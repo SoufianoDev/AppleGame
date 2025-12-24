@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjaar23uvc1xr"]
+
+[ext_resource type="Texture2D" uid="uid://7cvn7spxxavt" path="res://assets/background.png" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://5e6401osvb7c" path="res://basket.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_0xm2m")
+
+[node name="Basket" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(968, 917)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 35.0
+offset_top = 35.0
+offset_right = 224.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 45
+text = "Score : 0"
