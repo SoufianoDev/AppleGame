@@ -16,7 +16,7 @@ import godot.global.GD
 class Basket : Area2D() {
 
 	@RegisterProperty
-	var speed = 400.0
+	var speed = 700.0
 
 	@RegisterProperty
 	var score = 0

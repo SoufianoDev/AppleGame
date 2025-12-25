@@ -15,56 +15,55 @@ import kotlin.random.Random
 @RegisterClass
 class Main : Node2D() {
 
-    @RegisterProperty
-    var appleScene: PackedScene? = null
+	@RegisterProperty
+	var appleScene: PackedScene? = null
 
-    private var spawnTimer = 0.0
+	private var spawnTimer = 0.0
 
-    @RegisterProperty
-    var spawnInterval = 1.5
+	@RegisterProperty
+	var spawnInterval = 1.5
 
-    @RegisterProperty
-    var minSpawnInterval = 0.5
+	@RegisterProperty
+	var minSpawnInterval = 0.5
 
-    @RegisterProperty
-    var difficultyIncreaseRate = 0.99
+	@RegisterProperty
+	var difficultyIncreaseRate = 0.99
 
-    private var scoreLabel: Label? = null
-    private var basket: Node2D? = null
+	private var scoreLabel: Label? = null
+	private var basket: Node2D? = null
 
-    @RegisterFunction
-    override fun _ready() {
-        appleScene = ResourceLoader.load("res://apple.tscn") as? PackedScene
-        scoreLabel = getNode("CanvasLayer/ScoreLabel") as? Label
-        basket = getNode("Basket") as? Node2D
-    }
+	@RegisterFunction
+	override fun _ready() {
+		appleScene = ResourceLoader.load("res://apple.tscn") as? PackedScene
+		scoreLabel = getNode("CanvasLayer/ScoreLabel") as? Label
+		basket = getNode("Basket") as? Node2D
+	}
 
-    @RegisterFunction
-    override fun _process(delta: Double) {
-        spawnTimer += delta
+	@RegisterFunction
+	override fun _process(delta: Double) {
+		spawnTimer += delta
 
-        if (spawnTimer >= spawnInterval) {
-            spawnApple()
-            spawnTimer = 0.0
+		if (spawnTimer >= spawnInterval) {
+			spawnApple()
+			spawnTimer = 0.0
 
-            if (spawnInterval > minSpawnInterval) {
-                spawnInterval *= difficultyIncreaseRate
-            }
-        }
-    }
+			if (spawnInterval > minSpawnInterval) {
+				spawnInterval *= difficultyIncreaseRate
+			}
+		}
+	}
 
-    @RegisterFunction
-    fun spawnApple() {
-        val apple = appleScene?.instantiate() as? RigidBody2D ?: return
+	@RegisterFunction
+	fun spawnApple() {
+		val apple = appleScene?.instantiate() as? RigidBody2D ?: return
 
-        addChild(apple)
+		addChild(apple)
 
-        val screenWidth = getViewportRect().size.x
-        val randomX = Random.nextDouble(100.0, screenWidth - 100.0)
+		val screenWidth = getViewportRect().size.x
+		val randomX = Random.nextDouble(100.0, screenWidth - 100.0)
 
-        apple.position = Vector2(randomX, -100.0)
+		apple.position = Vector2(randomX, -100.0)
 
-        apple.setName(StringName("Apple_${System.currentTimeMillis()}").toString())
-    }
-
-}
+		apple.setName(StringName("Apple_${System.currentTimeMillis()}").toString())
+	}
+	}

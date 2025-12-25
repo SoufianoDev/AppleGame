@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjaar23uvc1xr"]
+[gd_scene load_steps=4 format=3 uid="uid://cjaar23uvc1xr"]
 
 [ext_resource type="Texture2D" uid="uid://7cvn7spxxavt" path="res://assets/background.png" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://bq77y3pyiawl1" path="res://src/main/kotlin/godot/game/Main.kt" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://5e6401osvb7c" path="res://basket.tscn" id="2_h2yge"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_1bvp3")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1920.0

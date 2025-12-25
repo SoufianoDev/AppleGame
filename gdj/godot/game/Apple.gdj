@@ -25,7 +25,5 @@ properties = [
     
 ]
 functions = [
-    _ready,
-	_process,
-	_on_body_entered
+    _process
 ]
