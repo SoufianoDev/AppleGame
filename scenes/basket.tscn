@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://ngdho762q1m4" path="res://build/resources/main/assets/basket.png" id="2_2cwdc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e01at"]
-radius = 23.0013
-height = 110.0
+radius = 2.25
+height = 99.0
 
 [node name="Basket" type="Area2D"]
 position = Vector2(3, 0)
@@ -17,6 +17,6 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_2cwdc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.25, 2)
+position = Vector2(-1.25, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e01at")

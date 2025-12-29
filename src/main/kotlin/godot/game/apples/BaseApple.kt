@@ -25,7 +25,7 @@ abstract class BaseApple : RigidBody2D() {
 	}
 
 	open fun onProcess(delta: Double) {
-		if (position.y > 800.0) {
+		if (position.y > 920.0) {
 			queueFree()
 		}
 	}
