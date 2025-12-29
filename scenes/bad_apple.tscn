@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bsjylmkiy2jur"]
 
-[ext_resource type="Texture2D" uid="uid://ck487vxwtmao0" path="res://assets/bad_apple.png" id="1_2on5v"]
+[ext_resource type="Texture2D" uid="uid://ck487vxwtmao0" path="res://build/resources/main/assets/bad_apple.png" id="1_2on5v"]
 [ext_resource type="Script" uid="uid://c66ioinikteea" path="res://src/main/kotlin/godot/game/apples/BadApple.kt" id="1_ovwlq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2on5v"]

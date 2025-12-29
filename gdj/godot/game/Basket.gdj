@@ -6,7 +6,7 @@ fqName = godot.game.Basket
 relativeSourcePath = src/main/kotlin/godot/game/Basket.kt
 baseType = Area2D
 supertypes = [
-    godot.api.Area2D,
+	godot.api.Area2D,
 	godot.api.CollisionObject2D,
 	godot.api.Node2D,
 	godot.api.CanvasItem,
@@ -18,10 +18,10 @@ supertypes = [
 	kotlin.Any
 ]
 signals = [
-    
+	
 ]
 properties = [
-    speed,
+	speed,
 	score,
 	lean_amount,
 	lean_speed,
@@ -32,7 +32,7 @@ properties = [
 	settle_duration
 ]
 functions = [
-    _ready,
+	_ready,
 	_process,
 	on_body_entered
 ]

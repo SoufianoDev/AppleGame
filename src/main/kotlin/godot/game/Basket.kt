@@ -131,7 +131,7 @@ class Basket : Area2D() {
 	fun onBodyEntered(body: Node) {
 		val apple = body as? BaseApple ?: return
 
-		score += apple.getPoints()
+		score += apple.getPoints().coerceAtLeast(0)
 		updateScoreUI()
 		startSquash()
 
