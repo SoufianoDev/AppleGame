@@ -74,8 +74,8 @@ class Basket : Area2D() {
 
 	private fun handleMovement(delta: Double) {
 		val inputX =
-			(if (Input.isActionPressed("ui_right")) 1.0 else 0.0) -
-					(if (Input.isActionPressed("ui_left")) 1.0 else 0.0)
+			(if (Input.isActionPressed("ui_to_right")) 1.0 else 0.0) -
+					(if (Input.isActionPressed("ui_to_left")) 1.0 else 0.0)
 
 		velocity = if (inputX != 0.0) {
 			Vector2(inputX, 0.0).normalized() * speed
