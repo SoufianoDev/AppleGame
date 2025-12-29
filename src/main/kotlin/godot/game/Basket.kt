@@ -1,16 +1,13 @@
 package godot.game
+
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.Area2D
-import godot.api.Input
-import godot.api.Label
-import godot.api.Node
-import godot.api.Node2D
-import godot.core.Callable
-import godot.core.StringName
-import godot.core.Vector2
+import godot.api.*
+import godot.core.*
+import godot.game.apples.BaseApple
 import godot.global.GD
+import kotlin.math.sign
 
 @RegisterClass
 class Basket : Area2D() {
@@ -24,51 +21,190 @@ class Basket : Area2D() {
 	private var screenSize = Vector2.ZERO
 	private var scoreLabel: Label? = null
 
+	// Movement / inertia
+	private var velocity = Vector2.ZERO
+	private var targetRotation = 0.0
+	private var currentRotation = 0.0
+
+	// Base scale
+	private val baseScale = Vector2(4.0, 4.0)
+	private var currentScale = baseScale
+	private var targetScale = baseScale
+
+	@RegisterProperty var leanAmount = 0.15
+	@RegisterProperty var leanSpeed = 8.0
+
+	// Squash / Stretch
+	@RegisterProperty var squashAmount = 0.35
+	@RegisterProperty var squashDuration = 0.10
+	@RegisterProperty var stretchAmount = 0.22
+	@RegisterProperty var stretchDuration = 0.12
+	@RegisterProperty var settleDuration = 0.18
+
+	private enum class ImpactPhase { IDLE, SQUASH, STRETCH, SETTLE }
+	private var impactPhase = ImpactPhase.IDLE
+	private var impactTimer = 0.0
+
 	@RegisterFunction
 	override fun _ready() {
 		screenSize = getViewportRect().size
+		monitoring = true
+		setProcess(true)
 
-		// الحصول على ScoreLabel من Main
-		val parent = getParent()
-		if (parent != null) {
-			scoreLabel = parent.getNode("CanvasLayer/ScoreLabel") as? Label
-		}
+		scale = baseScale
+		currentScale = baseScale
+		targetScale = baseScale
 
-		// الاتصال بإشارة التصادم
-		bodyEntered.connect(Callable(this, StringName("onBodyEntered")))
+		scoreLabel = getParent()
+			?.getNodeOrNull("CanvasLayer/ScoreLabel".asNodePath()) as? Label
+		updateScoreUI()
+
+		bodyEntered.connect(this, Basket::onBodyEntered)
+
+		GD.print("Basket ready - ScreenSize=$screenSize")
 	}
 
 	@RegisterFunction
 	override fun _process(delta: Double) {
-		var velocity = Vector2.ZERO
-
-		if (Input.isActionPressed("ui_right")) {
-			velocity.x = 1.0
-		}
-		if (Input.isActionPressed("ui_left")) {
-			velocity.x = -1.0
-		}
-
-		if (velocity.length() > 0.0) {
-			velocity = velocity.normalized() * speed
-			position = position + (velocity * delta)
-
-			val halfWidth = 100.0
-			position = Vector2(
-				position.x.coerceIn(halfWidth, screenSize.x - halfWidth),
-				position.y
-			)
-		}
+		handleMovement(delta)
+		updateAnimations(delta)
 	}
+
+	// ================= MOVEMENT =================
+
+	private fun handleMovement(delta: Double) {
+		val inputX =
+			(if (Input.isActionPressed("ui_right")) 1.0 else 0.0) -
+					(if (Input.isActionPressed("ui_left")) 1.0 else 0.0)
+
+		velocity = if (inputX != 0.0) {
+			Vector2(inputX, 0.0).normalized() * speed
+		} else {
+			Vector2.ZERO
+		}
+
+		position += velocity * delta
+
+		// ✅ CORRECT CLAMP USING REAL WIDTH
+		val halfWidth = getBasketHalfWidth()
+		position = Vector2(
+			x = position.x.coerceIn(halfWidth, screenSize.x - halfWidth),
+			y = position.y
+		)
+
+		val dirX = velocity.x.sign
+		targetRotation = -dirX * leanAmount
+	}
+
+	// ================= ANIMATIONS =================
+
+	private fun updateAnimations(delta: Double) {
+		currentRotation = lerp(currentRotation, targetRotation, leanSpeed * delta)
+		rotation = currentRotation.toFloat()
+
+		if (impactPhase != ImpactPhase.IDLE) {
+			impactTimer -= delta
+			if (impactTimer <= 0.0) {
+				when (impactPhase) {
+					ImpactPhase.SQUASH -> startStretch()
+					ImpactPhase.STRETCH -> startSettle()
+					ImpactPhase.SETTLE -> {
+						impactPhase = ImpactPhase.IDLE
+						targetScale = baseScale
+					}
+					else -> {}
+				}
+			}
+		}
+
+		currentScale = Vector2(
+			lerp(currentScale.x, targetScale.x, 12.0 * delta),
+			lerp(currentScale.y, targetScale.y, 12.0 * delta)
+		)
+
+		scale = currentScale
+	}
+
+	// ================= COLLISION =================
 
 	@RegisterFunction
 	fun onBodyEntered(body: Node) {
-		val bodyNode = body as? Node2D
-		if (bodyNode != null && bodyNode.name.toString().startsWith("Apple")) {
-			score++
-			scoreLabel?.text = "Score: $score"
-			GD.print("Score: $score")
-			bodyNode.queueFree()
+		val apple = body as? BaseApple ?: return
+
+		score += apple.getPoints()
+		updateScoreUI()
+		startSquash()
+
+		apple.queueFree()
+	}
+
+	// ================= WIDTH CALCULATION =================
+
+	/**
+	 * Calculates the REAL half width of the basket on screen
+	 */
+	private fun getBasketHalfWidth(): Double {
+
+		// 1️⃣ CollisionShape2D (BEST)
+		val col = getNodeOrNull("CollisionShape2D") as? CollisionShape2D
+		if (col != null) {
+			val shape = col.shape
+			when (shape) {
+				is RectangleShape2D -> {
+					return (shape.size.x * 0.5) * globalScale.x
+				}
+				is CircleShape2D -> {
+					return shape.radius * globalScale.x
+				}
+			}
 		}
+
+		// 2️⃣ Sprite2D fallback
+		val sprite = getNodeOrNull("Sprite2D") as? Sprite2D
+		if (sprite != null && sprite.texture != null) {
+			val texSize = sprite.texture!!.getSize()
+			return (texSize.x * 0.5) * sprite.scale.x * globalScale.x
+		}
+
+		// 3️⃣ Emergency fallback
+		GD.printErr("Basket width fallback used!")
+		return 100.0 * globalScale.x
+	}
+
+	// ================= IMPACT =================
+
+	private fun startSquash() {
+		impactPhase = ImpactPhase.SQUASH
+		impactTimer = squashDuration
+		targetScale = Vector2(
+			baseScale.x + squashAmount,
+			baseScale.y - squashAmount
+		)
+	}
+
+	private fun startStretch() {
+		impactPhase = ImpactPhase.STRETCH
+		impactTimer = stretchDuration
+		targetScale = Vector2(
+			baseScale.x - stretchAmount,
+			baseScale.y + stretchAmount
+		)
+	}
+
+	private fun startSettle() {
+		impactPhase = ImpactPhase.SETTLE
+		impactTimer = settleDuration
+		targetScale = baseScale
+	}
+
+	// ================= UI =================
+
+	private fun updateScoreUI() {
+		scoreLabel?.text = "Score: $score"
+	}
+
+	private fun lerp(from: Double, to: Double, weight: Double): Double {
+		val w = weight.coerceIn(0.0, 1.0)
+		return from + (to - from) * w
 	}
 }

@@ -19,13 +19,12 @@ signals = [
     
 ]
 properties = [
-    apple_scene,
-	spawn_interval,
-	min_spawn_interval,
-	difficulty_increase_rate
+    spawn_interval,
+	game_duration
 ]
 functions = [
     _ready,
 	_process,
-	spawn_apple
+	spawn_random_apple,
+	game_over
 ]
