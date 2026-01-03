@@ -1,19 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://didvwob12afua"]
 
 [ext_resource type="Script" uid="uid://cfnw2siqwm1ic" path="res://src/main/kotlin/godot/game/apples/GreenApple.kt" id="1_cjhvt"]
-[ext_resource type="Texture2D" uid="uid://dr8awdabxfuls" path="res://build/resources/main/assets/green_apple.png" id="1_qh5ai"]
+[ext_resource type="Texture2D" uid="uid://dr8awdabxfuls" path="res://src/main/resources/assets/green_apple.png" id="1_qh5ai"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qh5ai"]
-radius = 72.0278
+radius = 53.0
 
 [node name="green_apple" type="RigidBody2D"]
 max_contacts_reported = 4
 script = ExtResource("1_cjhvt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_qh5ai")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 11)
+position = Vector2(0, 9)
 shape = SubResource("CircleShape2D_qh5ai")

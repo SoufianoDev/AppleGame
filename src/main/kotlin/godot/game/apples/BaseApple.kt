@@ -10,6 +10,7 @@ abstract class BaseApple : RigidBody2D() {
 	@RegisterProperty
 	open var pointValue: Int = 1
 
+
 	open fun onReady() {
 
 //		var i : Int = 0
@@ -31,4 +32,7 @@ abstract class BaseApple : RigidBody2D() {
 	}
 
 	fun getPoints(): Int = pointValue
+
+
+//	fun getAppleName(): String =""
 }

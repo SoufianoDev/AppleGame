@@ -19,8 +19,11 @@ signals = [
     
 ]
 properties = [
-    spawn_interval,
-	game_duration
+    initial_spawn_interval,
+	min_spawn_interval,
+	difficulty_increase_rate,
+	game_duration,
+	apples_per_wave
 ]
 functions = [
     _ready,

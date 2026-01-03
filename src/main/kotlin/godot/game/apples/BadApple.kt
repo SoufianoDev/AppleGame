@@ -9,7 +9,7 @@ class BadApple : BaseApple() {
 
 	@RegisterFunction
 	override fun _ready() {
-		pointValue = -1
+		pointValue = -2
 		onReady()
 		GD.print("BadApple ready with $pointValue points")
 	}
