@@ -143,7 +143,7 @@ class Main : Node2D() {
 		return when {
 			currentWave <= 2 -> {
 				when {
-					random < 80.0 -> Triple(redAppleScene, "Red", 1)
+					random < 8Label0.0 -> Triple(redAppleScene, "Red", 1)
 					random < 95.0 -> Triple(greenAppleScene, "Green", 2)
 					else -> Triple(badAppleScene, "Bad", -1)
 				}

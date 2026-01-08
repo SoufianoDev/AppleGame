@@ -1,0 +1,128 @@
+[gd_scene load_steps=6 format=3 uid="uid://kadmrhokjppy"]
+
+[ext_resource type="Texture2D" uid="uid://jegddh4os35j" path="res://src/main/resources/assets/wood_pannel.png" id="1_iwahs"]
+[ext_resource type="Texture2D" uid="uid://ckf7ojh0affiw" path="res://src/main/resources/assets/game_over.png" id="2_61w2s"]
+[ext_resource type="Texture2D" uid="uid://bagi75e71f1gk" path="res://src/main/resources/assets/apples_row.png" id="3_jw6e5"]
+[ext_resource type="Texture2D" uid="uid://dribcsvkegba5" path="res://src/main/resources/assets/score_pannel.png" id="4_wa2qn"]
+[ext_resource type="FontFile" uid="uid://dl1iobwlyca2g" path="res://src/main/resources/assets/fonts/Nunito-Black.ttf" id="5_cyfkl"]
+
+[node name="GameOverScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundDim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.54902)
+
+[node name="CenterContainer" type="CenterContainer" parent="BackgroundDim"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContentRoot" type="Control" parent="BackgroundDim/CenterContainer"]
+layout_mode = 2
+
+[node name="WoodPannel" type="TextureRect" parent="BackgroundDim/CenterContainer/ContentRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -504.0
+offset_top = -429.0
+offset_right = 505.0
+offset_bottom = 437.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_iwahs")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="GameOverTitle" type="TextureRect" parent="BackgroundDim/CenterContainer/ContentRoot"]
+layout_mode = 0
+offset_left = -374.0
+offset_top = -381.0
+offset_right = 424.0
+offset_bottom = -190.0
+texture = ExtResource("2_61w2s")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ApplesRow" type="TextureRect" parent="BackgroundDim/CenterContainer/ContentRoot"]
+layout_mode = 0
+offset_left = -136.0
+offset_top = -213.0
+offset_right = 195.0
+offset_bottom = -136.0
+texture = ExtResource("3_jw6e5")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ScorePannelRoot" type="Control" parent="BackgroundDim/CenterContainer/ContentRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScorePannelImage" type="TextureRect" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -392.0
+offset_top = -129.0
+offset_right = 392.0
+offset_bottom = 231.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_wa2qn")
+expand_mode = 1
+
+[node name="FinalScoreLabel" type="Label" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+offset_left = -187.0
+offset_top = -77.0
+offset_right = 217.0
+offset_bottom = 6.0
+theme_override_colors/font_color = Color(0.254902, 0.380392, 0.423529, 1)
+theme_override_fonts/font = ExtResource("5_cyfkl")
+theme_override_font_sizes/font_size = 60
+text = "FINAL SCORE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreNumber" type="Label" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+offset_left = -371.0
+offset_top = -22.0
+offset_right = 365.0
+offset_bottom = 224.0
+theme_override_colors/font_color = Color(0.254902, 0.380392, 0.423529, 1)
+theme_override_colors/font_shadow_color = Color(0.192157, 0.192157, 0.192157, 0.501961)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 0.866667)
+theme_override_constants/outline_size = 23
+theme_override_constants/shadow_outline_size = 37
+theme_override_fonts/font = ExtResource("5_cyfkl")
+theme_override_font_sizes/font_size = 180
+text = "42"
+horizontal_alignment = 1
+vertical_alignment = 1
