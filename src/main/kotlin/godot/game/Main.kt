@@ -143,7 +143,7 @@ class Main : Node2D() {
 		return when {
 			currentWave <= 2 -> {
 				when {
-					random < 8Label0.0 -> Triple(redAppleScene, "Red", 1)
+					random < 80.0 -> Triple(redAppleScene, "Red", 1)
 					random < 95.0 -> Triple(greenAppleScene, "Green", 2)
 					else -> Triple(badAppleScene, "Bad", -1)
 				}
@@ -170,7 +170,6 @@ class Main : Node2D() {
 	private fun getSmartRandomX(screenWidth: Double): Double {
 		val margin = 100.0
 		val minDistance = 150.0
-
 		var attempts = 0
 		var randomX: Double
 

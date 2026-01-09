@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://kadmrhokjppy"]
+[gd_scene load_steps=9 format=3 uid="uid://kadmrhokjppy"]
 
 [ext_resource type="Texture2D" uid="uid://jegddh4os35j" path="res://src/main/resources/assets/wood_pannel.png" id="1_iwahs"]
 [ext_resource type="Texture2D" uid="uid://ckf7ojh0affiw" path="res://src/main/resources/assets/game_over.png" id="2_61w2s"]
 [ext_resource type="Texture2D" uid="uid://bagi75e71f1gk" path="res://src/main/resources/assets/apples_row.png" id="3_jw6e5"]
 [ext_resource type="Texture2D" uid="uid://dribcsvkegba5" path="res://src/main/resources/assets/score_pannel.png" id="4_wa2qn"]
 [ext_resource type="FontFile" uid="uid://dl1iobwlyca2g" path="res://src/main/resources/assets/fonts/Nunito-Black.ttf" id="5_cyfkl"]
+[ext_resource type="Texture2D" uid="uid://cmmranllk8twr" path="res://src/main/resources/assets/restart_btn.png" id="6_xx0b3"]
+[ext_resource type="Texture2D" uid="uid://csxqorhl43uch" path="res://src/main/resources/assets/munu_btn.png" id="7_nh6my"]
+[ext_resource type="Texture2D" uid="uid://c72dj3er3n4hf" path="res://src/main/resources/assets/new_high_score.png" id="8_4tlw3"]
 
 [node name="GameOverScreen" type="Control"]
 layout_mode = 3
@@ -100,6 +103,7 @@ texture = ExtResource("4_wa2qn")
 expand_mode = 1
 
 [node name="FinalScoreLabel" type="Label" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+layout_mode = 0
 offset_left = -187.0
 offset_top = -77.0
 offset_right = 217.0
@@ -112,6 +116,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ScoreNumber" type="Label" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+layout_mode = 0
 offset_left = -371.0
 offset_top = -22.0
 offset_right = 365.0
@@ -126,3 +131,44 @@ theme_override_font_sizes/font_size = 180
 text = "42"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="RestartButton" type="TextureButton" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+layout_mode = 0
+offset_left = -368.0
+offset_top = 239.0
+offset_right = -52.0
+offset_bottom = 347.0
+texture_normal = ExtResource("6_xx0b3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="MenuButton" type="TextureButton" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 230.0
+offset_right = 353.0
+offset_bottom = 358.0
+texture_normal = ExtResource("7_nh6my")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="HighScoreBanner" type="TextureRect" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot"]
+visible = false
+layout_mode = 0
+offset_left = 150.0
+offset_top = -144.0
+offset_right = 419.0
+offset_bottom = 90.0
+rotation = -0.0523599
+texture = ExtResource("8_4tlw3")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="HBCShadow" type="ColorRect" parent="BackgroundDim/CenterContainer/ContentRoot/ScorePannelRoot/HighScoreBanner"]
+layout_mode = 0
+offset_left = 4.21661
+offset_top = 53.2937
+offset_right = 221.217
+offset_bottom = 56.2937
+rotation = 0.296706
+color = Color(0.00351917, 0.00351917, 0.00351916, 0.247059)
