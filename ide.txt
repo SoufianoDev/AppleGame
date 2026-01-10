@@ -1,0 +1,1286 @@
+=== applegame — /home/soufiano/SoufianoDev/applegame ===
+applegame
+├── .
+├── project.godot
+├── .gradle
+│   ├── 8.10.2
+│   │   ├── dependencies-accessors
+│   │   │   ├── gc.properties
+│   │   ├── checksums
+│   │   │   ├── sha1-checksums.bin
+│   │   │   ├── md5-checksums.bin
+│   │   │   ├── checksums.lock
+│   │   ├── vcsMetadata
+│   │   ├── executionHistory
+│   │   │   ├── executionHistory.lock
+│   │   │   ├── executionHistory.bin
+│   │   ├── fileHashes
+│   │   │   ├── resourceHashesCache.bin
+│   │   │   ├── fileHashes.bin
+│   │   │   ├── fileHashes.lock
+│   │   ├── fileChanges
+│   │   │   ├── last-build.bin
+│   │   ├── gc.properties
+│   │   ├── expanded
+│   │   │   ├── expanded.lock
+│   ├── buildOutputCleanup
+│   │   ├── buildOutputCleanup.lock
+│   │   ├── outputFiles.bin
+│   │   ├── cache.properties
+│   ├── file-system.probe
+│   ├── vcs-1
+│   │   ├── gc.properties
+├── scenes
+│   ├── game_over_screen.tscn
+│   ├── bad_apple.tscn
+│   ├── main.tscn
+│   ├── red_apple.tscn
+│   ├── green_apple.tscn
+│   ├── basket.tscn
+├── icon.svg
+├── gradle
+│   ├── .gdignore
+│   ├── wrapper
+│   │   ├── gradle-wrapper.properties
+│   │   ├── gradle-wrapper.jar
+├── .gitignore
+├── jvm
+│   ├── godot-bootstrap.jar
+│   ├── AppleGame.jar
+│   ├── main.jar
+├── icon.svg.import
+├── godot_kotlin_configuration.json
+├── .idea
+│   ├── workspace.xml
+│   ├── misc.xml
+│   ├── .gitignore
+│   ├── gradle.xml
+│   ├── compiler.xml
+│   ├── material_theme_project_new.xml
+│   ├── vcs.xml
+│   ├── kotlinc.xml
+│   ├── .name
+├── build
+│   ├── generated
+│   │   ├── ksp
+│   │   │   ├── main
+│   │   │   │   ├── kotlin
+│   │   │   │   │   ├── godot
+│   │   │   │   │   │   ├── Entry.kt
+│   │   │   │   │   │   ├── entry
+│   │   │   │   │   │   │   ├── GreenAppleRegistrar.kt
+│   │   │   │   │   │   │   ├── BaseAppleRegistrar.kt
+│   │   │   │   │   │   │   ├── BadAppleRegistrar.kt
+│   │   │   │   │   │   │   ├── MainRegistrar.kt
+│   │   │   │   │   │   │   ├── BasketRegistrar.kt
+│   │   │   │   │   │   │   ├── RedAppleRegistrar.kt
+│   │   │   │   ├── resources
+│   │   │   │   │   ├── entryFiles
+│   │   │   │   │   │   ├── gdj
+│   │   │   │   │   │   │   ├── godot
+│   │   │   │   │   │   │   │   ├── game
+│   │   │   │   │   │   │   │   │   ├── Basket.gdj
+│   │   │   │   │   │   │   │   │   ├── apples
+│   │   │   │   │   │   │   │   │   │   ├── GreenApple.gdj
+│   │   │   │   │   │   │   │   │   │   ├── BadApple.gdj
+│   │   │   │   │   │   │   │   │   │   ├── RedApple.gdj
+│   │   │   │   │   │   │   │   │   ├── Main.gdj
+│   ├── .gdignore
+│   ├── kotlin
+│   │   ├── compileKotlin
+│   │   │   ├── classpath-snapshot
+│   │   │   │   ├── shrunk-classpath-snapshot.bin
+│   │   │   ├── local-state
+│   │   │   │   ├── build-history.bin
+│   │   │   ├── cacheable
+│   │   │   │   ├── caches-jvm
+│   │   │   │   │   ├── lookups
+│   │   │   │   │   │   ├── lookups.tab.keystream
+│   │   │   │   │   │   ├── lookups.tab.len
+│   │   │   │   │   │   ├── lookups.tab.values.at
+│   │   │   │   │   │   ├── id-to-file.tab.values.at
+│   │   │   │   │   │   ├── file-to-id.tab
+│   │   │   │   │   │   ├── id-to-file.tab
+│   │   │   │   │   │   ├── file-to-id.tab.len
+│   │   │   │   │   │   ├── file-to-id.tab.keystream
+│   │   │   │   │   │   ├── id-to-file.tab_i
+│   │   │   │   │   │   ├── file-to-id.tab_i.len
+│   │   │   │   │   │   ├── file-to-id.tab.values.at
+│   │   │   │   │   │   ├── lookups.tab
+│   │   │   │   │   │   ├── file-to-id.tab.keystream.len
+│   │   │   │   │   │   ├── id-to-file.tab.keystream
+│   │   │   │   │   │   ├── lookups.tab_i
+│   │   │   │   │   │   ├── file-to-id.tab_i
+│   │   │   │   │   │   ├── id-to-file.tab_i.len
+│   │   │   │   │   │   ├── lookups.tab.keystream.len
+│   │   │   │   │   │   ├── counters.tab
+│   │   │   │   │   │   ├── lookups.tab_i.len
+│   │   │   │   │   │   ├── id-to-file.tab.keystream.len
+│   │   │   │   │   │   ├── id-to-file.tab.len
+│   │   │   │   │   ├── jvm
+│   │   │   │   │   │   ├── kotlin
+│   │   │   │   │   │   │   ├── subtypes.tab
+│   │   │   │   │   │   │   ├── proto.tab.keystream
+│   │   │   │   │   │   │   ├── source-to-classes.tab_i.len
+│   │   │   │   │   │   │   ├── supertypes.tab.keystream.len
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab.len
+│   │   │   │   │   │   │   ├── source-to-classes.tab_i
+│   │   │   │   │   │   │   ├── source-to-classes.tab
+│   │   │   │   │   │   │   ├── class-attributes.tab.len
+│   │   │   │   │   │   │   ├── source-to-classes.tab.values.at
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab.values.at
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab.keystream
+│   │   │   │   │   │   │   ├── proto.tab.len
+│   │   │   │   │   │   │   ├── class-attributes.tab_i
+│   │   │   │   │   │   │   ├── subtypes.tab_i.len
+│   │   │   │   │   │   │   ├── subtypes.tab.keystream
+│   │   │   │   │   │   │   ├── proto.tab_i.len
+│   │   │   │   │   │   │   ├── class-attributes.tab.keystream.len
+│   │   │   │   │   │   │   ├── proto.tab.keystream.len
+│   │   │   │   │   │   │   ├── subtypes.tab.values.at
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab.keystream.len
+│   │   │   │   │   │   │   ├── proto.tab.values.at
+│   │   │   │   │   │   │   ├── subtypes.tab.len
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab_i
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab_i
+│   │   │   │   │   │   │   ├── class-attributes.tab.values.at
+│   │   │   │   │   │   │   ├── class-attributes.tab_i.len
+│   │   │   │   │   │   │   ├── source-to-classes.tab.len
+│   │   │   │   │   │   │   ├── class-attributes.tab.keystream
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab.keystream
+│   │   │   │   │   │   │   ├── supertypes.tab.values.at
+│   │   │   │   │   │   │   ├── class-attributes.tab
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab_i.len
+│   │   │   │   │   │   │   ├── supertypes.tab.len
+│   │   │   │   │   │   │   ├── source-to-classes.tab.keystream
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab_i.len
+│   │   │   │   │   │   │   ├── supertypes.tab.keystream
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab.values.at
+│   │   │   │   │   │   │   ├── supertypes.tab
+│   │   │   │   │   │   │   ├── supertypes.tab_i.len
+│   │   │   │   │   │   │   ├── proto.tab
+│   │   │   │   │   │   │   ├── proto.tab_i
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab.len
+│   │   │   │   │   │   │   ├── class-fq-name-to-source.tab
+│   │   │   │   │   │   │   ├── subtypes.tab.keystream.len
+│   │   │   │   │   │   │   ├── subtypes.tab_i
+│   │   │   │   │   │   │   ├── internal-name-to-source.tab.keystream.len
+│   │   │   │   │   │   │   ├── source-to-classes.tab.keystream.len
+│   │   │   │   │   │   │   ├── supertypes.tab_i
+│   │   │   │   │   ├── inputs
+│   │   │   │   │   │   ├── source-to-output.tab.keystream.len
+│   │   │   │   │   │   ├── source-to-output.tab_i
+│   │   │   │   │   │   ├── source-to-output.tab.values.at
+│   │   │   │   │   │   ├── source-to-output.tab
+│   │   │   │   │   │   ├── source-to-output.tab.keystream
+│   │   │   │   │   │   ├── source-to-output.tab_i.len
+│   │   │   │   │   │   ├── source-to-output.tab.len
+│   │   │   │   ├── last-build.bin
+│   │   ├── kspKotlin
+│   │   │   ├── classpath-snapshot
+│   │   │   ├── local-state
+│   │   │   ├── cacheable
+│   ├── tmp
+│   │   ├── packageBootstrapJar
+│   │   │   ├── MANIFEST.MF
+│   │   ├── shadowJar
+│   │   │   ├── MANIFEST.MF
+│   │   ├── jar
+│   │   │   ├── MANIFEST.MF
+│   ├── classes
+│   │   ├── kotlin
+│   │   │   ├── main
+│   │   │   │   ├── META-INF
+│   │   │   │   │   ├── AppleGame.kotlin_module
+│   │   │   │   ├── godot
+│   │   │   │   │   ├── entry
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$6.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$4.class
+│   │   │   │   │   │   ├── BadAppleRegistrar$register$1$1$2.class
+│   │   │   │   │   │   ├── RedAppleRegistrar.class
+│   │   │   │   │   │   ├── GreenAppleRegistrar$register$1$1$4.class
+│   │   │   │   │   │   ├── RedAppleRegistrar$register$1$1$2.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$8.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$7.class
+│   │   │   │   │   │   ├── BasketRegistrar.class
+│   │   │   │   │   │   ├── GreenAppleRegistrar.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$7.class
+│   │   │   │   │   │   ├── GreenAppleRegistrar$register$1$1$1.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$1.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$5.class
+│   │   │   │   │   │   ├── BaseAppleRegistrar.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$9.class
+│   │   │   │   │   │   ├── RedAppleRegistrar$register$1$1$4.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$10.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$11.class
+│   │   │   │   │   │   ├── GreenAppleRegistrar$register$1$1$3.class
+│   │   │   │   │   │   ├── RedAppleRegistrar$register$1$1$3.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$2.class
+│   │   │   │   │   │   ├── BadAppleRegistrar.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$9.class
+│   │   │   │   │   │   ├── BadAppleRegistrar$register$1$1$1.class
+│   │   │   │   │   │   ├── MainRegistrar.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$13.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$2.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$8.class
+│   │   │   │   │   │   ├── opDfRZOZLBjJznqBvFrH
+│   │   │   │   │   │   │   ├── Entry.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$4.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$3.class
+│   │   │   │   │   │   ├── BadAppleRegistrar$register$1$1$4.class
+│   │   │   │   │   │   ├── RedAppleRegistrar$register$1$1$1.class
+│   │   │   │   │   │   ├── BadAppleRegistrar$register$1$1$3.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$6.class
+│   │   │   │   │   │   ├── GreenAppleRegistrar$register$1$1$2.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$3.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$10.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$12.class
+│   │   │   │   │   │   ├── BasketRegistrar$register$1$1$1.class
+│   │   │   │   │   │   ├── MainRegistrar$register$1$1$5.class
+│   │   │   │   │   ├── game
+│   │   │   │   │   │   ├── Main.class
+│   │   │   │   │   │   ├── Basket$ImpactPhase.class
+│   │   │   │   │   │   ├── Basket$_ready$1.class
+│   │   │   │   │   │   ├── AnimationStyle.class
+│   │   │   │   │   │   ├── apples
+│   │   │   │   │   │   │   ├── BadApple.class
+│   │   │   │   │   │   │   ├── GreenApple.class
+│   │   │   │   │   │   │   ├── BaseApple.class
+│   │   │   │   │   │   │   ├── RedApple.class
+│   │   │   │   │   │   ├── Basket.class
+│   │   │   │   │   │   ├── Basket$WhenMappings.class
+│   ├── kspCaches
+│   │   ├── main
+│   │   │   ├── backups
+│   │   │   │   ├── kotlin
+│   │   │   │   │   ├── godot
+│   │   │   │   │   │   ├── Entry.kt
+│   │   │   │   │   │   ├── entry
+│   │   │   │   │   │   │   ├── GreenAppleRegistrar.kt
+│   │   │   │   │   │   │   ├── BaseAppleRegistrar.kt
+│   │   │   │   │   │   │   ├── BadAppleRegistrar.kt
+│   │   │   │   │   │   │   ├── MainRegistrar.kt
+│   │   │   │   │   │   │   ├── BasketRegistrar.kt
+│   │   │   │   │   │   │   ├── RedAppleRegistrar.kt
+│   │   │   │   ├── resources
+│   │   │   │   │   ├── entryFiles
+│   │   │   │   │   │   ├── gdj
+│   │   │   │   │   │   │   ├── godot
+│   │   │   │   │   │   │   │   ├── game
+│   │   │   │   │   │   │   │   │   ├── Basket.gdj
+│   │   │   │   │   │   │   │   │   ├── apples
+│   │   │   │   │   │   │   │   │   │   ├── GreenApple.gdj
+│   │   │   │   │   │   │   │   │   │   ├── BadApple.gdj
+│   │   │   │   │   │   │   │   │   │   ├── RedApple.gdj
+│   │   │   │   │   │   │   │   │   ├── Main.gdj
+│   │   │   ├── logs
+│   │   │   ├── symbolLookups
+│   │   │   │   ├── lookups.tab.keystream
+│   │   │   │   ├── lookups.tab.len
+│   │   │   │   ├── lookups.tab.values.at
+│   │   │   │   ├── id-to-file.tab.values.at
+│   │   │   │   ├── file-to-id.tab
+│   │   │   │   ├── id-to-file.tab
+│   │   │   │   ├── file-to-id.tab.len
+│   │   │   │   ├── file-to-id.tab.keystream
+│   │   │   │   ├── id-to-file.tab_i
+│   │   │   │   ├── file-to-id.tab_i.len
+│   │   │   │   ├── file-to-id.tab.values.at
+│   │   │   │   ├── lookups.tab
+│   │   │   │   ├── file-to-id.tab.keystream.len
+│   │   │   │   ├── id-to-file.tab.keystream
+│   │   │   │   ├── lookups.tab_i
+│   │   │   │   ├── file-to-id.tab_i
+│   │   │   │   ├── id-to-file.tab_i.len
+│   │   │   │   ├── lookups.tab.keystream.len
+│   │   │   │   ├── counters.tab
+│   │   │   │   ├── lookups.tab_i.len
+│   │   │   │   ├── id-to-file.tab.keystream.len
+│   │   │   │   ├── id-to-file.tab.len
+│   │   │   ├── sourceToOutputs
+│   │   │   ├── symbols
+│   │   │   ├── classpath-structure.bin
+│   │   │   ├── classLookups
+│   │   │   │   ├── lookups.tab.keystream
+│   │   │   │   ├── lookups.tab.len
+│   │   │   │   ├── lookups.tab.values.at
+│   │   │   │   ├── id-to-file.tab.values.at
+│   │   │   │   ├── file-to-id.tab
+│   │   │   │   ├── id-to-file.tab
+│   │   │   │   ├── file-to-id.tab.len
+│   │   │   │   ├── file-to-id.tab.keystream
+│   │   │   │   ├── id-to-file.tab_i
+│   │   │   │   ├── file-to-id.tab_i.len
+│   │   │   │   ├── file-to-id.tab.values.at
+│   │   │   │   ├── lookups.tab
+│   │   │   │   ├── file-to-id.tab.keystream.len
+│   │   │   │   ├── id-to-file.tab.keystream
+│   │   │   │   ├── lookups.tab_i
+│   │   │   │   ├── file-to-id.tab_i
+│   │   │   │   ├── id-to-file.tab_i.len
+│   │   │   │   ├── lookups.tab.keystream.len
+│   │   │   │   ├── counters.tab
+│   │   │   │   ├── lookups.tab_i.len
+│   │   │   │   ├── id-to-file.tab.keystream.len
+│   │   │   │   ├── id-to-file.tab.len
+│   │   │   ├── ap-classpath-entries.bin
+│   │   │   ├── caches.uptodate
+│   │   │   ├── classpath-entries.bin
+│   │   │   ├── sealed
+│   ├── libs
+│   │   ├── godot-bootstrap.jar
+│   │   ├── AppleGame.jar
+│   │   ├── main.jar
+│   ├── resources
+│   │   ├── main
+│   │   │   ├── META-INF
+│   │   │   │   ├── services
+│   │   │   │   │   ├── godot.registration.Entry
+│   │   │   ├── entryFiles
+│   │   │   │   ├── gdj
+│   │   │   │   │   ├── godot
+│   │   │   │   │   │   ├── game
+│   │   │   │   │   │   │   ├── Basket.gdj
+│   │   │   │   │   │   │   ├── apples
+│   │   │   │   │   │   │   │   ├── GreenApple.gdj
+│   │   │   │   │   │   │   │   ├── BadApple.gdj
+│   │   │   │   │   │   │   │   ├── RedApple.gdj
+│   │   │   │   │   │   │   ├── Main.gdj
+│   │   │   ├── assets
+│   │   │   │   ├── green_apple.png
+│   │   │   │   ├── apple.png.import
+│   │   │   │   ├── background.png
+│   │   │   │   ├── green_apple.png.import
+│   │   │   │   ├── background.png.import
+│   │   │   │   ├── basket
+│   │   │   │   │   ├── basket_5.png
+│   │   │   │   │   ├── basket_1.png
+│   │   │   │   │   ├── basket_5.png.import
+│   │   │   │   │   ├── basket_3.png
+│   │   │   │   │   ├── basket_3.png.import
+│   │   │   │   │   ├── basket_7.png
+│   │   │   │   │   ├── basket_0.png
+│   │   │   │   │   ├── basket_8.png
+│   │   │   │   │   ├── basket_2.png
+│   │   │   │   │   ├── basket_7.png.import
+│   │   │   │   │   ├── basket_2.png.import
+│   │   │   │   │   ├── basket_1.png.import
+│   │   │   │   │   ├── basket_0.png.import
+│   │   │   │   │   ├── basket_6.png.import
+│   │   │   │   │   ├── basket_8.png.import
+│   │   │   │   │   ├── basket_4.png
+│   │   │   │   │   ├── basket_6.png
+│   │   │   │   │   ├── basket_4.png.import
+│   │   │   │   ├── bad_apple.png
+│   │   │   │   ├── bad_apple.png.import
+│   │   │   │   ├── star.png
+│   │   │   │   ├── star.png.import
+│   │   │   │   ├── apple.png
+├── build.gradle.kts
+├── gradlew
+├── gdj
+│   ├── godot
+│   │   ├── game
+│   │   │   ├── Basket.gdj
+│   │   │   ├── apples
+│   │   │   │   ├── GreenApple.gdj
+│   │   │   │   ├── BadApple.gdj
+│   │   │   │   ├── RedApple.gdj
+│   │   │   ├── Main.gdj
+├── ide.md
+├── bin
+│   ├── main
+│   │   ├── META-INF
+│   │   │   ├── services
+│   │   │   │   ├── godot.registration.Entry
+│   │   ├── assets
+│   │   │   ├── green_apple.png
+│   │   │   ├── apple.png.import
+│   │   │   ├── background.png
+│   │   │   ├── green_apple.png.import
+│   │   │   ├── background.png.import
+│   │   │   ├── basket
+│   │   │   │   ├── basket_5.png
+│   │   │   │   ├── basket_1.png
+│   │   │   │   ├── basket_5.png.import
+│   │   │   │   ├── basket_3.png
+│   │   │   │   ├── basket_3.png.import
+│   │   │   │   ├── basket_7.png
+│   │   │   │   ├── basket_0.png
+│   │   │   │   ├── basket_8.png
+│   │   │   │   ├── basket_2.png
+│   │   │   │   ├── basket_7.png.import
+│   │   │   │   ├── basket_2.png.import
+│   │   │   │   ├── basket_1.png.import
+│   │   │   │   ├── basket_0.png.import
+│   │   │   │   ├── basket_6.png.import
+│   │   │   │   ├── basket_8.png.import
+│   │   │   │   ├── basket_4.png
+│   │   │   │   ├── basket_6.png
+│   │   │   │   ├── basket_4.png.import
+│   │   │   ├── bad_apple.png
+│   │   │   ├── bad_apple.png.import
+│   │   │   ├── star.png
+│   │   │   ├── star.png.import
+│   │   │   ├── apple.png
+│   │   ├── godot
+│   │   │   ├── Entry.kt
+│   │   │   ├── entry
+│   │   │   │   ├── GreenAppleRegistrar.kt
+│   │   │   │   ├── BaseAppleRegistrar.kt
+│   │   │   │   ├── BadAppleRegistrar.kt
+│   │   │   │   ├── MainRegistrar.kt
+│   │   │   │   ├── BasketRegistrar.kt
+│   │   │   │   ├── RedAppleRegistrar.kt
+│   │   │   ├── game
+│   │   │   │   ├── Basket.kt
+│   │   │   │   ├── AnimationStyle.kt
+│   │   │   │   ├── Main.kt
+│   │   │   │   ├── apples
+│   │   │   │   │   ├── BadApple.kt
+│   │   │   │   │   ├── GreenApple.kt
+│   │   │   │   │   ├── BaseApple.kt
+│   │   │   │   │   ├── RedApple.kt
+├── settings.gradle.kts
+├── .gitattributes
+├── gradle.properties
+├── .kotlin
+│   ├── sessions
+├── gradlew.bat
+├── .git
+│   ├── logs
+│   │   ├── refs
+│   │   │   ├── heads
+│   │   │   │   ├── master
+│   │   │   ├── remotes
+│   │   │   │   ├── origin
+│   │   │   │   │   ├── master
+│   │   │   │   │   ├── HEAD
+│   │   ├── HEAD
+│   ├── hooks
+│   │   ├── pre-merge-commit.sample
+│   │   ├── commit-msg.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── sendemail-validate.sample
+│   │   ├── push-to-checkout.sample
+│   │   ├── applypatch-msg.sample
+│   │   ├── update.sample
+│   │   ├── pre-receive.sample
+│   ├── index
+│   ├── refs
+│   │   ├── tags
+│   │   ├── heads
+│   │   │   ├── master
+│   │   ├── remotes
+│   │   │   ├── origin
+│   │   │   │   ├── master
+│   │   │   │   ├── HEAD
+│   ├── FETCH_HEAD
+│   ├── config
+│   ├── objects
+│   │   ├── ec
+│   │   │   ├── b978758f5f142d36aa464bf3b12a4f5e4a0c95
+│   │   ├── 2d
+│   │   │   ├── 55241b4f40f9510f3dbb94a014c19ebea34161
+│   │   │   ├── 3bf98edcdc75120cbbdb47b93c40132d72cf43
+│   │   ├── 5e
+│   │   │   ├── e2829ad16ada7e1fef970db8ec9290b589470f
+│   │   ├── e2
+│   │   │   ├── d09770ef4e1710f0be58557d805117e6131e00
+│   │   ├── d4
+│   │   │   ├── 79950f5f3b7d2e78cdea1230c1f5605441c8d9
+│   │   ├── 3f
+│   │   │   ├── 93986841bbbc5ceacd2dbdc4dc2df634ff999f
+│   │   ├── ae
+│   │   │   ├── 0c71dd7baad4f7d9fa510fca4bfe0d00641cb7
+│   │   ├── 83
+│   │   │   ├── 0035a3c910aef4fd73511f1d08542bc1108b75
+│   │   ├── 4a
+│   │   │   ├── 43c5be0ea2cedec1763d1f5e4d367f4cd34e8d
+│   │   ├── 70
+│   │   │   ├── e33a1cd723cc657260b04b8d6f30aebb41de6a
+│   │   ├── 80
+│   │   │   ├── ac5523075c5a23ecad5aa6771186ed91fd2392
+│   │   ├── 22
+│   │   │   ├── 9af497fea1d18234700ca2943116e0952fe853
+│   │   ├── 79
+│   │   │   ├── eb9d003feaeff23273846bfd609083f06f2858
+│   │   ├── 98
+│   │   │   ├── dcb2c190a21ab151bd02358670f60357c1e145
+│   │   │   ├── 62dfbdc58491f0f77caa2d6a6dfa1003eb1190
+│   │   │   ├── 8522c6bf8ff62ec0adf2e0fadac0a20fd99497
+│   │   ├── 43
+│   │   │   ├── 01259bc952c2ea2bcd82ba541ea9cc4f95caa8
+│   │   │   ├── 9fe71819d3b013d27cbb34ce4f51ecedd88b51
+│   │   ├── 09
+│   │   │   ├── 9b6fe3441cd6688dc694fe39688f8c42c69d8a
+│   │   │   ├── fdfea0584b8baba9fdcd391c59a1aa0f928fb6
+│   │   │   ├── 6e897edbbd00a01af1b0ac4f75ee74df72c87b
+│   │   ├── df
+│   │   │   ├── caf3e90bc7b8aed42fbef9edf65c9207707bab
+│   │   ├── 60
+│   │   │   ├── 1a9f883f325332797ed47f7684ac47189a400a
+│   │   │   ├── f97e0ce4df0278539b61e4ba35468360ab1522
+│   │   │   ├── 3e110017e2b5435c7b791f2cea40266e1ea8df
+│   │   ├── 16
+│   │   │   ├── 592afc5b62e49421d7d989b4e5affee2cfd257
+│   │   ├── e6
+│   │   │   ├── 9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+│   │   │   ├── 441136f3d4ba8a0da8d277868979cfbc8ad796
+│   │   ├── 1a
+│   │   │   ├── d9cfd938fd22689cab2bcf7d61fc49d9f1fc65
+│   │   ├── ff
+│   │   │   ├── faf82d715875aadb5f5753c2c1e84877c988bc
+│   │   ├── b0
+│   │   │   ├── 3a48b4573bb30124af4d24ecd95e397e91fbcc
+│   │   ├── 94
+│   │   │   ├── 54ce8e77ee9918e25a46c6afe5badeb26bb1f8
+│   │   ├── c8
+│   │   │   ├── 50a4cf65359a8667d274191b1a46e83b571042
+│   │   │   ├── 2a8b236ef4b8cd98b049af8579f0076d351379
+│   │   ├── 4c
+│   │   │   ├── bbef33e76607772fa5094c794f3d3c92b28e62
+│   │   │   ├── 73860423c705c352872310b104c143d338a3c4
+│   │   │   ├── d4f826745ce55b933b88e34c083bdc97d12a56
+│   │   ├── 0b
+│   │   │   ├── df90ef8dd08f78a28469ee68d24b4ee7a8e7d7
+│   │   │   ├── 1af46f1a076cc67bf4d274f6c6152df9e73cbf
+│   │   ├── f1
+│   │   │   ├── a62afa42db3bc949fad614e05a4b37a1fe354d
+│   │   │   ├── 0cc9ddae425aebffbb10f21a861f55c598b684
+│   │   │   ├── 575d705446b95de14f366837a89647537772e1
+│   │   ├── 8d
+│   │   │   ├── e06b921518e11a243060805a5513cac50d0d50
+│   │   │   ├── 8709ec7b8c9d27e5cff3d5319030f826275212
+│   │   ├── 6b
+│   │   │   ├── 66fdd10b112e61e06f422cdf1abf49fd630896
+│   │   │   ├── 1341d241b336775c1e69a2d20a3a0caf6f1aae
+│   │   ├── 52
+│   │   │   ├── 9d69cbaf76dacfba0e16c5dff370e397ceac4c
+│   │   │   ├── 33f9870f9998771ae015ef3d334042dc4b8ec3
+│   │   │   ├── 251234b6943f6b3dbdc561d155fcf976afd88b
+│   │   │   ├── 80d1cf257f4675099aaffddeed7458c7c695ba
+│   │   ├── a0
+│   │   │   ├── 126e2700aa0bc2c5296048b81dcf156556d28f
+│   │   │   ├── 2c852b1b9727e62d27f6b34d8543c145d32b62
+│   │   │   ├── 453255b770618c2b835ff33555f7107db178d9
+│   │   ├── b8
+│   │   │   ├── 5ac1315923d418f7fbd946dd6110e2a4bfafa9
+│   │   ├── 08
+│   │   │   ├── 94dc1d1bed1c5cc7d358d31074d1f6b01c9f94
+│   │   ├── 96
+│   │   │   ├── 3f778f06fe5f2fb53c8694b74cdf4b176dc165
+│   │   ├── 7f
+│   │   │   ├── 31c6a9a48cdc1d19137c131fafa8ff8f2ef2b1
+│   │   │   ├── 8db065dcd8e8ac2533dccd3e484aef458b9efa
+│   │   │   ├── 36fcae5b2a107de34f22a07566388812df4bf3
+│   │   │   ├── 8e74ec15e2e5f0153320eb6be63de9094d4b66
+│   │   ├── d2
+│   │   │   ├── 25b79921a588e4415b9aa1e1918b410a6fc396
+│   │   │   ├── f0112461a1fdf866f8b3103d654782f3947a2e
+│   │   ├── 03
+│   │   │   ├── fbbf948e150c2759f3e587259d511da6194306
+│   │   ├── 7e
+│   │   │   ├── 25e5639dd29e0b39edf06ff2dd2f44ad661bf2
+│   │   │   ├── 0e8306daa8841301ca9249c340ab2d6582411a
+│   │   ├── 77
+│   │   │   ├── d9c73c5f3e24256cdc4193e9299ec43ee102a9
+│   │   │   ├── 708890dc9edb85d51184b72a4daee3d4405a4c
+│   │   ├── 89
+│   │   │   ├── 2d95cd273435ced9b29341b6c9381e9902e7f8
+│   │   │   ├── b43c03a48af78c271f025798088c2d918218af
+│   │   ├── 59
+│   │   │   ├── 8e7f0aeed2bebadb8378bb5b9458231b4e822c
+│   │   │   ├── 7e6ca4e582c41ea4310760ef4b4426c595deb0
+│   │   ├── b9
+│   │   │   ├── e855c7b61bd1c507d2c4f44bae942078788e51
+│   │   ├── cd
+│   │   │   ├── 6a6d2ceb2d40d635fe6064870f9e558a780f11
+│   │   ├── aa
+│   │   │   ├── cf5349dc20f32ab514cd1fdb6d573694b79dc3
+│   │   ├── e1
+│   │   │   ├── 8270502a2a39eccac5fe3c1cecbc30552c83f9
+│   │   │   ├── 1399a3835de5de8aab7484bd3096a2aeaea82f
+│   │   │   ├── 9daebd4c0955c30ec6d9427dcbb857a06d1277
+│   │   ├── 11
+│   │   │   ├── 97af98f40f4626cce6be615d8bbd519c0e0af2
+│   │   ├── b7
+│   │   │   ├── 16e41ff076a14e6e53bf75fd9bac4415334436
+│   │   ├── c4
+│   │   │   ├── 1819ed5756d72c247861d3e4523f1cf0ddc316
+│   │   ├── a6
+│   │   │   ├── 61ce0504cd2ec9396ff4cc8f1869421abb2000
+│   │   │   ├── 6b8b1a0f8f6cff9a957da22f4cdb99261f800c
+│   │   ├── b3
+│   │   │   ├── e1de783d9719e7955d956e9c38eb6908e7261e
+│   │   │   ├── 4450e30f577dbe034d7833d785cec1df7a67c7
+│   │   │   ├── e3d368ac1daa3e2beaa81ba8f50aecb3f24640
+│   │   │   ├── f640087208a20be25cbbbf11a6a5341753a137
+│   │   ├── a7
+│   │   │   ├── 0db0dae37bad12078bec720df24e241734c372
+│   │   │   ├── 201b40865e210757e2980ee2d040fdbe2e741b
+│   │   │   ├── 54e6a476a4a05a9d1ff1256837a6fc0ded569b
+│   │   ├── f9
+│   │   │   ├── 488373b052065caff5b1325689fe7b5b4c42a0
+│   │   │   ├── 3e2d4df2080bd854f6eb82ff86b06dc35d8de4
+│   │   ├── fc
+│   │   │   ├── 3705b32df93d0d7ba596c0a46cda9e33f7b93b
+│   │   │   ├── bdefd09e75f28c61f8c587dd41ac471672d20a
+│   │   ├── ef
+│   │   │   ├── 626456e50cf695a868ec9fa2cb66f92cbd2f49
+│   │   ├── 36
+│   │   │   ├── fe92f3a45d388cb3e99d5d6776d72c1a1a0da3
+│   │   │   ├── 773289d3f88eae72a7ecce417144dcf0eab412
+│   │   ├── 00
+│   │   │   ├── a51aff5e5a83d6313f3bd15fadc601a205b66f
+│   │   ├── 6e
+│   │   │   ├── fb57268370d3ae5cc30d0b03b220bf21095b06
+│   │   ├── 73
+│   │   │   ├── 681d0582ff662630747be8a725bca55fa26892
+│   │   ├── 49
+│   │   │   ├── 02e5c017eb5747924ecb96e2276d73b5d36b38
+│   │   ├── 4f
+│   │   │   ├── 571f4db753700ae0fe8b116d52d15e47d3fcf4
+│   │   ├── ad
+│   │   │   ├── 2519fb01223b8fa26e27da0a99b6477e5b4e66
+│   │   │   ├── 5336e581fc0bec9d0e2a6ecc5026816923e837
+│   │   ├── f2
+│   │   │   ├── debac6fce80659d17c9505656c880795f43962
+│   │   │   ├── 8239ba52858394ae47b28ba1602bbd54baa833
+│   │   ├── af
+│   │   │   ├── 1404d58a5854e8f73a6c83f8b5d4680b33688f
+│   │   │   ├── ccac5153a97ece97d46c1d3361c287e680c8dd
+│   │   ├── 9e
+│   │   │   ├── c8aefb8ded10a3a00342b8f913e34b38a3c12d
+│   │   ├── 39
+│   │   │   ├── a7bf2777a793f9ec8f393a5e7245d07f6ea0b3
+│   │   │   ├── ede40d78a97894a5919a226329d6c5b8b94491
+│   │   ├── 12
+│   │   │   ├── 68aa7cc17b85db407999c960accec514f49244
+│   │   ├── ca
+│   │   │   ├── 49a49c444401ef89ef3bb500c17ee5edcc22b3
+│   │   ├── 29
+│   │   │   ├── 25c7ed65c5278a83794c76cf07a228698b4b9a
+│   │   ├── 01
+│   │   │   ├── a6fddada39663b10ef75f37c88a15d56bd122e
+│   │   ├── 85
+│   │   │   ├── 4cb230fd2b75b674c31caecbc0c73062c9d83a
+│   │   │   ├── 3aff5b91094a4934fe1c4e2726e2415562e52e
+│   │   ├── 6a
+│   │   │   ├── 6a77722afd2b39d91509f4ee54858b52eec48a
+│   │   │   ├── 61dc9bb3f67b5ffe7dadc5c52653e4e69217dc
+│   │   │   ├── 67bd1ef024ba476d46e4153aff5c4f9cb846de
+│   │   │   ├── a9ef06c7254a4e0c1b1701cf1f3c0b59a08c6c
+│   │   ├── 0a
+│   │   │   ├── 811a4c5a714853f147c5a504bb145091862776
+│   │   │   ├── f8337145b1429f256ce7d884e3ade849513bda
+│   │   ├── 9a
+│   │   │   ├── eb119b0058ce569aac363f07e865bc0e55f77a
+│   │   │   ├── 0a7860652fb46bf3c9a5fe332010c982f209dc
+│   │   │   ├── 18126f72e55d7cb0ab3790f7d75a8cf70dd8ab
+│   │   ├── be
+│   │   │   ├── d67e8cf68e97cb7594a35b9117747ced50eb09
+│   │   │   ├── b5f1322da4155d0c5a6b35a5a7b252d4e1f98b
+│   │   ├── a4
+│   │   │   ├── b12dba9d3361e5a3124db862460e3b51d79feb
+│   │   │   ├── 92a4c3db1b2e008e29f3c7f894914e6f6eeadf
+│   │   │   ├── bdf08c6568ac530db6c2b19f20f3e763f9b449
+│   │   ├── c1
+│   │   │   ├── 8b776445c6163ced7239ee89fa2e7c65d8bd53
+│   │   ├── 6c
+│   │   │   ├── 6597631b50beaf94ef3850227e82fe36f9bcb7
+│   │   ├── 21
+│   │   │   ├── 981732fcf0803d7de684f56a6fefb6dcf3e9a0
+│   │   │   ├── c28381ce5776de12587b2e2378fa1ce169b89f
+│   │   │   ├── 4f35ce14bfa516a6dd9a2a2c0568b2959026d7
+│   │   │   ├── 647b3d3c97a1d2532b12d1789494a4456e8f00
+│   │   │   ├── 5d305686fdf217ffc04d49a53c852c14c376a3
+│   │   ├── e0
+│   │   │   ├── a3ba5910734c87b402a8e33e803ab0401311e7
+│   │   ├── 4b
+│   │   │   ├── d02a97b134fa9f3503ddb85fafd950c52032c5
+│   │   │   ├── 306aacd6fd27574147f04a81e4118ed7b429e1
+│   │   │   ├── 14cd18e1568b7841a4656c2444ee2755585018
+│   │   ├── 5c
+│   │   │   ├── b5430da08cef68a7fa66327f383176d917f5fa
+│   │   │   ├── bc9ee9b9356ae2638ff310dfc78ad3cac5ecc1
+│   │   ├── 72
+│   │   │   ├── 3328ddc69f98e2722a37a151084b6b777e9c71
+│   │   │   ├── 7120c325f3c61a188e7f64781e3e342c9d2a7d
+│   │   ├── 19
+│   │   │   ├── 0e218aa82a57d1658cdaa5a129d0c096c76194
+│   │   │   ├── 5cf1424569d962b55a22ae0bffc8c2a7c38e02
+│   │   ├── 53
+│   │   │   ├── 906c8e028779e5fba6e5d390a5db6e089f086e
+│   │   ├── 5f
+│   │   │   ├── f0f2496e3de38e573b3f3ca2733287fde9c1e8
+│   │   │   ├── 4c4fb31b279d8f28be1ae7db428e78027203ea
+│   │   │   ├── bdcbac0e5975140830f7c2a13a20ee8eeaeeca
+│   │   │   ├── c36c1546cf3b9424777fc8da0869b9b95ef709
+│   │   ├── 87
+│   │   │   ├── 0c3d090f151b656ce6f464e00d63539e2d85db
+│   │   ├── ed
+│   │   │   ├── 9ef566e2042a4995eead5101f40fe6f30934a2
+│   │   │   ├── eb2c3aef19db7bf443f2ea2d10a914dede72d6
+│   │   ├── 0e
+│   │   │   ├── 8950dc24ccc8dee5874b0597ff147353cbd980
+│   │   ├── 91
+│   │   │   ├── 80e2dba0e5bba88670b3ca59969944a35201be
+│   │   ├── 2b
+│   │   │   ├── c4e3817e920e112320442c548e6703756c92c1
+│   │   ├── 78
+│   │   │   ├── b92ffb3a784c30ee8140619f90fd10a9be64e1
+│   │   ├── 32
+│   │   │   ├── fb6a1c17f1da16a41640dfeccb68a525f5423b
+│   │   │   ├── b1566679912986b74b84dc411e6bf0973a10ff
+│   │   ├── 8a
+│   │   │   ├── 9d7230e20cfe7ea17797cb405423d8063e2e9b
+│   │   │   ├── a29e602c2e9e2b4d86f45f9b5cfed5e943343a
+│   │   │   ├── e489a3896bd0a89b7b39a69a3403a8496bc0ba
+│   │   ├── b5
+│   │   │   ├── bebf34394b3eb8488605184e5c9f738ab809e4
+│   │   ├── c9
+│   │   │   ├── dc9793a7744e41f2f394b73ff2c980210be724
+│   │   │   ├── 70c598224e598c5a1a63cede8b3575500f71bc
+│   │   ├── 24
+│   │   │   ├── 0494e40d7fc95e1dc9aa088970bab423dbecf9
+│   │   ├── 50
+│   │   │   ├── 6928f8c6b306da1ad14618b3f353fd21985f75
+│   │   │   ├── 93609d512a96947851d39fa2dc05df2af2248e
+│   │   ├── 02
+│   │   │   ├── 8c2cef3bfbbb9ea6aa86788f690d0a65552af5
+│   │   ├── 7b
+│   │   │   ├── 937c3e074f459594c4093874c452314c4409f0
+│   │   │   ├── 861fd4553c6782a407ce6b7db712733fe2d673
+│   │   ├── 82
+│   │   │   ├── 2582d5b6e05070547bf5bd4db832d530d1e982
+│   │   ├── 7c
+│   │   │   ├── 9b6d6fd5e8f5a1bea1e9593ce8a9179b8a197a
+│   │   ├── 58
+│   │   │   ├── ae084ffe9f053720c37b41089159b39a3e1252
+│   │   ├── e8
+│   │   │   ├── 8340f99a93a6a13fb7e869c07e79c353599aa0
+│   │   ├── 8f
+│   │   │   ├── a2b01cf89532cafc1edc07629dc481aa89cce1
+│   │   │   ├── 2aa82971f29e5ec782df9906e8aa31be289990
+│   │   ├── dc
+│   │   │   ├── 5f56c1adb21d2890ac66da1f9e7fb78fb7c8be
+│   │   │   ├── f9888988a1540efbe672aa6c5a0abf00aed2b7
+│   │   ├── 99
+│   │   │   ├── 59b730bb3b2f790d7c02032e483de4655ad310
+│   │   │   ├── 491f840fc899e6c6f1b645195701a615c7a1a5
+│   │   ├── 8b
+│   │   │   ├── 88b6fec3944e9490f60b6d78c556c0e8cbba1c
+│   │   │   ├── af73c1d0594ca4f039d2e57e286f8de145c75a
+│   │   ├── 46
+│   │   │   ├── deaa0a271969a8f3a4029d2c0e4d1e945b7efa
+│   │   ├── b4
+│   │   │   ├── b78ecd3c0f53dbc74d81eb7cb6e56812af450c
+│   │   ├── bd
+│   │   │   ├── d0c5646474feb1dc94b68e2e639d1419956f3d
+│   │   │   ├── 188bb42dc01b605b28059e4f6fcfdd831e370e
+│   │   ├── 95
+│   │   │   ├── a557748aa2a87b2766b4a46734040a6dccb432
+│   │   │   ├── 1a9d0ee1424b371f138ca013a53befaf09cb84
+│   │   ├── a3
+│   │   │   ├── 33f938fc5290cb81158f76f336eb22f440c45c
+│   │   ├── db
+│   │   │   ├── 5d85e6594a5f360b4b73fc8827145c65879662
+│   │   │   ├── 7678163dac8973c50253ae4536d15cf78f02e3
+│   │   │   ├── 04b51e9a2010124c574d3f7c0e184a86301563
+│   │   │   ├── 9c678bb8c6cb6980218d3bdab6cb5da3703f42
+│   │   ├── 4e
+│   │   │   ├── 59645224d3693016376a60ef3a0221698726f3
+│   │   │   ├── 57e6dcb6ead8f15b96d9c47cc4c7bdbd78c28d
+│   │   ├── 45
+│   │   │   ├── ad0cda595173ff2344ec49621cf41f7fe6264a
+│   │   │   ├── 582cb2c1ca8d1edab2d1ebfe5c5f09cc6dcbb5
+│   │   │   ├── cfabe623c9206219b9ee2e6ad0bf0c0e70525a
+│   │   ├── 3c
+│   │   │   ├── 07419af94f890a3121a37587e24a884bbed6ae
+│   │   ├── eb
+│   │   │   ├── 3d7c6847afa082d5c287f92bfd56cd348974d1
+│   │   ├── c0
+│   │   │   ├── d85ac72766afea44bb5069b47bd414cad7dca7
+│   │   │   ├── e17cee0850656e8433131309f97b156c3d357a
+│   │   ├── 3b
+│   │   │   ├── e15a0b4009032f3a30d3d372181cf8aff86f56
+│   │   ├── 18
+│   │   │   ├── dfb22dde671fb3209ca8b0d09fd9bea67b3a9b
+│   │   ├── 34
+│   │   │   ├── 3d8616b4cdb74befe4b4988d81c6193f470569
+│   │   ├── 04
+│   │   │   ├── d343ae54cba6c1c01189a852c5859560bbc99c
+│   │   ├── 33
+│   │   │   ├── fdcfe8c34762fb1d08ec8aea2980e9a694829e
+│   │   │   ├── 6ad930ab5fcb2439aae3e078a2db115c356185
+│   │   │   ├── 300b5c47d4073135d8a7427a591bf78e3f9913
+│   │   │   ├── c73f1c61712ed7d2cf4e4cc5c70350bfe03b12
+│   │   ├── 0c
+│   │   │   ├── 010b9de147e1fd38be5348628f9512030ba154
+│   │   │   ├── 3962fcf0f5f225e181c752042014ab03622990
+│   │   ├── 07
+│   │   │   ├── b8f8d2ce66e91624aa34a5ad8fb0d5c5992352
+│   │   │   ├── 7e5f88d87d8f5c32ce122c14c28eebe62d0f66
+│   │   ├── pack
+│   │   ├── f8
+│   │   │   ├── 31455fb8ecbd307703d3e934a0105ffdf03f02
+│   │   ├── c7
+│   │   │   ├── d189cbbea233ca20861a50cdb26d58fa3a7254
+│   │   ├── 93
+│   │   │   ├── 0a72f7ca2b7a01d975e718918459adba4b0ecb
+│   │   ├── d6
+│   │   │   ├── 6e3bb19f72424022c931a04bc4292b11f992d7
+│   │   ├── 35
+│   │   │   ├── b643b7c26a28585aa684d859d5f12dead11a0d
+│   │   ├── 92
+│   │   │   ├── 3e370a50bf60aa61648550b11c4d3aef527695
+│   │   ├── 7a
+│   │   │   ├── 896b00740644a677296c0f6a3edfb19e63b40d
+│   │   ├── a1
+│   │   │   ├── 56be341dbc87b41377b2d18cf6b8fca3519805
+│   │   ├── d7
+│   │   │   ├── 66d588d9f4bd4e1cd06294ec6dfdd1dd6fe705
+│   │   │   ├── 8a5178ccd5941362ce358e1c53dccca72e0d93
+│   │   │   ├── 6944f5c273751645b89c6bbbf393f79abde031
+│   │   ├── 1c
+│   │   │   ├── 012020ee8dfb9bd8da5e2d98c39a9be695ee11
+│   │   │   ├── b9a7c43540acb407a779d1057b4560cbf4a178
+│   │   │   ├── b0d7d5e78824b86fabdc769b28ce42bf44dcdf
+│   │   ├── da
+│   │   │   ├── 53b40be706207798d5b1e5ca649c1957d4da28
+│   │   │   ├── 7896e985d8e1e6751791ccf69b686e319ae8a5
+│   │   │   ├── 7cd8a8fc37b9e1738483e511f4c3d0a98dc84d
+│   │   ├── 75
+│   │   │   ├── 5ee1d9646a52923fb4db741e12ce98acc1a4b4
+│   │   ├── 5d
+│   │   │   ├── 4eb0268c276db390ef378c49b3aae2d86d56dc
+│   │   ├── f7
+│   │   │   ├── 2f9504fa7e4db7204f31ea4a11c7e1155d0833
+│   │   ├── 8e
+│   │   │   ├── 96e41cc935707e4bf4090e3dc28b189e3c9f32
+│   │   ├── de
+│   │   │   ├── 1eebe8a4aa307a4c9c6c1e932d6a98232a9334
+│   │   ├── 41
+│   │   │   ├── 038115b68fc386ab53ca0c6f00d79364b7df98
+│   │   │   ├── e4c23effa41035bdd94617427a6374d2bc8d78
+│   │   ├── info
+│   │   ├── 9d
+│   │   │   ├── fa0db6eb535c8f2a2e66e35176d9d4e56a88e2
+│   │   │   ├── 8b7fa14f06c0de54ca2d69fe2ca52875b38017
+│   │   ├── b6
+│   │   │   ├── 90dbd5eef24235a62ccb8d163fb751ea98a04d
+│   │   ├── 3a
+│   │   │   ├── 47a26605a748a03a47d65250c98082d8fec240
+│   │   ├── 26
+│   │   │   ├── 1fab6452f200988a443861dbb13503215fe2e7
+│   │   ├── 86
+│   │   │   ├── aa6ed51bc88b306586173f0776c6971b1e0658
+│   │   │   ├── 0e4389e9e483f650702fa4bdeff2dda1378ff1
+│   │   ├── 30
+│   │   │   ├── 88d5c4f9025540518596c1fefab507f389dec7
+│   │   │   ├── 9f4ebffb53d6a1bf7f91c9bd2620b53f92c14f
+│   │   ├── a8
+│   │   │   ├── 3df8f359485e39437ca0717b3ab7dcbe926d95
+│   │   │   ├── 771608308138ee4615bed92ee2bf602aaf517f
+│   │   │   ├── b234145f018899fa6b5f7bd01c24288e27ae43
+│   │   ├── 68
+│   │   │   ├── b2a03983757281a1bd9b40e4df967f60e7b992
+│   │   │   ├── e6d12cbb1e0ce12a25bbb5a877cdc0d92235ed
+│   │   ├── e4
+│   │   │   ├── 1bd0725fad300d0c4cf4665ebbd1b4379bd5c8
+│   │   │   ├── d7d9097f237bc568c9950e3661cf1ad98496e3
+│   │   ├── cf
+│   │   │   ├── 225fab2d5db25ac437efd34782dd371008a04a
+│   │   ├── 54
+│   │   │   ├── 14e500ac35bd0a0dd34322dbc9bfe017b598af
+│   │   │   ├── b9994b445b4e778b546dd32945413963159f95
+│   │   ├── 40
+│   │   │   ├── dc5c7dc6b7c31b097759af5e8070b89af58829
+│   │   │   ├── 5dd86d63af2df71bf30b83e5be6196349ae7a7
+│   │   ├── ee
+│   │   │   ├── 685f1afade6080f9f720ba9273201f9848da93
+│   │   ├── d3
+│   │   │   ├── 3471ba2f6d7e93f9333b192e8c13779c2489c2
+│   │   ├── b2
+│   │   │   ├── 8fa1ebe1eac0ff3e8ef2236233a6a8bdc94fec
+│   │   │   ├── cbb5767edd8141b9e6ddfb408bba5f36e2776d
+│   │   ├── 2f
+│   │   │   ├── 2f9dee4b8bb912effda0ede855e5021ae26e6a
+│   │   │   ├── 4197b952dfd4385a44dae4035664c62fdda331
+│   │   │   ├── 155d257968a725d63d5844e265503b098d7705
+│   │   │   ├── a031266b478392fbceed0aa13a9409dad02071
+│   │   ├── 2e
+│   │   │   ├── 1baddc08696dd126f03a6c9ef01dea15ed07f8
+│   │   │   ├── c157eccae79fc29567281d28c85eacdb743614
+│   │   ├── 42
+│   │   │   ├── 30a200039fec1205fc23f55e85444c3c8b0c19
+│   │   │   ├── f1c1f5daab9978d30d40d7348a91a11de67e6d
+│   │   ├── 71
+│   │   │   ├── 3cef674cf07b4116ed22d78a4a9e7c1f9045c0
+│   │   │   ├── b59546bcf73cc711b4d44af3b014333024b69d
+│   │   ├── fb
+│   │   │   ├── cdad3d22ca53aebd64a916f595cf87a4185ba0
+│   │   │   ├── d7c515832dab7b01092e80db76e5e03fe32d29
+│   │   ├── 9f
+│   │   │   ├── b6a2f9ba0a0195f75db70a13a0a64372bc3c8f
+│   │   ├── 65
+│   │   │   ├── 87d6902c4ed97488fda5804eca03f09cb140ab
+│   │   ├── 47
+│   │   │   ├── 719f89eabe86d2098688a110a717c8fe39962a
+│   │   │   ├── 9e86ed63651ed7d8cbd66f7de15fcaa3da169f
+│   │   ├── 0d
+│   │   │   ├── 3bcf5ee4624eefab24462ce1b2a1dc072d4c46
+│   │   │   ├── 79f4f033b7bf66fcd2436e4a8ef6e61f8a5028
+│   │   │   ├── 26fdd5a729424f9cd2cbe54b4e75046a10ac88
+│   │   ├── 10
+│   │   │   ├── 29cfb05ab9269c824be4a32b5a4c30393e5bb2
+│   │   ├── cc
+│   │   │   ├── 343d377f2f46820dbfd1366d232fc38d924b49
+│   │   │   ├── cf06d49202ab0278c61169717fc7186e64247c
+│   │   ├── 55
+│   │   │   ├── 05693e4eadce294bb83ea8de63844a17f56f3d
+│   │   │   ├── cc12f6e2d02343655502558265c3aa0807ad91
+│   │   │   ├── 5c2fc23bf3870da5cc644b01a18542c31cab3f
+│   │   ├── 5a
+│   │   │   ├── 90506e52266d8e48144239af2268db76558918
+│   │   │   ├── 2020cd20beac9526136701a907de5a1ba9c6a5
+│   │   │   ├── 4782ff2135336f5578fc9014c05ba28c3d277a
+│   │   ├── 37
+│   │   │   ├── d1aa7b09ed9b7fe9a3b4131d0299ba8b7f33db
+│   │   ├── ab
+│   │   │   ├── 215bcf0a91367a40043213a108bd2ce7b8624c
+│   │   │   ├── 9157abbfe71a0d3af996c3fdb0bac945b3bd7b
+│   │   ├── ac
+│   │   │   ├── a247dc3db85c6ba91f7f88826f5a9fcd0b42f5
+│   │   ├── ce
+│   │   │   ├── bb09c17cf5e7d61939f24c9383c87b83c8d432
+│   │   │   ├── 8a6a1e72379c102ceeeb529e53e190749bdbb2
+│   │   │   ├── d611b9eb5c66e7208cbe9620dde2daabf01cfe
+│   ├── description
+│   ├── HEAD
+│   ├── COMMIT_EDITMSG
+│   ├── info
+│   │   ├── exclude
+│   ├── ORIG_HEAD
+├── src
+│   ├── main
+│   │   ├── kotlin
+│   │   │   ├── godot
+│   │   │   │   ├── game
+│   │   │   │   │   ├── Basket.kt
+│   │   │   │   │   ├── AnimationStyle.kt
+│   │   │   │   │   ├── Main.kt
+│   │   │   │   │   ├── apples
+│   │   │   │   │   │   ├── BadApple.kt
+│   │   │   │   │   │   ├── GreenApple.kt
+│   │   │   │   │   │   ├── BaseApple.kt
+│   │   │   │   │   │   ├── RedApple.kt
+│   │   ├── resources
+│   │   │   ├── META-INF
+│   │   │   │   ├── services
+│   │   │   │   │   ├── godot.registration.Entry
+│   │   │   ├── assets
+│   │   │   │   ├── green_apple.png
+│   │   │   │   ├── ic_claud.png.import
+│   │   │   │   ├── game_over_old.png
+│   │   │   │   ├── apple.png.import
+│   │   │   │   ├── background.png
+│   │   │   │   ├── wood_pannel.png.import
+│   │   │   │   ├── green_apple.png.import
+│   │   │   │   ├── fonts
+│   │   │   │   │   ├── TitanOne-Regular.ttf
+│   │   │   │   │   ├── Nunito-Black.ttf
+│   │   │   │   │   ├── TitanOne-Regular.ttf.import
+│   │   │   │   │   ├── Nunito-Black.ttf.import
+│   │   │   │   ├── background.png.import
+│   │   │   │   ├── basket
+│   │   │   │   │   ├── basket_5.png
+│   │   │   │   │   ├── basket_1.png
+│   │   │   │   │   ├── basket_5.png.import
+│   │   │   │   │   ├── basket_3.png
+│   │   │   │   │   ├── basket_3.png.import
+│   │   │   │   │   ├── basket_7.png
+│   │   │   │   │   ├── basket_0.png
+│   │   │   │   │   ├── basket_8.png
+│   │   │   │   │   ├── basket_2.png
+│   │   │   │   │   ├── basket_7.png.import
+│   │   │   │   │   ├── basket_2.png.import
+│   │   │   │   │   ├── basket_1.png.import
+│   │   │   │   │   ├── basket_0.png.import
+│   │   │   │   │   ├── basket_6.png.import
+│   │   │   │   │   ├── basket_8.png.import
+│   │   │   │   │   ├── basket_4.png
+│   │   │   │   │   ├── basket_6.png
+│   │   │   │   │   ├── basket_4.png.import
+│   │   │   │   ├── apples_row.png
+│   │   │   │   ├── bad_apple.png
+│   │   │   │   ├── game_over_bg_dim.png~
+│   │   │   │   ├── ic_claud.png
+│   │   │   │   ├── game_over_bg_dim.png.import
+│   │   │   │   ├── wood_pannel.png
+│   │   │   │   ├── restart_btn.png
+│   │   │   │   ├── Picsart_26-01-06_04-57-53-057.png.import
+│   │   │   │   ├── bad_apple.png.import
+│   │   │   │   ├── game_over.png.import
+│   │   │   │   ├── game_over_old.png.import
+│   │   │   │   ├── new_high_score.png
+│   │   │   │   ├── star.png
+│   │   │   │   ├── munu_btn.png
+│   │   │   │   ├── score_pannel.png.import
+│   │   │   │   ├── new_high_score.png.import
+│   │   │   │   ├── gmovr_apple.png
+│   │   │   │   ├── star.png.import
+│   │   │   │   ├── gmovr_apple.png.import
+│   │   │   │   ├── restart_btn.png.import
+│   │   │   │   ├── game_over.png
+│   │   │   │   ├── munu_btn.png.import
+│   │   │   │   ├── game_over_bg_dim.png
+│   │   │   │   ├── score_pannel.png
+│   │   │   │   ├── apples_row.png.import
+│   │   │   │   ├── apple.png
+├── .editorconfig
+├── README.md
+├── .godot
+│   ├── uid_cache.bin
+│   ├── imported
+│   │   ├── basket.png-9fc26b07e2231ae038a954cbfe493a42.md5
+│   │   ├── basket.png-9fc26b07e2231ae038a954cbfe493a42.ctex
+│   │   ├── basket_3.png-9333c8b621311df1646ca60199ee285d.md5
+│   │   ├── background.png-9b699e2444e2a9befef30761f65d6ab9.ctex
+│   │   ├── bad_apple.png-386cc80cf49fd78983c25fae221260f6.ctex
+│   │   ├── basket_2.png-31bb5a5299ec30c7d8003fc3ad0bac5d.md5
+│   │   ├── basket_8.png-bde26fcf379436f997b3cf31ca889f5a.ctex
+│   │   ├── basket_3.png-1a5627b1a9a5aa59e41b03b17755d5bc.md5
+│   │   ├── basket_1.png-b82a625dea3fc2c0afe47634b035d6ce.md5
+│   │   ├── basket_0.png-d5d64c7671a9e2b39e0a3b44a2ecbbb5.md5
+│   │   ├── apple.png-5af038e60111d14ffdb83abf912ce55a.md5
+│   │   ├── basket_3.png-1a5627b1a9a5aa59e41b03b17755d5bc.ctex
+│   │   ├── green_apple.png-3e6371f6b0b4bb460bd93ed3eff81433.md5
+│   │   ├── new_high_score.png-36e5dea10bf5618472e1e38f4adf0eb2.md5
+│   │   ├── green_apple.png-667e8f2ede31a3b18fb1b8930ac6dd1d.ctex
+│   │   ├── restart_btn.png-9b347de1a4e5546a48b1d4076614257e.ctex
+│   │   ├── apple.png-40cdc5657afe85db3aa171f87a6cc388.md5
+│   │   ├── ic_claud.png-22f78f3098fcea2246ed79feb499cbbf.md5
+│   │   ├── TitanOne-Regular.ttf-5250c43139b01f770938f3c2a99ae0a0.fontdata
+│   │   ├── basket_7.png-888beb3b82302147bc9ddcc446b2e113.md5
+│   │   ├── basket_2.png-73229434d8c03f5421fc2cc282f3e63a.ctex
+│   │   ├── basket_4.png-b47685ac1bb3e165784ce116283d5973.md5
+│   │   ├── basket_1.png-a6b7a31cd3bcbbb9cdd5d000c446581e.ctex
+│   │   ├── background.png-6a7789af39d55e23dab4d24327ecad75.ctex
+│   │   ├── basket.png-6ee12a6a20fc3175fc25d5fd985d2271.ctex
+│   │   ├── basket_7.png-22c19571f10bd2c8210d86e31b78371d.ctex
+│   │   ├── basket_3.png-9333c8b621311df1646ca60199ee285d.ctex
+│   │   ├── game_over_old.png-b1cc86956c0a2100c54e6680af41ee7f.ctex
+│   │   ├── icon.svg-218a8f2b3041327d8a5756f3a245f83b.md5
+│   │   ├── new_high_score.png-36e5dea10bf5618472e1e38f4adf0eb2.ctex
+│   │   ├── apple.png-c918a35b23f27e2eca59041fddb27503.md5
+│   │   ├── basket_0.png-4850e9eea0694bf5f8eb5735c82605d5.ctex
+│   │   ├── basket_6.png-96fa89e93d4a6abb5a791d965e797f45.md5
+│   │   ├── TitanOne-Regular.ttf-5250c43139b01f770938f3c2a99ae0a0.md5
+│   │   ├── apple.png-d0c5a0e024efc439723035186c67a74a.md5
+│   │   ├── basket_1.png-b82a625dea3fc2c0afe47634b035d6ce.ctex
+│   │   ├── basket_8.png-bde26fcf379436f997b3cf31ca889f5a.md5
+│   │   ├── apples_row.png-a2f6a16ca245361d3a6702d49fdb6744.md5
+│   │   ├── bad_apple.png-af1019ce2332ecd488ce24ded6c7b879.md5
+│   │   ├── basket_6.png-96fa89e93d4a6abb5a791d965e797f45.ctex
+│   │   ├── apple.png-5af038e60111d14ffdb83abf912ce55a.ctex
+│   │   ├── basket_5.png-4544ab973ef1c425e7e209e5a2cef7a1.ctex
+│   │   ├── star.png-db40ec76fb3fd808480ce0481255e27b.md5
+│   │   ├── basket_4.png-4efbdcf8420d6be1c5e745213fb82624.ctex
+│   │   ├── basket_8.png-006f418abc7b1e110766dfaf281532ba.md5
+│   │   ├── background.png-1fdba8b6a966ce2c2ffc607f7c096e95.md5
+│   │   ├── score_pannel.png-f3e431d02ce3ba63c1db060d71b5c130.ctex
+│   │   ├── background.png-92aadf90643c13f2194f2a46088e76bd.md5
+│   │   ├── gm_over.png-4bc77e99b39fea38677bcf791b7b8337.ctex
+│   │   ├── basket_1.png-a6b7a31cd3bcbbb9cdd5d000c446581e.md5
+│   │   ├── basket_6.png-7829c48f8fe6efb5670996bbe422dbc0.md5
+│   │   ├── bad_apple.png-af1019ce2332ecd488ce24ded6c7b879.ctex
+│   │   ├── star.png-eafdac3687cf8ce5d7868e25e79639ca.ctex
+│   │   ├── basket_4.png-4efbdcf8420d6be1c5e745213fb82624.md5
+│   │   ├── bad_apple.png-bca261cc6c1faed5f1cb4d79df82f3dc.md5
+│   │   ├── basket_8.png-b761cbe4183e8d095a21b9f7c9866cbb.md5
+│   │   ├── basket_5.png-367459890e7faf28f17700d9e588efeb.ctex
+│   │   ├── background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex
+│   │   ├── green_apple.png-c0d044706059da05e9cfac26076f80f3.md5
+│   │   ├── basket_0.png-b3650b9c5565274e0500d8ce3b93800b.md5
+│   │   ├── wood_pannel.png-949ef4ba9612d8591ce3e7b71417cff5.md5
+│   │   ├── basket_4.png-8c17659eb70ee57c2bcf1964523134c8.ctex
+│   │   ├── star.png-cd949641a048df3307575fd203a0a8cb.ctex
+│   │   ├── Picsart_26-01-06_04-57-53-057.png-cbaecb6dab7cadf7b259da901cacde75.ctex
+│   │   ├── star.png-cd949641a048df3307575fd203a0a8cb.md5
+│   │   ├── basket_5.png-4544ab973ef1c425e7e209e5a2cef7a1.md5
+│   │   ├── green_apple.png-3e6371f6b0b4bb460bd93ed3eff81433.ctex
+│   │   ├── icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex
+│   │   ├── basket_2.png-6fffc50ecf5bdef725bac075f2dc1ee3.md5
+│   │   ├── gmovr_apple.png-0ca13c1ed5d8087e916e82fc3ca1a87f.ctex
+│   │   ├── basket_1.png-fb80357672ad801a8e6a476ae7af5309.md5
+│   │   ├── ic_claud.png-22f78f3098fcea2246ed79feb499cbbf.ctex
+│   │   ├── green_apple.png-4c8773d4750a5589461e88fd94862d67.ctex
+│   │   ├── bad_apple.png-386cc80cf49fd78983c25fae221260f6.md5
+│   │   ├── basket_5.png-6ea9059c8e9e175c925f07d1cd3fff4b.ctex
+│   │   ├── star.png-db40ec76fb3fd808480ce0481255e27b.ctex
+│   │   ├── green_apple.png-2661240e3ecaef0aadd0b12a75550c18.md5
+│   │   ├── star.png-bd98fcb1161db685f07e6e02077b84bf.ctex
+│   │   ├── bad_apple.png-bca261cc6c1faed5f1cb4d79df82f3dc.ctex
+│   │   ├── basket_7.png-b6609474d0bdd0f6f8adaf4e9a9dce52.md5
+│   │   ├── background.png-92aadf90643c13f2194f2a46088e76bd.ctex
+│   │   ├── game_over.png-778619b0a0039b0fb03648775e7f9ed7.ctex
+│   │   ├── basket_2.png-31bb5a5299ec30c7d8003fc3ad0bac5d.ctex
+│   │   ├── bad_apple.png-ec22f8b2edf0765a91d2636a2c29cc4d.md5
+│   │   ├── Picsart_26-01-06_04-57-53-057.png-cbaecb6dab7cadf7b259da901cacde75.md5
+│   │   ├── game_over_bg_dim.png-cec19c52eafb1381ffa234d8f9f0a0d4.ctex
+│   │   ├── basket.png-8af1e9e933200808f8a639df30d1b3ba.md5
+│   │   ├── background.png-6a7789af39d55e23dab4d24327ecad75.md5
+│   │   ├── restart_btn.png-9b347de1a4e5546a48b1d4076614257e.md5
+│   │   ├── Nunito-Black.ttf-e21a49e581cc70561f68909151cb8935.fontdata
+│   │   ├── basket_5.png-367459890e7faf28f17700d9e588efeb.md5
+│   │   ├── game_over_bg_dim.png-cec19c52eafb1381ffa234d8f9f0a0d4.md5
+│   │   ├── bad_apple.png-ec22f8b2edf0765a91d2636a2c29cc4d.ctex
+│   │   ├── green_apple.png-4c8773d4750a5589461e88fd94862d67.md5
+│   │   ├── basket_2.png-73229434d8c03f5421fc2cc282f3e63a.md5
+│   │   ├── basket_8.png-b761cbe4183e8d095a21b9f7c9866cbb.ctex
+│   │   ├── basket_0.png-d5d64c7671a9e2b39e0a3b44a2ecbbb5.ctex
+│   │   ├── green_apple.png-667e8f2ede31a3b18fb1b8930ac6dd1d.md5
+│   │   ├── green_apple.png-2661240e3ecaef0aadd0b12a75550c18.ctex
+│   │   ├── basket_3.png-a1bcbee12fab19df573d9955613b6268.ctex
+│   │   ├── wood_pannel.png-949ef4ba9612d8591ce3e7b71417cff5.ctex
+│   │   ├── game_over.png-778619b0a0039b0fb03648775e7f9ed7.md5
+│   │   ├── munu_btn.png-4653a6825624507ebff2781086eebb78.ctex
+│   │   ├── basket_0.png-4850e9eea0694bf5f8eb5735c82605d5.md5
+│   │   ├── basket_7.png-22c19571f10bd2c8210d86e31b78371d.md5
+│   │   ├── apple.png-d0c5a0e024efc439723035186c67a74a.ctex
+│   │   ├── score_pannel.png-f3e431d02ce3ba63c1db060d71b5c130.md5
+│   │   ├── basket_7.png-b6609474d0bdd0f6f8adaf4e9a9dce52.ctex
+│   │   ├── basket_0.png-5d63e597a237433e9ff2753861ee3fcc.ctex
+│   │   ├── gmovr_apple.png-0ca13c1ed5d8087e916e82fc3ca1a87f.md5
+│   │   ├── basket_6.png-0d524a0a849c20597fea47b0aa714eef.md5
+│   │   ├── basket_4.png-8c17659eb70ee57c2bcf1964523134c8.md5
+│   │   ├── green_apple.png-c0d044706059da05e9cfac26076f80f3.ctex
+│   │   ├── basket.png-6ee12a6a20fc3175fc25d5fd985d2271.md5
+│   │   ├── Nunito-Black.ttf-e21a49e581cc70561f68909151cb8935.md5
+│   │   ├── basket_3.png-a1bcbee12fab19df573d9955613b6268.md5
+│   │   ├── basket_2.png-6fffc50ecf5bdef725bac075f2dc1ee3.ctex
+│   │   ├── star.png-bd98fcb1161db685f07e6e02077b84bf.md5
+│   │   ├── apple.png-c918a35b23f27e2eca59041fddb27503.ctex
+│   │   ├── basket_0.png-b3650b9c5565274e0500d8ce3b93800b.ctex
+│   │   ├── star.png-eafdac3687cf8ce5d7868e25e79639ca.md5
+│   │   ├── basket_8.png-006f418abc7b1e110766dfaf281532ba.ctex
+│   │   ├── basket_4.png-b47685ac1bb3e165784ce116283d5973.ctex
+│   │   ├── basket_1.png-fb80357672ad801a8e6a476ae7af5309.ctex
+│   │   ├── apple.png-40cdc5657afe85db3aa171f87a6cc388.ctex
+│   │   ├── basket_6.png-7829c48f8fe6efb5670996bbe422dbc0.ctex
+│   │   ├── basket_5.png-6ea9059c8e9e175c925f07d1cd3fff4b.md5
+│   │   ├── basket_0.png-5d63e597a237433e9ff2753861ee3fcc.md5
+│   │   ├── game_over_old.png-b1cc86956c0a2100c54e6680af41ee7f.md5
+│   │   ├── basket_7.png-888beb3b82302147bc9ddcc446b2e113.ctex
+│   │   ├── basket.png-8af1e9e933200808f8a639df30d1b3ba.ctex
+│   │   ├── background.png-9b699e2444e2a9befef30761f65d6ab9.md5
+│   │   ├── munu_btn.png-4653a6825624507ebff2781086eebb78.md5
+│   │   ├── gm_over.png-4bc77e99b39fea38677bcf791b7b8337.md5
+│   │   ├── basket_6.png-0d524a0a849c20597fea47b0aa714eef.ctex
+│   │   ├── apples_row.png-a2f6a16ca245361d3a6702d49fdb6744.ctex
+│   ├── shader_cache
+│   │   ├── ParticlesCopyShaderGLES3
+│   │   │   ├── 1e55ecf5415bd7559044cbd380571437cbee239198d762540e80f98520f349c1
+│   │   ├── CanvasShaderGLES3
+│   │   │   ├── 75d2aa420b5e33df11df2d82db196fd07779e0ded1480ca769b3bd818045f0ec
+│   │   │   │   ├── 518538bf05eaf1c5a8f573ce35477363d09c45ba.cache
+│   │   │   │   ├── 1975435a9f21605e984ea4e75fa9cba591aa0cb4.cache
+│   │   │   │   ├── 875eee8acf808f3b4f5c360b4e5b25932f967a63.cache
+│   │   │   │   ├── 6bb7c9a2fd1c4a8fa77cb96555b9b4a720209981.cache
+│   │   ├── CubemapFilterShaderGLES3
+│   │   │   ├── 404b4d1b71905e5892e780cc635f33ab3805046efda83de3e953406421eb3416
+│   │   │   │   ├── 6bb7c9a2fd1c4a8fa77cb96555b9b4a720209981.cache
+│   │   ├── FeedShaderGLES3
+│   │   │   ├── 806ec8417124bddcd249dd0d0aa6268bfce22f2d0a03453e89c2b8d13516168a
+│   │   │   │   ├── 6bb7c9a2fd1c4a8fa77cb96555b9b4a720209981.cache
+│   │   ├── SkeletonShaderGLES3
+│   │   │   ├── ada25528073bec13177f1fa94dab935ae9daaf734fed3eadaf3877809d5d4029
+│   │   ├── SceneShaderGLES3
+│   │   │   ├── 34be4f0fc91a404e694456e751e904a48ea693a6e24ef7be07c8979b408040f0
+│   │   │   │   ├── e4803059b59d245bee29da2f87c302ecb830c09e.cache
+│   │   │   │   ├── 6bb7c9a2fd1c4a8fa77cb96555b9b4a720209981.cache
+│   │   │   │   ├── 0c9689a7dae2d011729a1e2cf29c71ecb4a7e8bb.cache
+│   │   ├── SkyShaderGLES3
+│   │   │   ├── d59a6926cf1dec4eca01104d28801d93a5cffa541bcfff1be2e9b25bfe3a7a76
+│   │   │   │   ├── 851ad615ab5772632d2dd49f5447ff21ea10b2fe.cache
+│   │   ├── GlowShaderGLES3
+│   │   │   ├── 560809422f0fafb8373be9bfb9dff7861b05f4e200c18fa3ce0bb24724357420
+│   │   ├── CanvasSdfShaderGLES3
+│   │   │   ├── 89b7a5c42102eedb173fbbb2c924baabef08492fd8c9dbd86529d537a3c107a6
+│   │   ├── CopyShaderGLES3
+│   │   │   ├── 7385df44d1e8d6f4547719b01750fdac1a1fc4d9bb01ed3b92dcc866a624681d
+│   │   │   │   ├── 6bb7c9a2fd1c4a8fa77cb96555b9b4a720209981.cache
+│   │   ├── ParticlesShaderGLES3
+│   │   │   ├── f3dd14759b6967c42af078aaa3fce0dd52430bbdd55da29d35f8ef0f6d42b4ba
+│   │   ├── CanvasOcclusionShaderGLES3
+│   │   │   ├── 7216441a4316170e337aacc7127f570e989d5fec829cc899959f742aa756434c
+│   │   ├── PostShaderGLES3
+│   │   │   ├── 0657a56c090dcfb55a2e7ba5fba98798848610e43ce7fb537f23ef1a800ccf1a
+│   │   │   │   ├── 6bb7c9a2fd1c4a8fa77cb96555b9b4a720209981.cache
+│   ├── .gdignore
+│   ├── global_script_class_cache.cfg
+│   ├── scene_groups_cache.cfg
+│   ├── editor
+│   │   ├── BaseApple.kt-folding-924fd576cabc8f670bd788dc4a2f3209.cfg
+│   │   ├── main.tscn-editstate-3070c538c03ee49b7677ff960a3f5195.cfg
+│   │   ├── green_apple.tscn-folding-0bc694c3508319ee8f5b9c9fae507fc5.cfg
+│   │   ├── apple.tscn-folding-7cadf0ec706f5a89c767029c0fc20706.cfg
+│   │   ├── project_metadata.cfg
+│   │   ├── favorites.Resource
+│   │   ├── editor_layout.cfg
+│   │   ├── main.tscn-editstate-3ad5c15c4f3250da0cc7c1af1770d85f.cfg
+│   │   ├── favorites.Node
+│   │   ├── BadApple.kt-folding-3cf43d7d7400716ac50a268add24a596.cfg
+│   │   ├── recent_dirs
+│   │   ├── basket.kt-folding-e502a7e76a04918fd15a55cfe2a9cce0.cfg
+│   │   ├── main.tscn-folding-3070c538c03ee49b7677ff960a3f5195.cfg
+│   │   ├── filesystem_cache10
+│   │   ├── RedApple.kt-folding-1a8f618b05e3f8e53c58cfcbc3ed7295.cfg
+│   │   ├── GreenApple.kt-folding-84924668bad829f462c8711762e92822.cfg
+│   │   ├── apple.tscn-editstate-7cadf0ec706f5a89c767029c0fc20706.cfg
+│   │   ├── bad_apple.tscn-editstate-c3e7d1f2c637c91a0f4e55abf40290e3.cfg
+│   │   ├── create_recent.Node
+│   │   ├── new_script.gd-folding-6e39f6db0ea2911558afddf879107081.cfg
+│   │   ├── bad_apple.tscn-folding-c3e7d1f2c637c91a0f4e55abf40290e3.cfg
+│   │   ├── Basket.kt-folding-65ac1989e61077a0554746bd40434779.cfg
+│   │   ├── favorites
+│   │   ├── Nunito-Black.ttf-e21a49e581cc70561f68909151cb8935.fontdata-folding-5e5f76d0e76de4357bb016498bfdfc0b.cfg
+│   │   ├── quick_open_dialog_cache.cfg
+│   │   ├── Basket.kt-folding-86a9a634d0b229c29834959167c47540.cfg
+│   │   ├── favorite_properties
+│   │   ├── Basket.gdj-folding-4067b1182e854f5251644b16666c265c.cfg
+│   │   ├── BadApple.kt-folding-17dbe03bdcb7ed78c2d5e64e5997d775.cfg
+│   │   ├── green_apple.tscn-folding-5613dc645b328231020080eaf1de6f3d.cfg
+│   │   ├── game_over_screen.tscn-editstate-e22825d93e7ddd42eb50ee3deead56b6.cfg
+│   │   ├── red_apple.tscn-editstate-be3da62ea56684e8b93e992ad56422b0.cfg
+│   │   ├── red_apple.tscn-folding-6445d1c2c4865caaa79501f0838363fc.cfg
+│   │   ├── filesystem_update4
+│   │   ├── game_over_screen.tscn-folding-e22825d93e7ddd42eb50ee3deead56b6.cfg
+│   │   ├── green_apple.tscn-editstate-0bc694c3508319ee8f5b9c9fae507fc5.cfg
+│   │   ├── Apple.kt-folding-9a3dbcec679680e52f42716f4725fcbb.cfg
+│   │   ├── bad_apple.tscn-folding-370099c1f60eb56d6f37f34297934fc8.cfg
+│   │   ├── basket.tscn-editstate-0dcbe6cc97e5d4aaa92c3cefcb93a6e8.cfg
+│   │   ├── script_editor_cache.cfg
+│   │   ├── bad_apple.tscn-editstate-370099c1f60eb56d6f37f34297934fc8.cfg
+│   │   ├── BaseApple.kt-folding-278215d2b6cf6b87e356215335b90d10.cfg
+│   │   ├── green_apple.tscn-editstate-5613dc645b328231020080eaf1de6f3d.cfg
+│   │   ├── basket.tscn-folding-0dcbe6cc97e5d4aaa92c3cefcb93a6e8.cfg
+│   │   ├── basket.tscn-editstate-e08f70cd0d5a937f6a6517e600410f05.cfg
+│   │   ├── red_apple.tscn-editstate-6445d1c2c4865caaa79501f0838363fc.cfg
+│   │   ├── Main.kt-folding-02958706def58b580f81995455aea2f5.cfg
+│   │   ├── basket.tscn-folding-e08f70cd0d5a937f6a6517e600410f05.cfg
+│   │   ├── GreenApple.kt-folding-18857348144367659a0a93b59c390bb5.cfg
+│   │   ├── main.tscn-folding-3ad5c15c4f3250da0cc7c1af1770d85f.cfg
+│   │   ├── basket.kt-folding-2826537e71833ff0e9993a60b4f6860d.cfg
+│   │   ├── TitanOne-Regular.ttf-5250c43139b01f770938f3c2a99ae0a0.fontdata-folding-63da8dec9efc8165a64f99dfeb8b0d65.cfg
+│   │   ├── red_apple.tscn-folding-be3da62ea56684e8b93e992ad56422b0.cfg
+│   │   ├── basket.kt-folding-52f3282d88987c55184ad47d15a5e7b6.cfg
