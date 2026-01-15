@@ -3,209 +3,214 @@ package godot.game
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.Node2D
-import godot.api.PackedScene
-import godot.api.ResourceLoader
-import godot.api.Label
-import godot.api.RigidBody2D
-import godot.core.Vector2
+import godot.api.*
 import godot.core.asNodePath
-import godot.game.apples.BaseApple
 import godot.global.GD
-import kotlin.random.Random
 
 @RegisterClass
 class Main : Node2D() {
 
-	private var redAppleScene: PackedScene? = null
-	private var greenAppleScene: PackedScene? = null
-	private var badAppleScene: PackedScene? = null
-
-	private var spawnTimer = 0.0
-
-	@RegisterProperty
-	var initialSpawnInterval = 1.5
-
-	@RegisterProperty
-	var minSpawnInterval = 0.5
-
-	@RegisterProperty
-	var difficultyIncreaseRate = 0.98
-
-	private var currentSpawnInterval = 1.5
+	private var timerLabel: Label? = null
+	private var scoreLabel: Label? = null
+	private var basket: Basket? = null
+	private var gameOverScene: PackedScene? = null
+	private var gameplayInstance: TimingModeGameplay? = null
+	private var gameOverScreen: GameOverScreen? = null
+	private var gameOverLayer: CanvasLayer? = null
+	
+	// Flag for deferred restart
+	private var restartPending = false
 
 	@RegisterProperty
 	var gameDuration = 60.0
 
-	private var gameTimer = 0.0
-	private var isGameOver = false
-
-	private var timerLabel: Label? = null
-
-	// Wave system
-	private var applesSpawned = 0
-	private var currentWave = 1
-
-	@RegisterProperty
-	var applesPerWave = 10
-
 	@RegisterFunction
 	override fun _ready() {
-		GD.print("🎮 Main scene ready!")
-
-		// Init Apples
-		redAppleScene = ResourceLoader.load("res://scenes/red_apple.tscn") as? PackedScene
-		greenAppleScene = ResourceLoader.load("res://scenes/green_apple.tscn") as? PackedScene
-		badAppleScene = ResourceLoader.load("res://scenes/bad_apple.tscn") as? PackedScene
-
-		// Debug
-		GD.print("Red: ${redAppleScene != null}")
-		GD.print("Green: ${greenAppleScene != null}")
-		GD.print("Bad: ${badAppleScene != null}")
-
-		timerLabel = getNodeOrNull("CanvasLayer2/TimerLabel".asNodePath()) as? Label
-		gameTimer = gameDuration
-		currentSpawnInterval = initialSpawnInterval
+		GD.print("Main: Starting game...")
+		bindMainUI()
+		bindBasket()
+		loadResources()
+		startGameplayLifeCycle()
 	}
 
 	@RegisterFunction
 	override fun _process(delta: Double) {
-		if (isGameOver) return
-
-		gameTimer -= delta
-		timerLabel?.text = "Time: ${gameTimer.toInt()}"
-
-		if (gameTimer <= 0.0) {
-			gameOver()
-			return
+		// Handle deferred restart
+		if (restartPending && gameplayInstance == null) {
+			restartPending = false
+			GD.print("Main: Executing deferred restart")
+			restartGamePlayLifeCycle()
 		}
+	}
 
-		spawnTimer += delta
-		if (spawnTimer >= currentSpawnInterval) {
-			spawnRandomApple()
-			spawnTimer = 0.0
+	private fun bindMainUI() {
+		timerLabel = getNodeOrNull("CanvasLayer2/TimerLabel".asNodePath()) as? Label
+		scoreLabel = getNodeOrNull("CanvasLayer/ScoreLabel".asNodePath()) as? Label
 
+		GD.print("Main: Timer label bound? ${timerLabel != null}")
+		GD.print("Main: Score label bound? ${scoreLabel != null}")
 
-			if (currentSpawnInterval > minSpawnInterval) {
-				currentSpawnInterval *= difficultyIncreaseRate
-			}
+		// Set initial values
+		timerLabel?.text = "Time: ${gameDuration.toInt()}"
+		scoreLabel?.text = "Score: 0"
+	}
+
+	private fun bindBasket() {
+		basket = getNodeOrNull("Basket".asNodePath()) as? Basket
+		if (basket != null) {
+			GD.print("Main: Basket bound successfully")
+		} else {
+			GD.printErr("Main: Basket not found in scene tree")
+		}
+	}
+
+	private fun loadResources() {
+		gameOverScene = ResourceLoader.load("res://scenes/game_over_screen.tscn") as? PackedScene
+		if (gameOverScene == null) {
+			GD.printErr("Main: Failed to load game_over_screen.tscn")
+			GD.printErr("Main: Check the file exists at: res://scenes/game_over_screen.tscn")
+		} else {
+			GD.print("Main: Game over scene loaded successfully")
+		}
+	}
+
+	fun startGameplayLifeCycle() {
+		gameplayInstance?.queueFree()
+		gameplayInstance = null
+
+		GD.print("Main: Creating new gameplay instance")
+		gameplayInstance = TimingModeGameplay()
+		gameplayInstance?.let {
+			it.gameDuration = gameDuration
+
+			// Connect signals from gameplay to UI handlers
+			it.scoreUpdated.connect(this, Main::onScoreUpdated)
+			it.timerUpdated.connect(this, Main::onTimerUpdated)
+			it.gameOverSignal.connect(this, Main::onGameOver)
+
+			addChild(it)
+			GD.print("Main: Gameplay instance added to scene")
+			
+			// Connect basket signals after the node is in the scene tree
+			it.connectBasketSignals()
+			GD.print("Main: Basket signals connection initiated")
 		}
 	}
 
 	@RegisterFunction
-	fun spawnRandomApple() {
-		applesSpawned++
-		if (applesSpawned > applesPerWave) {
-			applesSpawned = 0
-			currentWave++
-			GD.print("Wave $currentWave started!")
-		}
-
-		val (scene, type, points) = selectAppleByWave()
-
-		if (scene == null) {
-			GD.print("ERROR: $type apple scene is null!")
-			return
-		}
-
-		val instance = scene.instantiate()
-
-		if (instance == null) {
-			GD.print("ERROR: instantiate() returned null for $type!")
-			return
-		}
-
-		val apple = instance as? BaseApple
-
-		if (apple == null) {
-			GD.print("ERROR: Cannot cast to BaseApple!")
-			instance.queueFree()
-			return
-		}
-
-		// Random Position
-		val screenWidth = getViewportRect().size.x
-		val randomX = getSmartRandomX(screenWidth)
-		apple.position = Vector2(randomX, -100.0)
-
-		if (apple is RigidBody2D) {
-			applyRandomPhysics(apple, points)
-		}
-
-		addChild(apple)
-		GD.print("$type apple spawned at x=$randomX")
-	}
-
-
-	private fun selectAppleByWave(): Triple<PackedScene?, String, Int> {
-		val random = Random.nextDouble(0.0, 100.0)
-
-		return when {
-			currentWave <= 2 -> {
-				when {
-					random < 8Label0.0 -> Triple(redAppleScene, "Red", 1)
-					random < 95.0 -> Triple(greenAppleScene, "Green", 2)
-					else -> Triple(badAppleScene, "Bad", -1)
-				}
-			}
-			currentWave <= 4 -> {
-				when {
-					random < 60.0 -> Triple(redAppleScene, "Red", 1)
-					random < 85.0 -> Triple(greenAppleScene, "Green", 2)
-					else -> Triple(badAppleScene, "Bad", -1)
-				}
-			}
-			else -> {
-				when {
-					random < 50.0 -> Triple(redAppleScene, "Red", 1)
-					random < 75.0 -> Triple(greenAppleScene, "Green", 2)
-					else -> Triple(badAppleScene, "Bad", -1)
-				}
-			}
-		}
-	}
-
-	private var lastSpawnX = 0.0
-
-	private fun getSmartRandomX(screenWidth: Double): Double {
-		val margin = 100.0
-		val minDistance = 150.0
-
-		var attempts = 0
-		var randomX: Double
-
-		do {
-			randomX = Random.nextDouble(margin, screenWidth - margin)
-			attempts++
-		} while (kotlin.math.abs(randomX - lastSpawnX) < minDistance && attempts < 5)
-
-		lastSpawnX = randomX
-		return randomX
-	}
-
-
-	private fun applyRandomPhysics(apple: RigidBody2D, points: Int) {
-
-		val gravityMultiplier = when (points) {
-			2 -> Random.nextDouble(0.8, 1.0)
-			-1 -> Random.nextDouble(1.1, 1.3)
-			else -> Random.nextDouble(0.9, 1.1)
-		}
-
-		apple.gravityScale = gravityMultiplier.toFloat()
-
-		val lateralImpulse = Random.nextDouble(-50.0, 50.0)
-		apple.applyImpulse(Vector2(lateralImpulse, 0.0))
-
-		val angularImpulse = Random.nextDouble(-0.5, 0.5).toFloat()
-		apple.applyTorqueImpulse(angularImpulse)
+	fun onScoreUpdated(scoreText: String) {
+		scoreLabel?.text = scoreText
+		GD.print("Main: Score updated to: $scoreText")
 	}
 
 	@RegisterFunction
-	fun gameOver() {
-		isGameOver = true
-		GD.print("🎮 GAME OVER!")
-		GD.print("Final Wave: $currentWave")
-		GD.print("Final Spawn Interval: $currentSpawnInterval")
+	fun onTimerUpdated(timeText: String) {
+		timerLabel?.text = timeText
+	}
+
+	@RegisterFunction
+	fun onGameOver(finalScore: String) {
+		GD.print("Main: Game over! Final score: $finalScore")
+		showGameOverScreen(finalScore)
+		gameplayInstance?.setProcess(false)
+		gameplayInstance?.setPhysicsProcess(false)
+	}
+
+	private fun showGameOverScreen(finalScore: String) {
+		// Clean up previous instances
+		gameOverLayer?.queueFree()
+		gameOverLayer = null
+		gameOverScreen = null
+
+		if (gameOverScene == null) {
+			GD.printErr("Main: gameOverScene is null! Cannot show game over screen")
+			return
+		}
+
+		// Create CanvasLayer for proper overlay rendering
+		val layer = CanvasLayer()
+		layer.layer = 100 // Render above all other UI layers
+		addChild(layer)
+		gameOverLayer = layer
+		GD.print("Main: CanvasLayer created for Game Over screen (layer=100)")
+
+		// Instantiate GameOverScreen
+		gameOverScreen = gameOverScene?.instantiate() as? GameOverScreen
+		if (gameOverScreen == null) {
+			GD.printErr("Main: Failed to instantiate GameOverScreen")
+			return
+		}
+
+		gameOverScreen?.let {
+			// Connect restart signal
+			it.restartRequested.connect(this, Main::onClickRestartBtn)
+
+			// Add to CanvasLayer (not directly to Main)
+			layer.addChild(it)
+			it.showGameOver(finalScore)
+			GD.print("Main: Game over screen shown on CanvasLayer with score: $finalScore")
+		}
+	}
+
+	@RegisterFunction
+	fun onClickRestartBtn() {
+		GD.print("Main: Restart button clicked - initiating cleanup sequence")
+		
+		// Step 1: Validate instance exists
+		if (gameplayInstance == null) {
+			GD.printErr("Main: Cannot restart - gameplay instance already null")
+			// Still need to clean up UI
+			gameOverLayer?.queueFree()
+			gameOverLayer = null
+			gameOverScreen = null
+			return
+		}
+		
+		// Step 2: Disconnect all signals from gameplay instance
+		try {
+			gameplayInstance?.scoreUpdated?.disconnect(this, Main::onScoreUpdated)
+			gameplayInstance?.timerUpdated?.disconnect(this, Main::onTimerUpdated)
+			gameplayInstance?.gameOverSignal?.disconnect(this, Main::onGameOver)
+			GD.print("Main: Signals disconnected from gameplay instance")
+		} catch (e: Exception) {
+			GD.printErr("Main: Error disconnecting signals: ${e.message}")
+		}
+		
+		// Step 3: Call explicit cleanup on gameplay instance
+		try {
+			gameplayInstance?.cleanupGameplay()
+			GD.print("Main: Gameplay cleanup method called")
+		} catch (e: Exception) {
+			GD.printErr("Main: Error during cleanup: ${e.message}")
+		}
+		
+		// Step 4: Free gameplay node
+		gameplayInstance?.queueFree()
+		gameplayInstance = null
+		GD.print("Main: Gameplay instance queued for freeing")
+		
+		// Step 5: Free game over UI
+		gameOverLayer?.queueFree()
+		gameOverLayer = null
+		gameOverScreen = null
+		GD.print("Main: Game Over UI queued for freeing")
+		
+		// Step 6: Set restart flag for next frame
+		// This ensures queueFree() completes before creating new instance
+		restartPending = true
+		GD.print("Main: Restart flag set - will restart on next frame")
+	}
+
+	/**
+	 * Restarts the gameplay lifecycle.
+	 * Called from _process() when restart flag is set.
+	 */
+	private fun restartGamePlayLifeCycle() {
+		GD.print("Main: Restarting game...")
+		
+		// Reset basket to empty state (basket_0)
+		basket?.resetBasket()
+		
+		startGameplayLifeCycle()
 	}
 }

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjaar23uvc1xr"]
+[gd_scene load_steps=6 format=3 uid="uid://cjaar23uvc1xr"]
 
 [ext_resource type="Texture2D" uid="uid://7cvn7spxxavt" path="res://src/main/resources/assets/background.png" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://bq77y3pyiawl1" path="res://src/main/kotlin/godot/game/Main.kt" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://5e6401osvb7c" path="res://scenes/basket.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://kadmrhokjppy" path="res://scenes/game_over_screen.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://bvhc6ubnudous" path="res://scenes/left_btn_control.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bukoqa86veuyg" path="res://scenes/right_btn_control.tscn" id="5_tefeu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1bvp3")
@@ -42,8 +43,16 @@ theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 45
 text = "Time : 60"
 
-[node name="GameOverScreen" parent="." instance=ExtResource("4_jyhfs")]
-offset_left = 960.0
-offset_top = 539.0
-offset_right = 960.0
-offset_bottom = 539.0
+[node name="MobileControls" type="CanvasLayer" parent="."]
+
+[node name="LeftBtnControl" parent="MobileControls" instance=ExtResource("4_tbgi4")]
+offset_left = 63.0
+offset_top = 767.0
+offset_right = 303.0
+offset_bottom = 1007.0
+
+[node name="RightBtnControl" parent="MobileControls" instance=ExtResource("5_tefeu")]
+offset_left = 1627.0
+offset_top = 770.0
+offset_right = 1867.0
+offset_bottom = 1010.0

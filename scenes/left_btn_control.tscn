@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvhc6ubnudous"]
+
+[ext_resource type="Texture2D" uid="uid://c4t1m5xtun431" path="res://src/main/resources/assets/ic_left_arrow_btn.png" id="1_qqepx"]
+
+[node name="LeftBtnControl" type="TextureButton"]
+custom_minimum_size = Vector2(240, 240)
+offset_right = 240.0
+offset_bottom = 240.0
+pivot_offset = Vector2(120, 120)
+action_mode = 0
+texture_normal = ExtResource("1_qqepx")
+ignore_texture_size = true
+stretch_mode = 5

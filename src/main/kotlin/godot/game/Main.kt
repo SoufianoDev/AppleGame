@@ -3,208 +3,213 @@ package godot.game
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.Node2D
-import godot.api.PackedScene
-import godot.api.ResourceLoader
-import godot.api.Label
-import godot.api.RigidBody2D
-import godot.core.Vector2
+import godot.api.*
+import godot.core.Color
 import godot.core.asNodePath
-import godot.game.apples.BaseApple
 import godot.global.GD
-import kotlin.random.Random
 
 @RegisterClass
 class Main : Node2D() {
 
-	private var redAppleScene: PackedScene? = null
-	private var greenAppleScene: PackedScene? = null
-	private var badAppleScene: PackedScene? = null
+	private var timerLabel: Label? = null
+	private var scoreLabel: Label? = null
+	private var basket: Basket? = null
+	private var gameOverScene: PackedScene? = null
+	private var gameplayInstance: TimingModeGameplay? = null
+	private var gameOverScreen: GameOverScreen? = null
+	private var gameOverLayer: CanvasLayer? = null
 
-	private var spawnTimer = 0.0
+	// Mobile controls (TextureButton nodes under MobileControls CanvasLayer)
+	private var leftBtnControl: TextureButton? = null
+	private var rightBtnControl: TextureButton? = null
 
-	@RegisterProperty
-	var initialSpawnInterval = 1.5
-
-	@RegisterProperty
-	var minSpawnInterval = 0.5
-
-	@RegisterProperty
-	var difficultyIncreaseRate = 0.98
-
-	private var currentSpawnInterval = 1.5
+	private var restartPending = false
 
 	@RegisterProperty
 	var gameDuration = 60.0
 
-	private var gameTimer = 0.0
-	private var isGameOver = false
-
-	private var timerLabel: Label? = null
-
-	// Wave system
-	private var applesSpawned = 0
-	private var currentWave = 1
-
+	/**
+	 * Default opacity for mobile control buttons (0.0 = fully transparent, 1.0 = fully opaque).
+	 * This value is applied when buttons are first bound in _ready().
+	 * Can be modified in Godot Inspector.
+	 */
 	@RegisterProperty
-	var applesPerWave = 10
+	var defaultMobileOpacity = 0.1
 
 	@RegisterFunction
 	override fun _ready() {
-		GD.print("🎮 Main scene ready!")
-
-		// Init Apples
-		redAppleScene = ResourceLoader.load("res://scenes/red_apple.tscn") as? PackedScene
-		greenAppleScene = ResourceLoader.load("res://scenes/green_apple.tscn") as? PackedScene
-		badAppleScene = ResourceLoader.load("res://scenes/bad_apple.tscn") as? PackedScene
-
-		// Debug
-		GD.print("Red: ${redAppleScene != null}")
-		GD.print("Green: ${greenAppleScene != null}")
-		GD.print("Bad: ${badAppleScene != null}")
-
-		timerLabel = getNodeOrNull("CanvasLayer2/TimerLabel".asNodePath()) as? Label
-		gameTimer = gameDuration
-		currentSpawnInterval = initialSpawnInterval
+		GD.print("Main: Starting game...")
+		bindMainUI()
+		bindBasket()
+		bindMobileControls()
+		loadResources()
+		startGameplayLifeCycle()
 	}
 
 	@RegisterFunction
 	override fun _process(delta: Double) {
-		if (isGameOver) return
-
-		gameTimer -= delta
-		timerLabel?.text = "Time: ${gameTimer.toInt()}"
-
-		if (gameTimer <= 0.0) {
-			gameOver()
-			return
+		if (restartPending && gameplayInstance == null) {
+			restartPending = false
+			GD.print("Main: Executing deferred restart")
+			restartGamePlayLifeCycle()
 		}
+	}
 
-		spawnTimer += delta
-		if (spawnTimer >= currentSpawnInterval) {
-			spawnRandomApple()
-			spawnTimer = 0.0
+	private fun bindMainUI() {
+		timerLabel = getNodeOrNull("CanvasLayer2/TimerLabel".asNodePath()) as? Label
+		scoreLabel = getNodeOrNull("CanvasLayer/ScoreLabel".asNodePath()) as? Label
+		GD.print("Main: Timer label bound? ${timerLabel != null}")
+		GD.print("Main: Score label bound? ${scoreLabel != null}")
+	}
 
+	private fun bindBasket() {
+		basket = getNodeOrNull("Basket".asNodePath()) as? Basket
+		if (basket == null) GD.printErr("Main: Basket not found in scene tree")
+	}
 
-			if (currentSpawnInterval > minSpawnInterval) {
-				currentSpawnInterval *= difficultyIncreaseRate
-			}
+	/**
+	 * Binds mobile control TextureButtons to Basket input handlers and applies default opacity.
+	 *
+	 * Expected scene structure:
+	 * - MobileControls (CanvasLayer)
+	 *   - LeftBtnControl (TextureButton)
+	 *   - RightBtnControl (TextureButton)
+	 */
+	private fun bindMobileControls() {
+		leftBtnControl = getNodeOrNull("MobileControls/LeftBtnControl".asNodePath()) as? TextureButton
+		rightBtnControl = getNodeOrNull("MobileControls/RightBtnControl".asNodePath()) as? TextureButton
+
+		if (leftBtnControl != null && rightBtnControl != null && basket != null) {
+			// Connect signals
+			leftBtnControl!!.buttonDown.connect(basket!!, Basket::onMobileLeftDown)
+			leftBtnControl!!.buttonUp.connect(basket!!, Basket::onMobileLeftUp)
+			rightBtnControl!!.buttonDown.connect(basket!!, Basket::onMobileRightDown)
+			rightBtnControl!!.buttonUp.connect(basket!!, Basket::onMobileRightUp)
+
+			// Apply default opacity
+			applyMobileOpacity(defaultMobileOpacity)
+
+			GD.print("Main: Mobile controls bound with opacity ${defaultMobileOpacity}")
+		} else {
+			GD.print("Main: Mobile controls not found (OK if running on desktop)")
+		}
+	}
+
+	/**
+	 * Applies opacity (alpha/transparency) to both mobile control buttons.
+	 *
+	 * @param opacity Alpha value from 0.0 (fully transparent) to 1.0 (fully opaque).
+	 *                Values outside this range will be clamped.
+	 *
+	 * Usage examples:
+	 * - applyMobileOpacity(0.3)  // 30% visible (subtle)
+	 * - applyMobileOpacity(0.5)  // 50% visible (balanced)
+	 * - applyMobileOpacity(1.0)  // 100% visible (fully opaque)
+	 * - applyMobileOpacity(0.0)  // 0% visible (hidden but still functional)
+	 */
+	@RegisterFunction
+	fun applyMobileOpacity(opacity: Double) {
+		val clampedOpacity = opacity.coerceIn(0.0, 1.0)
+
+		leftBtnControl?.modulate = Color(1.0, 1.0, 1.0, clampedOpacity)
+		rightBtnControl?.modulate = Color(1.0, 1.0, 1.0, clampedOpacity)
+
+		GD.print("Main: Mobile controls opacity set to $clampedOpacity")
+	}
+
+	/**
+	 * Shows mobile control buttons by setting opacity to 1.0 (fully opaque).
+	 */
+	@RegisterFunction
+	fun showMobileControls() {
+		applyMobileOpacity(1.0)
+	}
+
+	/**
+	 * Hides mobile control buttons by setting opacity to 0.0 (fully transparent).
+	 * Note: Buttons remain functional even when fully transparent.
+	 */
+	@RegisterFunction
+	fun hideMobileControls() {
+		applyMobileOpacity(0.0)
+	}
+
+	/**
+	 * Sets mobile controls to semi-transparent (50% opacity).
+	 * Useful for reducing visual clutter while keeping buttons visible.
+	 */
+	@RegisterFunction
+	fun fadeMobileControls() {
+		applyMobileOpacity(0.5)
+	}
+
+	private fun loadResources() {
+		gameOverScene = ResourceLoader.load("res://scenes/game_over_screen.tscn") as? PackedScene
+	}
+
+	fun startGameplayLifeCycle() {
+		gameplayInstance?.queueFree()
+		gameplayInstance = null
+
+		val newGameplay = TimingModeGameplay()
+		newGameplay.let {
+			it.gameDuration = gameDuration
+			it.scoreUpdated.connect(this, Main::onScoreUpdated)
+			it.timerUpdated.connect(this, Main::onTimerUpdated)
+			it.gameOverSignal.connect(this, Main::onGameOver)
+
+			addChild(it)
+			it.connectBasketSignals()
+			gameplayInstance = it
 		}
 	}
 
 	@RegisterFunction
-	fun spawnRandomApple() {
-		applesSpawned++
-		if (applesSpawned > applesPerWave) {
-			applesSpawned = 0
-			currentWave++
-			GD.print("Wave $currentWave started!")
-		}
-
-		val (scene, type, points) = selectAppleByWave()
-
-		if (scene == null) {
-			GD.print("ERROR: $type apple scene is null!")
-			return
-		}
-
-		val instance = scene.instantiate()
-
-		if (instance == null) {
-			GD.print("ERROR: instantiate() returned null for $type!")
-			return
-		}
-
-		val apple = instance as? BaseApple
-
-		if (apple == null) {
-			GD.print("ERROR: Cannot cast to BaseApple!")
-			instance.queueFree()
-			return
-		}
-
-		// Random Position
-		val screenWidth = getViewportRect().size.x
-		val randomX = getSmartRandomX(screenWidth)
-		apple.position = Vector2(randomX, -100.0)
-
-		if (apple is RigidBody2D) {
-			applyRandomPhysics(apple, points)
-		}
-
-		addChild(apple)
-		GD.print("$type apple spawned at x=$randomX")
-	}
-
-
-	private fun selectAppleByWave(): Triple<PackedScene?, String, Int> {
-		val random = Random.nextDouble(0.0, 100.0)
-
-		return when {
-			currentWave <= 2 -> {
-				when {
-					random < 80.0 -> Triple(redAppleScene, "Red", 1)
-					random < 95.0 -> Triple(greenAppleScene, "Green", 2)
-					else -> Triple(badAppleScene, "Bad", -1)
-				}
-			}
-			currentWave <= 4 -> {
-				when {
-					random < 60.0 -> Triple(redAppleScene, "Red", 1)
-					random < 85.0 -> Triple(greenAppleScene, "Green", 2)
-					else -> Triple(badAppleScene, "Bad", -1)
-				}
-			}
-			else -> {
-				when {
-					random < 50.0 -> Triple(redAppleScene, "Red", 1)
-					random < 75.0 -> Triple(greenAppleScene, "Green", 2)
-					else -> Triple(badAppleScene, "Bad", -1)
-				}
-			}
-		}
-	}
-
-	private var lastSpawnX = 0.0
-
-	private fun getSmartRandomX(screenWidth: Double): Double {
-		val margin = 100.0
-		val minDistance = 150.0
-		var attempts = 0
-		var randomX: Double
-
-		do {
-			randomX = Random.nextDouble(margin, screenWidth - margin)
-			attempts++
-		} while (kotlin.math.abs(randomX - lastSpawnX) < minDistance && attempts < 5)
-
-		lastSpawnX = randomX
-		return randomX
-	}
-
-
-	private fun applyRandomPhysics(apple: RigidBody2D, points: Int) {
-
-		val gravityMultiplier = when (points) {
-			2 -> Random.nextDouble(0.8, 1.0)
-			-1 -> Random.nextDouble(1.1, 1.3)
-			else -> Random.nextDouble(0.9, 1.1)
-		}
-
-		apple.gravityScale = gravityMultiplier.toFloat()
-
-		val lateralImpulse = Random.nextDouble(-50.0, 50.0)
-		apple.applyImpulse(Vector2(lateralImpulse, 0.0))
-
-		val angularImpulse = Random.nextDouble(-0.5, 0.5).toFloat()
-		apple.applyTorqueImpulse(angularImpulse)
+	fun onScoreUpdated(scoreText: String) {
+		scoreLabel?.text = scoreText
 	}
 
 	@RegisterFunction
-	fun gameOver() {
-		isGameOver = true
-		GD.print("🎮 GAME OVER!")
-		GD.print("Final Wave: $currentWave")
-		GD.print("Final Spawn Interval: $currentSpawnInterval")
+	fun onTimerUpdated(timeText: String) {
+		timerLabel?.text = timeText
+	}
+
+	@RegisterFunction
+	fun onGameOver(finalScore: String) {
+		showGameOverScreen(finalScore)
+	}
+
+	private fun showGameOverScreen(finalScore: String) {
+		gameOverLayer?.queueFree()
+		val layer = CanvasLayer().apply { this.layer = 100 }
+		addChild(layer)
+		gameOverLayer = layer
+
+		(gameOverScene?.instantiate() as? GameOverScreen)?.let {
+			it.restartRequested.connect(this, Main::onClickRestartBtn)
+			layer.addChild(it)
+			it.showGameOver(finalScore)
+		}
+	}
+
+	@RegisterFunction
+	fun onClickRestartBtn() {
+		try {
+			gameplayInstance?.scoreUpdated?.disconnect(this, Main::onScoreUpdated)
+			gameplayInstance?.timerUpdated?.disconnect(this, Main::onTimerUpdated)
+			gameplayInstance?.gameOverSignal?.disconnect(this, Main::onGameOver)
+		} catch (e: Exception) {}
+
+		gameplayInstance?.cleanupGameplay()
+		gameplayInstance?.queueFree()
+		gameplayInstance = null
+		gameOverLayer?.queueFree()
+		gameOverLayer = null
+		restartPending = true
+	}
+
+	private fun restartGamePlayLifeCycle() {
+		basket?.resetBasket()
+		startGameplayLifeCycle()
 	}
 }

@@ -1,12 +1,12 @@
 // THIS FILE IS GENERATED! DO NOT EDIT OR DELETE IT. EDIT OR DELETE THE ASSOCIATED SOURCE CODE FILE INSTEAD
 // Note: You can however freely move this file inside your godot project if you want. Keep in mind however, that if you rename the originating source code file, this file will be deleted and regenerated as a new file instead of being updated! Other modifications to the source file however, will result in this file being updated.
 
-registeredName = Main
-fqName = godot.game.Main
-relativeSourcePath = src/main/kotlin/godot/game/Main.kt
-baseType = Node2D
+registeredName = GameOverScreen
+fqName = godot.game.GameOverScreen
+relativeSourcePath = src/main/kotlin/godot/game/GameOverScreen.kt
+baseType = Control
 supertypes = [
-    godot.api.Node2D,
+    godot.api.Control,
 	godot.api.CanvasItem,
 	godot.api.Node,
 	godot.api.Object,
@@ -16,21 +16,19 @@ supertypes = [
 	kotlin.Any
 ]
 signals = [
-    
+    restart_requested
 ]
 properties = [
-    game_duration,
-	default_mobile_opacity
+    score_label_path,
+	restart_btn_path
 ]
 functions = [
     _ready,
-	_process,
-	apply_mobile_opacity,
-	show_mobile_controls,
-	hide_mobile_controls,
-	fade_mobile_controls,
-	on_score_updated,
-	on_timer_updated,
-	on_game_over,
+	show_game_over,
+	hide_screen,
+	on_restart_pressed,
+	on_restart_released,
+	on_animation_complete,
+	_exit_tree,
 	on_click_restart_btn
 ]

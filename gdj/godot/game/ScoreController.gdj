@@ -1,14 +1,12 @@
 // THIS FILE IS GENERATED! DO NOT EDIT OR DELETE IT. EDIT OR DELETE THE ASSOCIATED SOURCE CODE FILE INSTEAD
 // Note: You can however freely move this file inside your godot project if you want. Keep in mind however, that if you rename the originating source code file, this file will be deleted and regenerated as a new file instead of being updated! Other modifications to the source file however, will result in this file being updated.
 
-registeredName = Main
-fqName = godot.game.Main
-relativeSourcePath = src/main/kotlin/godot/game/Main.kt
-baseType = Node2D
+registeredName = ScoreController
+fqName = godot.game.ScoreController
+relativeSourcePath = src/main/kotlin/godot/game/ScoreController.kt
+baseType = Node
 supertypes = [
-    godot.api.Node2D,
-	godot.api.CanvasItem,
-	godot.api.Node,
+    godot.api.Node,
 	godot.api.Object,
 	godot.core.KtObject,
 	godot.common.interop.NativeWrapper,
@@ -19,18 +17,13 @@ signals = [
     
 ]
 properties = [
-    game_duration,
-	default_mobile_opacity
+    
 ]
 functions = [
     _ready,
-	_process,
-	apply_mobile_opacity,
-	show_mobile_controls,
-	hide_mobile_controls,
-	fade_mobile_controls,
-	on_score_updated,
-	on_timer_updated,
-	on_game_over,
-	on_click_restart_btn
+	add_score,
+	set_score,
+	get_score,
+	get_formatted_score,
+	reset_score
 ]
