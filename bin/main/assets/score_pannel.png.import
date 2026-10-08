@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dribcsvkegba5"
-path="res://.godot/imported/score_pannel.png-54c3ae2e4bcc1bf781d5a6a5ee318223.ctex"
+path="res://.godot/imported/score_pannel.png-f3e431d02ce3ba63c1db060d71b5c130.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bin/main/assets/score_pannel.png"
-dest_files=["res://.godot/imported/score_pannel.png-54c3ae2e4bcc1bf781d5a6a5ee318223.ctex"]
+source_file="res://src/main/resources/assets/score_pannel.png"
+dest_files=["res://.godot/imported/score_pannel.png-f3e431d02ce3ba63c1db060d71b5c130.ctex"]
 
 [params]
 

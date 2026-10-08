@@ -4,6 +4,7 @@ package godot.entry.opDfRZOZLBjJznqBvFrH
 import godot.entry.BadAppleRegistrar
 import godot.entry.BaseAppleRegistrar
 import godot.entry.BasketRegistrar
+import godot.entry.DesktopDisplayManagerRegistrar
 import godot.entry.GameOverScreenRegistrar
 import godot.entry.GreenAppleRegistrar
 import godot.entry.MainRegistrar
@@ -19,6 +20,7 @@ import godot.game.apples.BadApple
 import godot.game.apples.BaseApple
 import godot.game.apples.GreenApple
 import godot.game.apples.RedApple
+import godot.game.desktop.DesktopDisplayManager
 import godot.registerEngineTypeMethods
 import godot.registerEngineTypes
 import godot.registerVariantMapping
@@ -32,7 +34,7 @@ import kotlin.collections.listOf
 import kotlin.reflect.KClass
 
 public class Entry : Entry() {
-  public override val classRegistrarCount: Int = 9
+  public override val classRegistrarCount: Int = 10
 
   public override val projectName: String = "AppleGame"
 
@@ -46,6 +48,7 @@ public class Entry : Entry() {
     BaseAppleRegistrar().register(registry)
     GreenAppleRegistrar().register(registry)
     RedAppleRegistrar().register(registry)
+    DesktopDisplayManagerRegistrar().register(registry)
   }
 
   public override fun Context.initEngineTypes(): Unit {
@@ -56,5 +59,6 @@ public class Entry : Entry() {
 
   public override fun Context.getRegisteredClasses(): List<KClass<*>> = listOf(Basket::class,
       GameOverScreen::class, Main::class, ScoreController::class, TimingModeGameplay::class,
-      BadApple::class, BaseApple::class, GreenApple::class, RedApple::class)
+      BadApple::class, BaseApple::class, GreenApple::class, RedApple::class,
+      DesktopDisplayManager::class)
 }

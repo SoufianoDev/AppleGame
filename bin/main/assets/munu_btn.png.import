@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://csxqorhl43uch"
-path="res://.godot/imported/munu_btn.png-1aa1799c859d6c29e67c16031af2f309.ctex"
+path="res://.godot/imported/munu_btn.png-4653a6825624507ebff2781086eebb78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bin/main/assets/munu_btn.png"
-dest_files=["res://.godot/imported/munu_btn.png-1aa1799c859d6c29e67c16031af2f309.ctex"]
+source_file="res://src/main/resources/assets/munu_btn.png"
+dest_files=["res://.godot/imported/munu_btn.png-4653a6825624507ebff2781086eebb78.ctex"]
 
 [params]
 

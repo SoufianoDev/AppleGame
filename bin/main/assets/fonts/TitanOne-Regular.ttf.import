@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dgyg08qive7ir"
-path="res://.godot/imported/TitanOne-Regular.ttf-c47ce5d38c8ff5f67a00e5b59328a88e.fontdata"
+path="res://.godot/imported/TitanOne-Regular.ttf-5250c43139b01f770938f3c2a99ae0a0.fontdata"
 
 [deps]
 
-source_file="res://bin/main/assets/fonts/TitanOne-Regular.ttf"
-dest_files=["res://.godot/imported/TitanOne-Regular.ttf-c47ce5d38c8ff5f67a00e5b59328a88e.fontdata"]
+source_file="res://src/main/resources/assets/fonts/TitanOne-Regular.ttf"
+dest_files=["res://.godot/imported/TitanOne-Regular.ttf-5250c43139b01f770938f3c2a99ae0a0.fontdata"]
 
 [params]
 

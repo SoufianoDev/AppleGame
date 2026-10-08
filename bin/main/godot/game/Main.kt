@@ -4,11 +4,15 @@ import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.*
+import godot.core.Color
+import godot.core.Vector2
 import godot.core.asNodePath
+import godot.game.desktop.DesktopDisplayManager
 import godot.global.GD
+import java.io.File
 
 @RegisterClass
-class Main : Node2D() {
+class Main : Control() {
 
 	private var timerLabel: Label? = null
 	private var scoreLabel: Label? = null
@@ -17,25 +21,44 @@ class Main : Node2D() {
 	private var gameplayInstance: TimingModeGameplay? = null
 	private var gameOverScreen: GameOverScreen? = null
 	private var gameOverLayer: CanvasLayer? = null
-	
-	// Flag for deferred restart
+
+	// Mobile controls (TextureButton nodes under MobileControls CanvasLayer)
+	private var leftBtnControl: TextureButton? = null
+	private var rightBtnControl: TextureButton? = null
+
+	// Display manager for desktop fullscreen control
+	private var displayManager: DisplayManager? = null
+
 	private var restartPending = false
+	private var background : TextureRect? = null
 
 	@RegisterProperty
 	var gameDuration = 60.0
 
+	/**
+	 * Default opacity for mobile control buttons (0.0 = fully transparent, 1.0 = fully opaque).
+	 * This value is applied when buttons are first bound in _ready().
+	 * Can be modified in Godot Inspector.
+	 */
+	@RegisterProperty
+	var defaultMobileOpacity = 0.3
+
 	@RegisterFunction
 	override fun _ready() {
-		GD.print("Main: Starting game...")
+		GD.print("\n ========================")
+		detectDesktopEnv()
+		GD.print("\n ========================")
+		GD.print("\nMain: Starting game...")
 		bindMainUI()
 		bindBasket()
+		bindMobileControls()
 		loadResources()
+		initializeDisplayManager()
 		startGameplayLifeCycle()
 	}
 
 	@RegisterFunction
 	override fun _process(delta: Double) {
-		// Handle deferred restart
 		if (restartPending && gameplayInstance == null) {
 			restartPending = false
 			GD.print("Main: Executing deferred restart")
@@ -46,61 +69,137 @@ class Main : Node2D() {
 	private fun bindMainUI() {
 		timerLabel = getNodeOrNull("CanvasLayer2/TimerLabel".asNodePath()) as? Label
 		scoreLabel = getNodeOrNull("CanvasLayer/ScoreLabel".asNodePath()) as? Label
-
 		GD.print("Main: Timer label bound? ${timerLabel != null}")
 		GD.print("Main: Score label bound? ${scoreLabel != null}")
-
-		// Set initial values
-		timerLabel?.text = "Time: ${gameDuration.toInt()}"
-		scoreLabel?.text = "Score: 0"
 	}
 
 	private fun bindBasket() {
 		basket = getNodeOrNull("Basket".asNodePath()) as? Basket
-		if (basket != null) {
-			GD.print("Main: Basket bound successfully")
+		if (basket == null) GD.printErr("Main: Basket not found in scene tree")
+	}
+
+	/**
+	 * Binds mobile control TextureButtons to Basket input handlers and applies default opacity.
+	 *
+	 * Expected scene structure:
+	 * - MobileControls (CanvasLayer)
+	 *   - LeftBtnControl (TextureButton)
+	 *   - RightBtnControl (TextureButton)
+	 */
+	private fun bindMobileControls() {
+		leftBtnControl = getNodeOrNull("MobileControls/LeftBtnControl".asNodePath()) as? TextureButton
+		rightBtnControl = getNodeOrNull("MobileControls/RightBtnControl".asNodePath()) as? TextureButton
+
+		detectMobilesEnv()
+
+		if (leftBtnControl != null && rightBtnControl != null && basket != null) {
+			// Connect signals
+			leftBtnControl!!.buttonDown.connect(basket!!, Basket::onMobileLeftDown)
+			leftBtnControl!!.buttonUp.connect(basket!!, Basket::onMobileLeftUp)
+			rightBtnControl!!.buttonDown.connect(basket!!, Basket::onMobileRightDown)
+			rightBtnControl!!.buttonUp.connect(basket!!, Basket::onMobileRightUp)
+
+			// Apply default opacity
+			applyMobileOpacity(defaultMobileOpacity)
+
+			GD.print("Main: Mobile controls bound with opacity ${defaultMobileOpacity}")
 		} else {
-			GD.printErr("Main: Basket not found in scene tree")
+			GD.print("Main: Mobile controls not found (OK if running on desktop)")
 		}
+	}
+
+	/**
+	 * Initializes the display manager for desktop environments.
+	 * Only creates DesktopDisplayManager when running on desktop platforms.
+	 */
+	private fun initializeDisplayManager() {
+		if (envIsDesktop()) {
+			val manager = DesktopDisplayManager()
+			addChild(manager)
+			displayManager = manager
+			GD.print("MaFilein: DesktopDisplayManager initialized")
+
+			// Optional: Auto-enter fullscreen on desktop startup
+			// manager.enterFullscreen()
+		} else {
+			GD.print("Main: Skipping DisplayManager on non-desktop platform")
+		}
+	}
+
+	/**
+	 * Applies opacity (alpha/transparency) to both mobile control buttons.
+	 *
+	 * @param opacity Alpha value from 0.0 (fully transparent) to 1.0 (fully opaque).
+	 *                Values outside this range will be clamped.
+	 *
+	 * Usage examples:
+	 * - applyMobileOpacity(0.3)  // 30% visible (subtle)
+	 * - applyMobileOpacity(0.5)  // 50% visible (balanced)
+	 * - applyMobileOpacity(1.0)  // 100% visible (fully opaque)
+	 * - applyMobileOpacity(0.0)  // 0% visible (hidden but still functional)
+	 */
+	@RegisterFunction
+	fun applyMobileOpacity(opacity: Double) {
+		val clampedOpacity = opacity.coerceIn(0.0, 1.0)
+
+		leftBtnControl?.modulate = Color(1.0, 1.0, 1.0, clampedOpacity)
+		rightBtnControl?.modulate = Color(1.0, 1.0, 1.0, clampedOpacity)
+
+		GD.print("Main: Mobile controls opacity set to $clampedOpacity")
+	}
+
+	/**
+	 * Shows mobile control buttons by setting opacity to 1.0 (fully opaque).
+	 */
+	@RegisterFunction
+	fun showMobileControls() {
+		leftBtnControl?.visible = true
+		rightBtnControl?.visible = true
+	}
+
+	/**
+	 * Hides mobile control buttons by setting opacity to 0.0 (fully transparent).
+	 * Note: Buttons remain functional even when fully transparent.
+	 */
+	@RegisterFunction
+	fun hideMobileControls() {
+		leftBtnControl?.visible = false
+		rightBtnControl?.visible = false
+	}
+
+	/**
+	 * Sets mobile controls to semi-transparent (50% opacity).
+	 * Useful for reducing visual clutter while keeping buttons visible.
+	 */
+	@RegisterFunction
+	fun fadeMobileControls() {
+		applyMobileOpacity(0.5)
 	}
 
 	private fun loadResources() {
 		gameOverScene = ResourceLoader.load("res://scenes/game_over_screen.tscn") as? PackedScene
-		if (gameOverScene == null) {
-			GD.printErr("Main: Failed to load game_over_screen.tscn")
-			GD.printErr("Main: Check the file exists at: res://scenes/game_over_screen.tscn")
-		} else {
-			GD.print("Main: Game over scene loaded successfully")
-		}
 	}
 
 	fun startGameplayLifeCycle() {
 		gameplayInstance?.queueFree()
 		gameplayInstance = null
 
-		GD.print("Main: Creating new gameplay instance")
-		gameplayInstance = TimingModeGameplay()
-		gameplayInstance?.let {
+		val newGameplay = TimingModeGameplay()
+		newGameplay.let {
 			it.gameDuration = gameDuration
-
-			// Connect signals from gameplay to UI handlers
 			it.scoreUpdated.connect(this, Main::onScoreUpdated)
 			it.timerUpdated.connect(this, Main::onTimerUpdated)
 			it.gameOverSignal.connect(this, Main::onGameOver)
 
 			addChild(it)
-			GD.print("Main: Gameplay instance added to scene")
-			
-			// Connect basket signals after the node is in the scene tree
 			it.connectBasketSignals()
-			GD.print("Main: Basket signals connection initiated")
+			gameplayInstance = it
 		}
 	}
 
 	@RegisterFunction
 	fun onScoreUpdated(scoreText: String) {
 		scoreLabel?.text = scoreText
-		GD.print("Main: Score updated to: $scoreText")
 	}
 
 	@RegisterFunction
@@ -110,107 +209,132 @@ class Main : Node2D() {
 
 	@RegisterFunction
 	fun onGameOver(finalScore: String) {
-		GD.print("Main: Game over! Final score: $finalScore")
 		showGameOverScreen(finalScore)
-		gameplayInstance?.setProcess(false)
-		gameplayInstance?.setPhysicsProcess(false)
 	}
 
 	private fun showGameOverScreen(finalScore: String) {
-		// Clean up previous instances
 		gameOverLayer?.queueFree()
-		gameOverLayer = null
-		gameOverScreen = null
-
-		if (gameOverScene == null) {
-			GD.printErr("Main: gameOverScene is null! Cannot show game over screen")
-			return
-		}
-
-		// Create CanvasLayer for proper overlay rendering
-		val layer = CanvasLayer()
-		layer.layer = 100 // Render above all other UI layers
+		val layer = CanvasLayer().apply { this.layer = 100 }
 		addChild(layer)
 		gameOverLayer = layer
-		GD.print("Main: CanvasLayer created for Game Over screen (layer=100)")
 
-		// Instantiate GameOverScreen
-		gameOverScreen = gameOverScene?.instantiate() as? GameOverScreen
-		if (gameOverScreen == null) {
-			GD.printErr("Main: Failed to instantiate GameOverScreen")
-			return
-		}
-
-		gameOverScreen?.let {
-			// Connect restart signal
+		(gameOverScene?.instantiate() as? GameOverScreen)?.let {
 			it.restartRequested.connect(this, Main::onClickRestartBtn)
-
-			// Add to CanvasLayer (not directly to Main)
 			layer.addChild(it)
 			it.showGameOver(finalScore)
-			GD.print("Main: Game over screen shown on CanvasLayer with score: $finalScore")
 		}
 	}
 
 	@RegisterFunction
 	fun onClickRestartBtn() {
-		GD.print("Main: Restart button clicked - initiating cleanup sequence")
-		
-		// Step 1: Validate instance exists
-		if (gameplayInstance == null) {
-			GD.printErr("Main: Cannot restart - gameplay instance already null")
-			// Still need to clean up UI
-			gameOverLayer?.queueFree()
-			gameOverLayer = null
-			gameOverScreen = null
-			return
-		}
-		
-		// Step 2: Disconnect all signals from gameplay instance
 		try {
 			gameplayInstance?.scoreUpdated?.disconnect(this, Main::onScoreUpdated)
 			gameplayInstance?.timerUpdated?.disconnect(this, Main::onTimerUpdated)
 			gameplayInstance?.gameOverSignal?.disconnect(this, Main::onGameOver)
-			GD.print("Main: Signals disconnected from gameplay instance")
-		} catch (e: Exception) {
-			GD.printErr("Main: Error disconnecting signals: ${e.message}")
-		}
-		
-		// Step 3: Call explicit cleanup on gameplay instance
-		try {
-			gameplayInstance?.cleanupGameplay()
-			GD.print("Main: Gameplay cleanup method called")
-		} catch (e: Exception) {
-			GD.printErr("Main: Error during cleanup: ${e.message}")
-		}
-		
-		// Step 4: Free gameplay node
+		} catch (e: Exception) {}
+
+		gameplayInstance?.cleanupGameplay()
 		gameplayInstance?.queueFree()
 		gameplayInstance = null
-		GD.print("Main: Gameplay instance queued for freeing")
-		
-		// Step 5: Free game over UI
 		gameOverLayer?.queueFree()
 		gameOverLayer = null
-		gameOverScreen = null
-		GD.print("Main: Game Over UI queued for freeing")
-		
-		// Step 6: Set restart flag for next frame
-		// This ensures queueFree() completes before creating new instance
 		restartPending = true
-		GD.print("Main: Restart flag set - will restart on next frame")
 	}
 
-	/**
-	 * Restarts the gameplay lifecycle.
-	 * Called from _process() when restart flag is set.
-	 */
+	@RegisterFunction
+	fun onWindowSizeChanged() {
+
+		background = getNodeOrNull("TextureRect".asNodePath()) as? TextureRect
+
+		getTree()?.root?.sizeChanged?.connect(this, Main::onWindowSizeChanged)
+
+		background?.let { bg ->
+			val texture = bg.texture
+			val windowSize = getViewport()?.getVisibleRect()?.size ?: Vector2(1920, 1080)
+
+			texture?.let { tex ->
+				val texSize = tex.getSize()
+
+				val scaleX = windowSize.x / texSize.x
+				val scaleY = windowSize.y / texSize.y
+
+				val finalScale = if (scaleX > scaleY) scaleX else scaleY
+
+				bg.setScale(Vector2(finalScale, finalScale))
+				bg.setPivotOffset(texSize / 2.0)
+				bg.setPosition(windowSize / 2.0 - (texSize * finalScale / 2.0))
+			}
+		}
+	}
+
 	private fun restartGamePlayLifeCycle() {
-		GD.print("Main: Restarting game...")
-		
-		// Reset basket to empty state (basket_0)
 		basket?.resetBasket()
-		
 		startGameplayLifeCycle()
+	}
+
+	// ================= PLATFORM DETECTION =================
+
+	private fun detectOsEnv(): String {
+		val osName = OS.getName()
+		return osName.lowercase()
+	}
+
+	private fun printOsEnvName() {
+		GD.print("Main: OS name: ${detectOsEnv()}")
+	}
+
+	private fun envIsMobile(): Boolean {
+		return OS.hasFeature("mobile") ||
+				OS.hasFeature("android") ||
+				OS.hasFeature("ios")
+	}
+
+	private fun envIsDesktop(): Boolean {
+		return OS.hasFeature("pc") ||
+				OS.hasFeature("Windows") ||
+				OS.hasFeature("macOS") ||
+				OS.hasFeature("Linux")
+	}
+
+	private fun detectMobilesEnv() {
+		if (envIsMobile())
+			showMobileControls()
+		else
+			hideMobileControls()
+	}
+
+	private fun detectDesktopEnv() {
+		if (envIsDesktop()) {
+			if (detectOsEnv() == "linux") {
+				val distro = getLinuxDistro()
+				GD.print("Os : $distro")
+			}
+		}
+	}
+
+	// Cache the distro result to avoid file reading on every call
+	private var linuxDistroCache: String? = null
+
+	fun getLinuxDistro(): String {
+		linuxDistroCache?.let { return it }
+
+		val osRelease = File("/etc/os-release")
+		if (osRelease.exists()) {
+			try {
+				val lines = osRelease.readLines()
+				val idLine = lines.find { it.startsWith("ID=") }
+				val distroName = idLine
+					?.substringAfter("=")
+					?.removeSurrounding("\"")
+					?: "Unknown Linux"
+
+				val result = "Linux ($distroName)"
+				linuxDistroCache = result
+				return result
+			} catch (e: Exception) {
+				return "Linux (Unknown/Error)"
+			}
+		}
+		return "Unknown Linux"
 	}
 }

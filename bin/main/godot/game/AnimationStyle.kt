@@ -21,7 +21,7 @@ enum class AnimationStyle(
 	 * Use: When button is pressed (button_down signal)
 	 */
 	BUTTON_PRESS(
-		scaleFactor = 0.92f,
+		scaleFactor = 0.98f,
 		durationSeconds = 0.08f
 	),
 

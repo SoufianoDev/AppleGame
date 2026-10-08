@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0evu4483x01i"
-path="res://.godot/imported/basket_1.png-fb80357672ad801a8e6a476ae7af5309.ctex"
+path="res://.godot/imported/basket_1.png-b82a625dea3fc2c0afe47634b035d6ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bin/main/assets/basket/basket_1.png"
-dest_files=["res://.godot/imported/basket_1.png-fb80357672ad801a8e6a476ae7af5309.ctex"]
+source_file="res://src/main/resources/assets/basket/basket_1.png"
+dest_files=["res://.godot/imported/basket_1.png-b82a625dea3fc2c0afe47634b035d6ce.ctex"]
 
 [params]
 

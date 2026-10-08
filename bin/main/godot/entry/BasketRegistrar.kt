@@ -27,8 +27,8 @@ import kotlin.collections.listOf
   "AppleGame",
   "godot.api.Area2D,godot.api.CollisionObject2D,godot.api.Node2D,godot.api.CanvasItem,godot.api.Node,godot.api.Object,godot.core.KtObject,godot.common.interop.NativeWrapper,godot.common.interop.NativePointer,kotlin.Any",
   "godot.game.Basket.appleCollected",
-  "godot.game.Basket.speed,godot.game.Basket.leanAmount,godot.game.Basket.leanSpeed,godot.game.Basket.squashAmount,godot.game.Basket.squashDuration,godot.game.Basket.stretchAmount,godot.game.Basket.stretchDuration,godot.game.Basket.settleDuration",
-  "godot.game.Basket._ready,godot.game.Basket._process,godot.game.Basket.onBodyEntered,godot.game.Basket.resetBasket",
+  "godot.game.Basket.baseSpeed,godot.game.Basket.leanAmount,godot.game.Basket.leanSpeed,godot.game.Basket.squashAmount,godot.game.Basket.squashDuration,godot.game.Basket.stretchAmount,godot.game.Basket.stretchDuration,godot.game.Basket.settleDuration",
+  "godot.game.Basket._ready,godot.game.Basket._process,godot.game.Basket.adjustToScreen,godot.game.Basket.onBodyEntered,godot.game.Basket.onMobileLeftDown,godot.game.Basket.onMobileLeftUp,godot.game.Basket.onMobileRightDown,godot.game.Basket.onMobileRightUp,godot.game.Basket.resetBasket",
   true,
 )
 public open class BasketRegistrar : ClassRegistrar {
@@ -39,10 +39,15 @@ public open class BasketRegistrar : ClassRegistrar {
         notificationFunctions(listOf())
         function(Basket::_ready, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
         function(Basket::_process, NIL, DOUBLE, KtFunctionArgument(DOUBLE, "kotlin.Double", "delta"), KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
+        function(Basket::adjustToScreen, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
         function(Basket::onBodyEntered, NIL, OBJECT, KtFunctionArgument(OBJECT, "godot.api.Node", "body"), KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
+        function(Basket::onMobileLeftDown, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
+        function(Basket::onMobileLeftUp, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
+        function(Basket::onMobileRightDown, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
+        function(Basket::onMobileRightUp, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
         function(Basket::resetBasket, NIL, KtFunctionArgument(NIL, "kotlin.Unit"), KtRpcConfig(DISABLED.id.toInt(), false, RELIABLE.id.toInt(), 0))
         signal(Basket::appleCollected, KtFunctionArgument(INT, "kotlin.Int", "points"))
-        property(Basket::speed, DOUBLE, DOUBLE, "kotlin.Double", NONE, "", godot.core.PropertyUsageFlags.NONE.flag)
+        property(Basket::baseSpeed, DOUBLE, DOUBLE, "kotlin.Double", NONE, "", godot.core.PropertyUsageFlags.NONE.flag)
         property(Basket::leanAmount, DOUBLE, DOUBLE, "kotlin.Double", NONE, "", godot.core.PropertyUsageFlags.NONE.flag)
         property(Basket::leanSpeed, DOUBLE, DOUBLE, "kotlin.Double", NONE, "", godot.core.PropertyUsageFlags.NONE.flag)
         property(Basket::squashAmount, DOUBLE, DOUBLE, "kotlin.Double", NONE, "", godot.core.PropertyUsageFlags.NONE.flag)

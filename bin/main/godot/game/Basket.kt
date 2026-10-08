@@ -1,21 +1,12 @@
 package godot.game
 
-
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.annotation.RegisterSignal
-import godot.api.Area2D
-import godot.api.CircleShape2D
-import godot.api.CollisionShape2D
-import godot.api.Input
-import godot.api.Node
-import godot.api.RectangleShape2D
-import godot.api.ResourceLoader
-import godot.api.Sprite2D
-import godot.api.Texture2D
+import godot.api.*
 import godot.core.Vector2
-import godot.core.signal1 
+import godot.core.signal1
 import godot.game.apples.BaseApple
 import godot.global.GD
 import kotlin.math.sign
@@ -23,10 +14,13 @@ import kotlin.math.sign
 @RegisterClass
 class Basket : Area2D() {
 
+	// --- Speed & Scaling (Merged from first code logic) ---
 	@RegisterProperty
-	var speed = 850.0
+	var baseSpeed = 850.0
+	private var currentSpeed = 850.0
+	private var scaleFactor = 1.0
+	private val referenceWidth = 1920.0 // The standard resolution width
 
-	// Parameter name goes in the annotation, and use signal1 for 1 argument
 	@RegisterSignal("points")
 	val appleCollected by signal1<Int>()
 
@@ -41,26 +35,24 @@ class Basket : Area2D() {
 	private var targetRotation = 0.0
 	private var currentRotation = 0.0
 
-	@RegisterProperty
-	var leanAmount = 0.15
-	@RegisterProperty
-	var leanSpeed = 8.0
+	@RegisterProperty var leanAmount = 0.15
+	@RegisterProperty var leanSpeed = 8.0
+
+	// --- Mobile Input State ---
+	private var isLeftPressed = false
+	private var isRightPressed = false
 
 	// --- Squash & Stretch (Juice) ---
-	private val baseScale = Vector2(4.0, 4.0)
+	private val originalBaseScale = Vector2(4.0, 4.0) // Your intended sprite scale
+	private var baseScale = originalBaseScale
 	private var currentScale = baseScale
 	private var targetScale = baseScale
 
-	@RegisterProperty
-	var squashAmount = 0.35
-	@RegisterProperty
-	var squashDuration = 0.10
-	@RegisterProperty
-	var stretchAmount = 0.22
-	@RegisterProperty
-	var stretchDuration = 0.12
-	@RegisterProperty
-	var settleDuration = 0.18
+	@RegisterProperty var squashAmount = 0.35
+	@RegisterProperty var squashDuration = 0.10
+	@RegisterProperty var stretchAmount = 0.22
+	@RegisterProperty var stretchDuration = 0.12
+	@RegisterProperty var settleDuration = 0.18
 
 	private enum class ImpactPhase { IDLE, SQUASH, STRETCH, SETTLE }
 	private var impactPhase = ImpactPhase.IDLE
@@ -68,21 +60,17 @@ class Basket : Area2D() {
 
 	@RegisterFunction
 	override fun _ready() {
-		screenSize = getViewportRect().size
-		monitoring = true
-		setProcess(true)
-
-		scale = baseScale
-		currentScale = baseScale
-		targetScale = baseScale
-
+		// Connect to viewport size changes for real-time responsiveness
+		getViewport()?.sizeChanged?.connect(this, Basket::adjustToScreen)
+		// Initial setup
+		adjustToScreen()
 		basketSprite = getNodeOrNull("Sprite2D") as? Sprite2D
 		loadBasketTextureMap()
 		updateBasketVisuals()
 
-		// Connect the engine's built-in signal to our handler
+		// Connect collision signal
 		bodyEntered.connect(this, Basket::onBodyEntered)
-		GD.print("Basket ready")
+		GD.print("Basket: Ready with dynamic scaling and mobile support")
 	}
 
 	@RegisterFunction
@@ -91,31 +79,65 @@ class Basket : Area2D() {
 		updateAnimations(delta)
 	}
 
+	/**
+	 * Logic merged from the first code: Adjusts scale and speed based on screen width.
+	 * Ensures the game feels the same on a small phone and a large monitor.
+	 *
+	 * This implements responsive scaling by:
+	 * 1. Calculating scale factor from viewport width relative to 1920px standard
+	 * 2. Scaling basket sprite accordingly
+	 * 3. Adjusting movement speed proportionally
+	 * 4. Maintaining collision box consistency
+	 */
+	@RegisterFunction
+	fun adjustToScreen() {
+		screenSize = getViewportRect().size
+
+		// Calculate the ratio compared to 1920p reference width
+		scaleFactor = screenSize.x / referenceWidth
+
+		// Adjust speed dynamically so player covers the same screen % per second
+		currentSpeed = baseSpeed * scaleFactor
+
+		// Adjust visual base scale to match the screen density
+		// This ensures the basket size is proportional to screen dimensions
+		baseScale = Vector2(originalBaseScale.x * scaleFactor, originalBaseScale.y * scaleFactor)
+		targetScale = baseScale
+		scale = baseScale
+
+		GD.print("Basket: Screen adjusted - Size: $screenSize, Scale Factor: $scaleFactor, Current Speed: $currentSpeed")
+	}
+
+	/**
+	 * Handles unified input from both keyboard and mobile controls.
+	 */
 	private fun handleMovement(delta: Double) {
-		val inputX = (if (Input.isActionPressed("ui_to_right")) 1.0 else 0.0) -
+		// Keyboard: traditional ui_to_left/ui_to_right actions
+		val keyboardInputX = (if (Input.isActionPressed("ui_to_right")) 1.0 else 0.0) -
 				(if (Input.isActionPressed("ui_to_left")) 1.0 else 0.0)
 
-		velocity = if (inputX != 0.0) {
-			Vector2(inputX, 0.0).normalized() * speed
-		} else {
-			Vector2.ZERO
-		}
+		// Mobile: button press state flags
+		val mobileInputX = (if (isRightPressed) 1.0 else 0.0) - (if (isLeftPressed) 1.0 else 0.0)
 
+		// Unified input: combine both sources
+		val inputX = keyboardInputX + mobileInputX
+
+		// Use currentSpeed (scaled) for consistent movement across resolutions
+		velocity = if (inputX != 0.0) Vector2(inputX, 0.0).normalized() * currentSpeed else Vector2.ZERO
+
+		// Apply delta-based movement
 		position += velocity * delta
 
 		// Screen boundary clamping
 		val halfWidth = getBasketHalfWidth()
-		position = Vector2(
-			x = position.x.coerceIn(halfWidth, screenSize.x - halfWidth),
-			y = position.y
-		)
+		position = Vector2(position.x.coerceIn(halfWidth, screenSize.x - halfWidth), position.y)
 
-		// Calculate visual lean based on movement direction
+		// Visual lean based on movement direction
 		targetRotation = -velocity.x.sign * leanAmount
 	}
 
 	private fun updateAnimations(delta: Double) {
-		// Rotation Lean
+		// Rotation Lean Lerp
 		currentRotation = lerp(currentRotation, targetRotation, leanSpeed * delta)
 		rotation = currentRotation.toFloat()
 
@@ -126,20 +148,14 @@ class Basket : Area2D() {
 				when (impactPhase) {
 					ImpactPhase.SQUASH -> startStretch()
 					ImpactPhase.STRETCH -> startSettle()
-					ImpactPhase.SETTLE -> {
-						impactPhase = ImpactPhase.IDLE
-						targetScale = baseScale
-					}
+					ImpactPhase.SETTLE -> { impactPhase = ImpactPhase.IDLE; targetScale = baseScale }
 					else -> {}
 				}
 			}
 		}
 
-		// Smoothly interpolate scale changes
-		currentScale = Vector2(
-			lerp(currentScale.x, targetScale.x, 12.0 * delta),
-			lerp(currentScale.y, targetScale.y, 12.0 * delta)
-		)
+		// Smoothly transition scale changes
+		currentScale = Vector2(lerp(currentScale.x, targetScale.x, 12.0 * delta), lerp(currentScale.y, targetScale.y, 12.0 * delta))
 		scale = currentScale
 	}
 
@@ -148,34 +164,38 @@ class Basket : Area2D() {
 		val apple = body as? BaseApple ?: return
 		val points = apple.getPoints()
 
-		// Update visual state (0-8 apples displayed)
-		when {
-			points > 0 -> appleCount += 1
-			points < 0 -> appleCount -= 1
-		}
-		appleCount = appleCount.coerceIn(0, 8)
-
+		// Update apple count and cycle visuals (0-8 range)
+		appleCount = (appleCount + if (points > 0) 1 else -1).coerceIn(0, 8)
 		updateBasketVisuals()
+
+		// Trigger visual impact feedback
 		startSquash()
 
-		// Emit the custom signal with the points value
+		// Emit signal for UI/GameManager
 		appleCollected.emit(points)
-
 		apple.queueFree()
 	}
 
+	// --- Mobile Control Handlers ---
+
+	@RegisterFunction
+	fun onMobileLeftDown() { isLeftPressed = true }
+
+	@RegisterFunction
+	fun onMobileLeftUp() { isLeftPressed = false }
+
+	@RegisterFunction
+	fun onMobileRightDown() { isRightPressed = true }
+
+	@RegisterFunction
+	fun onMobileRightUp() { isRightPressed = false }
+
+	// --- Visual Helpers ---
+
 	private fun loadBasketTextureMap() {
-		val baseBasketPath = "res://src/main/resources/assets/basket/basket_"
 		for (i in 0..8) {
-			val path = "$baseBasketPath$i.png"
-			try {
-				val resource = ResourceLoader.load(path) as? Texture2D
-				if (resource != null) {
-					textureMap[i] = resource
-				}
-			} catch (e: Exception) {
-				GD.printErr("Failed to load basket texture: $path")
-			}
+			val path = "res://src/main/resources/assets/basket/basket_$i.png"
+			(ResourceLoader.load(path) as? Texture2D)?.let { textureMap[i] = it }
 		}
 	}
 
@@ -184,25 +204,21 @@ class Basket : Area2D() {
 	}
 
 	private fun getBasketHalfWidth(): Double {
-		val col = getNodeOrNull("CollisionShape2D") as? CollisionShape2D
-		if (col != null) {
-			val shape = col.shape
-			if (shape is RectangleShape2D) return (shape.size.x * 0.5) * globalScale.x
-			if (shape is CircleShape2D) return shape.radius * globalScale.x
-		}
-		return 64.0 * globalScale.x // Default fallback
+		// Calculate collision width: sprite is 328px wide * 0.2 scale * current scale factor
+		// 328 * 0.2 = 65.6px base, then multiplied by the responsive scale
+		return (328.0 * 0.2 * scaleFactor / 2.0)
 	}
 
 	private fun startSquash() {
 		impactPhase = ImpactPhase.SQUASH
 		impactTimer = squashDuration
-		targetScale = Vector2(baseScale.x + squashAmount, baseScale.y - squashAmount)
+		targetScale = Vector2(baseScale.x + (squashAmount * scaleFactor), baseScale.y - (squashAmount * scaleFactor))
 	}
 
 	private fun startStretch() {
 		impactPhase = ImpactPhase.STRETCH
 		impactTimer = stretchDuration
-		targetScale = Vector2(baseScale.x - stretchAmount, baseScale.y + stretchAmount)
+		targetScale = Vector2(baseScale.x - (stretchAmount * scaleFactor), baseScale.y + (stretchAmount * scaleFactor))
 	}
 
 	private fun startSettle() {
@@ -211,27 +227,17 @@ class Basket : Area2D() {
 		targetScale = baseScale
 	}
 
-	private fun lerp(from: Double, to: Double, weight: Double): Double {
-		return from + (to - from) * weight.coerceIn(0.0, 1.0)
-	}
+	private fun lerp(from: Double, to: Double, weight: Double): Double = from + (to - from) * weight.coerceIn(0.0, 1.0)
 
-	/**
-	 * Resets the basket to its initial state.
-	 * Called when gameplay restarts to show empty basket (basket_0).
-	 */
 	@RegisterFunction
 	fun resetBasket() {
 		appleCount = 0
 		updateBasketVisuals()
+		getTree()?.reloadCurrentScene()
 		velocity = Vector2.ZERO
-		targetRotation = 0.0
-		currentRotation = 0.0
 		rotation = 0f
-		impactPhase = ImpactPhase.IDLE
-		impactTimer = 0.0
-		currentScale = baseScale
-		targetScale = baseScale
-		scale = baseScale
-		GD.print("Basket: Reset to empty state (basket_0)")
+		adjustToScreen() // Ensure scaling is reset correctly
+		isLeftPressed = false
+		isRightPressed = false
 	}
 }

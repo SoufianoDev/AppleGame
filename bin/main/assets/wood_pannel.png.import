@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://jegddh4os35j"
-path="res://.godot/imported/wood_pannel.png-088f109985f563a584661b507789e1d3.ctex"
+path="res://.godot/imported/wood_pannel.png-949ef4ba9612d8591ce3e7b71417cff5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://bin/main/assets/wood_pannel.png"
-dest_files=["res://.godot/imported/wood_pannel.png-088f109985f563a584661b507789e1d3.ctex"]
+source_file="res://src/main/resources/assets/wood_pannel.png"
+dest_files=["res://.godot/imported/wood_pannel.png-949ef4ba9612d8591ce3e7b71417cff5.ctex"]
 
 [params]
 
