@@ -3,9 +3,19 @@
 [ext_resource type="Texture2D" uid="uid://c4t1m5xtun431" path="res://src/main/resources/assets/ic_left_arrow_btn.png" id="1_qqepx"]
 
 [node name="LeftBtnControl" type="TextureButton"]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -260.0
+offset_right = 260.0
+offset_bottom = -20.0
+grow_horizontal = 1
+grow_vertical = 0
 custom_minimum_size = Vector2(240, 240)
-offset_right = 240.0
-offset_bottom = 240.0
 pivot_offset = Vector2(120, 120)
 action_mode = 0
 texture_normal = ExtResource("1_qqepx")

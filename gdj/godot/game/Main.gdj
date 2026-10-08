@@ -4,9 +4,9 @@
 registeredName = Main
 fqName = godot.game.Main
 relativeSourcePath = src/main/kotlin/godot/game/Main.kt
-baseType = Node2D
+baseType = Control
 supertypes = [
-    godot.api.Node2D,
+    godot.api.Control,
 	godot.api.CanvasItem,
 	godot.api.Node,
 	godot.api.Object,
@@ -32,5 +32,6 @@ functions = [
 	on_score_updated,
 	on_timer_updated,
 	on_game_over,
-	on_click_restart_btn
+	on_click_restart_btn,
+	on_window_size_changed
 ]

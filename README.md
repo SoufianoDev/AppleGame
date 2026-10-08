@@ -100,9 +100,9 @@ Player Basket:
 
 - **Player Control**: Use 'A' and 'D' keys (or arrow keys) to move the basket left and right
 - **Apples**: Three types of falling objects
-    - Red Apples: Standard scoring items (+10 points)
-    - Green Apples: Alternative scoring items (+15 points)
-    - Bad Apples: Obstacles to avoid (game hazard)
+	- Red Apples: Standard scoring items (+10 points)
+	- Green Apples: Alternative scoring items (+15 points)
+	- Bad Apples: Obstacles to avoid (game hazard)
 - **Scoring**: Earn points by catching good apples
 - **Difficulty**: Game automatically increases spawn rate over 60 seconds
 - **Duration**: Game runs for exactly 60 seconds
@@ -125,38 +125,38 @@ Timeline (60 seconds):
 ### Game State Flow
 
 ```
-         START
-           |
-           v
-    Load Apple Scenes
-           |
-           v
-    Initialize Game Timer (60s)
-           |
-           v
-    +-----------+
-    | Game Loop |
-    +-----------+
-    |
-    +---> Check Elapsed Time
-    |
-    +---> Decrease Spawn Interval
-    |
-    +---> Spawn Apples (random type)
-    |
-    +---> Update Basket Position
-    |
-    +---> Check Collisions
-    |
-    +---> Update Score
-    |
-    +---> Repeat until time < 60s
-           |
-           v
-        GAME OVER
-           |
-           v
-    Display Final Score
+		 START
+		   |
+		   v
+	Load Apple Scenes
+		   |
+		   v
+	Initialize Game Timer (60s)
+		   |
+		   v
+	+-----------+
+	| Game Loop |
+	+-----------+
+	|
+	+---> Check Elapsed Time
+	|
+	+---> Decrease Spawn Interval
+	|
+	+---> Spawn Apples (random type)
+	|
+	+---> Update Basket Position
+	|
+	+---> Check Collisions
+	|
+	+---> Update Score
+	|
+	+---> Repeat until time < 60s
+		   |
+		   v
+		GAME OVER
+		   |
+		   v
+	Display Final Score
 ```
 
 ## Project Structure
@@ -320,23 +320,23 @@ applegame/
 │  - Signal Routing (Gameplay → UI)                           │
 │  - Mobile Controls Opacity Configuration                    │
 └───────────────┬──────────────────────┬──────────────────────┘
-                │                      │
-                v                      v
-    ┌───────────────────┐    ┌─────────────────────┐
-    │ TimingModeGameplay│    │   GameOverScreen    │
-    │  (Gameplay Logic) │    │   (End Screen UI)   │
-    └────────┬──────────┘    └──────────┬──────────┘
-             │                           │
-             │ Signals:                  │ Signals:
-             │ - scoreUpdated            │ - restartRequested
-             │ - timerUpdated            │
-             │ - gameOverSignal          │ Uses:
-             │                           │ - AnimationStyle
-             │ Creates & Manages:        │   (Button animations)
-             │                           │
-    ┌────────┴────────┬─────────────────┴──────────┐
-    │                 │                             │
-    v                 v                             v
+				│                      │
+				v                      v
+	┌───────────────────┐    ┌─────────────────────┐
+	│ TimingModeGameplay│    │   GameOverScreen    │
+	│  (Gameplay Logic) │    │   (End Screen UI)   │
+	└────────┬──────────┘    └──────────┬──────────┘
+			 │                           │
+			 │ Signals:                  │ Signals:
+			 │ - scoreUpdated            │ - restartRequested
+			 │ - timerUpdated            │
+			 │ - gameOverSignal          │ Uses:
+			 │                           │ - AnimationStyle
+			 │ Creates & Manages:        │   (Button animations)
+			 │                           │
+	┌────────┴────────┬─────────────────┴──────────┐
+	│                 │                             │
+	v                 v                             v
 ┌────────────┐  ┌──────────────┐        ┌─────────────────┐
 │  Basket.kt │  │ScoreController│        │  Mobile Controls│
 │  (Player)  │  │ (Score Mgmt) │        │  (Touch Buttons)│
@@ -350,9 +350,9 @@ applegame/
 │ - Dynamic  │  │              │        │                 │
 │   Texture  │  │              │        │                 │
 └────────────┘  └──────────────┘        └─────────────────┘
-    ^
-    │ Collects
-    │
+	^
+	│ Collects
+	│
 ┌───┴─────────────────────────────────┐
 │         Apple Hierarchy              │
 │                                      │
@@ -434,29 +434,29 @@ Features:
 ```
 Keyboard Input              Mobile Input
 (ui_to_left/right)         (isLeftPressed/isRightPressed)
-        |                            |
-        +----------------------------+
-                    |
-                    v
-          Unified Input (inputX)
-                    |
-                    v
-          Calculate Velocity
-                    |
-                    v
-          Apply Delta Movement
-                    |
-                    v
-          Screen Boundary Clamp
-                    |
-                    v
-          Visual Lean Animation
+		|                            |
+		+----------------------------+
+					|
+					v
+		  Unified Input (inputX)
+					|
+					v
+		  Calculate Velocity
+					|
+					v
+		  Apply Delta Movement
+					|
+					v
+		  Screen Boundary Clamp
+					|
+					v
+		  Visual Lean Animation
 ```
 
 **Squash & Stretch:**
 ```
 Collision → SQUASH (0.10s) → STRETCH (0.12s) → SETTLE (0.18s) → IDLE
-            Scale: (4.35,3.65)  (3.78,4.22)     (4.0,4.0)
+			Scale: (4.35,3.65)  (3.78,4.22)     (4.0,4.0)
 ```
 
 ### ScoreController.kt (Score Management)
@@ -472,23 +472,23 @@ Collision → SQUASH (0.10s) → STRETCH (0.12s) → SETTLE (0.18s) → IDLE
 ### Apple Hierarchy
 
 ```
-        RigidBody2D (Godot Physics)
-             |
-             v
-      ┌──────────────┐
-      │  BaseApple   │
-      │              │
-      │ Properties:  │
-      │ - velocity   │
-      │ - lifetime   │
-      │ - type       │
-      │ - collision  │
-      └──────────────┘
-             ^
-             |
-    ┌────────┼────────┬────────┐
-    |        |        |        |
-    v        v        v        v
+		RigidBody2D (Godot Physics)
+			 |
+			 v
+	  ┌──────────────┐
+	  │  BaseApple   │
+	  │              │
+	  │ Properties:  │
+	  │ - velocity   │
+	  │ - lifetime   │
+	  │ - type       │
+	  │ - collision  │
+	  └──────────────┘
+			 ^
+			 |
+	┌────────┼────────┬────────┐
+	|        |        |        |
+	v        v        v        v
 ┌────────┐┌────────┐┌────────┐┌────────┐
 │RedApple││GreenApp││BadApple││Unique  │
 │Points:1││Points:1││Hazard  ││Features│
@@ -510,66 +510,66 @@ All apples:
 ## Collision and Scoring System
 
 ```
-                Apple Spawned
-                     |
-                     v
-            Falls towards ground
-            (RigidBody2D physics)
-                     |
-         ┌───────────┼───────────┐
-         |           |           |
-         v           v           v
-    Good Apple   Good Apple   Bad Apple
-    (Red/Green)  (Red/Green)   (Hazard)
-         |           |           |
-         v           v           v
-    Basket near?  Basket near?  Basket near?
-         |           |           |
-       YES          NO          YES
-         |           |           |
-         v           v           v
-    Award Pts   Delete Apple   Game Event
-    (10-15)     (off-screen)   (Hazard trigger)
-         |
-         v
-    Update Score
-    (Display label)
-         |
-         v
-    Scale/Rotate Basket
-    (Visual feedback)
+				Apple Spawned
+					 |
+					 v
+			Falls towards ground
+			(RigidBody2D physics)
+					 |
+		 ┌───────────┼───────────┐
+		 |           |           |
+		 v           v           v
+	Good Apple   Good Apple   Bad Apple
+	(Red/Green)  (Red/Green)   (Hazard)
+		 |           |           |
+		 v           v           v
+	Basket near?  Basket near?  Basket near?
+		 |           |           |
+	   YES          NO          YES
+		 |           |           |
+		 v           v           v
+	Award Pts   Delete Apple   Game Event
+	(10-15)     (off-screen)   (Hazard trigger)
+		 |
+		 v
+	Update Score
+	(Display label)
+		 |
+		 v
+	Scale/Rotate Basket
+	(Visual feedback)
 ```
 
 ## Build System and Compilation
 
 ```
 Source Code (.kt files)
-    |
-    v
+	|
+	v
 Gradle Build Process
-    |
-    +---> KSP (Kotlin Symbol Processing)
-    |     - Scans @RegisterClass annotations
-    |     - Scans @RegisterFunction annotations
-    |     - Scans @RegisterProperty annotations
-    |
-    +---> Generate .gdj Files (Script Registration)
-    |     - Stored in gdj/ directory
-    |     - Used by Godot to load Kotlin scripts
-    |
-    +---> Compile Kotlin to JVM Bytecode
-    |     - Output: build/classes/kotlin/main/
-    |
-    +---> Package Resources
-    |     - Assets copied to build/resources/
-    |
-    v
+	|
+	+---> KSP (Kotlin Symbol Processing)
+	|     - Scans @RegisterClass annotations
+	|     - Scans @RegisterFunction annotations
+	|     - Scans @RegisterProperty annotations
+	|
+	+---> Generate .gdj Files (Script Registration)
+	|     - Stored in gdj/ directory
+	|     - Used by Godot to load Kotlin scripts
+	|
+	+---> Compile Kotlin to JVM Bytecode
+	|     - Output: build/classes/kotlin/main/
+	|
+	+---> Package Resources
+	|     - Assets copied to build/resources/
+	|
+	v
 JAR File (build/libs/applegame.jar)
-    |
-    v
+	|
+	v
 Godot Engine Loads JVM Scripts
-    |
-    v
+	|
+	v
 Game Ready to Run
 ```
 
@@ -577,15 +577,15 @@ Game Ready to Run
 
 ```
 Kotlin Code                 Generated Output
-                           
+						   
 @RegisterClass             Creates .gdj file
 class Main : Node2D()      for script registration
-    
-    @RegisterFunction       Exposes method to Godot
-    fun _ready()            editor and runtime
-    
-    @RegisterProperty       Exposes property in
-    var speed = 850.0       Godot inspector
+	
+	@RegisterFunction       Exposes method to Godot
+	fun _ready()            editor and runtime
+	
+	@RegisterProperty       Exposes property in
+	var speed = 850.0       Godot inspector
 ```
 
 ## Technical Stack
@@ -603,31 +603,31 @@ class Main : Node2D()      for script registration
 
 ```
 Kotlin Source Code
-        |
-        v
+		|
+		v
 Gradle Build System
-        |
-    ┌───┴────┬────────────┐
-    |        |            |
-    v        v            v
+		|
+	┌───┴────┬────────────┐
+	|        |            |
+	v        v            v
   KSP    Kotlin      Resource
 Processor Compiler   Bundler
-    |        |            |
-    |        v            |
-    | JVM Bytecode        |
-    |        |            |
-    └────────┼────────────┘
-             |
-             v
-    Generated .gdj Files
-    (Script Registration)
-             |
-             v
-    Godot Engine 4.4
-    (GL Compatibility)
-             |
-             v
-        Game Runtime
+	|        |            |
+	|        v            |
+	| JVM Bytecode        |
+	|        |            |
+	└────────┼────────────┘
+			 |
+			 v
+	Generated .gdj Files
+	(Script Registration)
+			 |
+			 v
+	Godot Engine 4.4
+	(GL Compatibility)
+			 |
+			 v
+		Game Runtime
 ```
 
 ## Development Setup
@@ -664,25 +664,25 @@ The project is configured with JVM debugging support:
 
 ```
 IDE (IntelliJ/VS Code)
-        |
-        | (Debug Protocol)
-        |
-        v
+		|
+		| (Debug Protocol)
+		|
+		v
 JVM Debugger (port 5005)
-        |
-        | (Breakpoints, variables)
-        |
-        v
+		|
+		| (Breakpoints, variables)
+		|
+		v
 Kotlin Code Execution
-        |
-        | (Step through)
-        |
-        v
+		|
+		| (Step through)
+		|
+		v
 Godot Runtime
-        |
-        | (Game state)
-        |
-        v
+		|
+		| (Game state)
+		|
+		v
 Monitor Score, Position, Apple Spawns
 ```
 
@@ -696,28 +696,28 @@ Input mappings defined in `project.godot`:
 
 ```
 Keyboard Input
-    |
-    v
+	|
+	v
 Godot Input System
-    |
-    ├─-> ui_to_left (A key or LEFT arrow)
-    |       |
-    |       v
-    |    Basket._input() method
-    |       |
-    |       v
-    |    velocity.x = -speed
-    |
-    └─-> ui_to_right (D key or RIGHT arrow)
-            |
-            v
-        Basket._input() method
-            |
-            v
-        velocity.x = +speed
-            |
-            v
-        Update basket position
+	|
+	├─-> ui_to_left (A key or LEFT arrow)
+	|       |
+	|       v
+	|    Basket._input() method
+	|       |
+	|       v
+	|    velocity.x = -speed
+	|
+	└─-> ui_to_right (D key or RIGHT arrow)
+			|
+			v
+		Basket._input() method
+			|
+			v
+		velocity.x = +speed
+			|
+			v
+		Update basket position
 ```
 
 ## Performance Optimization
@@ -734,13 +734,13 @@ The build system includes KSP (Kotlin Symbol Processing) for:
 Execution Pipeline
 
 Kotlin Source
-    |
-    v
+	|
+	v
 Compile-time Processing (KSP)
-    |---> Generate .gdj files (one-time cost)
-    |---> Type checking (one-time cost)
-    |
-    v
+	|---> Generate .gdj files (one-time cost)
+	|---> Type checking (one-time cost)
+	|
+	v
 Runtime Execution
 
 Per Frame (~16ms @ 60 FPS):
@@ -750,8 +750,8 @@ Per Frame (~16ms @ 60 FPS):
 ├─ Collision detection: <1ms
 ├─ Score calculation: <1ms
 └─ Render frame: <10ms
-    |
-    v
+	|
+	v
 Total: ~16ms per frame (60 FPS target)
 ```
 
@@ -767,67 +767,67 @@ Total: ~16ms per frame (60 FPS target)
 │  - Get screen size                  │
 │  - Set spawn interval (1.5s)        │
 └────────────────┬────────────────────┘
-                 │
-                 v
-         ┌───────────────────┐
-         │ GAME RUNNING      │
-         │ (_process delta)  │
-         └────────┬──────────┘
-                  │
-           ┌──────┴──────┐
-           |             |
-    Time < 60s?      Time >= 60s?
-           |             |
-          YES            NO
-           |             |
-           v             v
-    Continue         ┌─────────────┐
-    Game Loop        │ GAME OVER   │
-           |         │ - Stop game │
-           |         │ - Show score│
-           |         └─────────────┘
-           |
-    ┌──────┴──────────────┐
-    |                     |
-    v                     v
+				 │
+				 v
+		 ┌───────────────────┐
+		 │ GAME RUNNING      │
+		 │ (_process delta)  │
+		 └────────┬──────────┘
+				  │
+		   ┌──────┴──────┐
+		   |             |
+	Time < 60s?      Time >= 60s?
+		   |             |
+		  YES            NO
+		   |             |
+		   v             v
+	Continue         ┌─────────────┐
+	Game Loop        │ GAME OVER   │
+		   |         │ - Stop game │
+		   |         │ - Show score│
+		   |         └─────────────┘
+		   |
+	┌──────┴──────────────┐
+	|                     |
+	v                     v
 Spawn Apple?       Update Basket
-    |                     |
+	|                     |
   YES       ┌─────────────┘
-    |       |
-    v       v
+	|       |
+	v       v
   Random   Check Movement Input
   Type     (A/D keys)
-    |       |
-    |       v
-    |    Calculate Velocity
-    |       |
-    |       v
-    |    Apply Easing
-    |       |
-    |       v
-    |    Update Position
-    |       |
-    |       v
-    |    Rotate Basket
-    |       |
-    v       v
+	|       |
+	|       v
+	|    Calculate Velocity
+	|       |
+	|       v
+	|    Apply Easing
+	|       |
+	|       v
+	|    Update Position
+	|       |
+	|       v
+	|    Rotate Basket
+	|       |
+	v       v
 Create   Check Collisions
 Apple     |
 Node      v
-    |    Collect Good Apple?
-    |       |
-    |      YES
-    |       |
-    |    +--------+
-    |    |        |
-    v    v        v
-    └────────────────┐
-            |        |
-            v        v
-    Update Score   Scale Basket
-            |        |
-            v        v
-    Loop Back to Top
+	|    Collect Good Apple?
+	|       |
+	|      YES
+	|       |
+	|    +--------+
+	|    |        |
+	v    v        v
+	└────────────────┐
+			|        |
+			v        v
+	Update Score   Scale Basket
+			|        |
+			v        v
+	Loop Back to Top
 ```
 
 ## Assets
@@ -861,23 +861,23 @@ All game sprites and textures are stored in `src/main/resources/assets/`. The ga
 
 ```
 START GAME
-    |
-    +---> Load Scenes
-    |
-    +---> Initialize Variables
-    |
-    +---> Main Game Loop (60 seconds)
-    |       |
-    |       +---> Decrease spawn interval
-    |       +---> Spawn random apple (if time)
-    |       +---> Update basket position (from input)
-    |       +---> Check collisions
-    |       +---> Update score display
-    |
-    +---> Game Ends
-    |
-    +---> Show Final Score
-    |
+	|
+	+---> Load Scenes
+	|
+	+---> Initialize Variables
+	|
+	+---> Main Game Loop (60 seconds)
+	|       |
+	|       +---> Decrease spawn interval
+	|       +---> Spawn random apple (if time)
+	|       +---> Update basket position (from input)
+	|       +---> Check collisions
+	|       +---> Update score display
+	|
+	+---> Game Ends
+	|
+	+---> Show Final Score
+	|
 END GAME
 ```
 

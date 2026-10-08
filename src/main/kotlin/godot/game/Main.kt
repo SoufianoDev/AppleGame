@@ -5,11 +5,14 @@ import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.*
 import godot.core.Color
+import godot.core.Vector2
 import godot.core.asNodePath
+import godot.game.desktop.DesktopDisplayManager
 import godot.global.GD
+import java.io.File
 
 @RegisterClass
-class Main : Node2D() {
+class Main : Control() {
 
 	private var timerLabel: Label? = null
 	private var scoreLabel: Label? = null
@@ -23,7 +26,11 @@ class Main : Node2D() {
 	private var leftBtnControl: TextureButton? = null
 	private var rightBtnControl: TextureButton? = null
 
+	// Display manager for desktop fullscreen control
+	private var displayManager: DisplayManager? = null
+
 	private var restartPending = false
+	private var background : TextureRect? = null
 
 	@RegisterProperty
 	var gameDuration = 60.0
@@ -34,15 +41,19 @@ class Main : Node2D() {
 	 * Can be modified in Godot Inspector.
 	 */
 	@RegisterProperty
-	var defaultMobileOpacity = 0.1
+	var defaultMobileOpacity = 0.3
 
 	@RegisterFunction
 	override fun _ready() {
-		GD.print("Main: Starting game...")
+		GD.print("\n ========================")
+		detectDesktopEnv()
+		GD.print("\n ========================")
+		GD.print("\nMain: Starting game...")
 		bindMainUI()
 		bindBasket()
 		bindMobileControls()
 		loadResources()
+		initializeDisplayManager()
 		startGameplayLifeCycle()
 	}
 
@@ -79,6 +90,8 @@ class Main : Node2D() {
 		leftBtnControl = getNodeOrNull("MobileControls/LeftBtnControl".asNodePath()) as? TextureButton
 		rightBtnControl = getNodeOrNull("MobileControls/RightBtnControl".asNodePath()) as? TextureButton
 
+		detectMobilesEnv()
+
 		if (leftBtnControl != null && rightBtnControl != null && basket != null) {
 			// Connect signals
 			leftBtnControl!!.buttonDown.connect(basket!!, Basket::onMobileLeftDown)
@@ -92,6 +105,24 @@ class Main : Node2D() {
 			GD.print("Main: Mobile controls bound with opacity ${defaultMobileOpacity}")
 		} else {
 			GD.print("Main: Mobile controls not found (OK if running on desktop)")
+		}
+	}
+
+	/**
+	 * Initializes the display manager for desktop environments.
+	 * Only creates DesktopDisplayManager when running on desktop platforms.
+	 */
+	private fun initializeDisplayManager() {
+		if (envIsDesktop()) {
+			val manager = DesktopDisplayManager()
+			addChild(manager)
+			displayManager = manager
+			GD.print("MaFilein: DesktopDisplayManager initialized")
+
+			// Optional: Auto-enter fullscreen on desktop startup
+			// manager.enterFullscreen()
+		} else {
+			GD.print("Main: Skipping DisplayManager on non-desktop platform")
 		}
 	}
 
@@ -122,7 +153,8 @@ class Main : Node2D() {
 	 */
 	@RegisterFunction
 	fun showMobileControls() {
-		applyMobileOpacity(1.0)
+		leftBtnControl?.visible = true
+		rightBtnControl?.visible = true
 	}
 
 	/**
@@ -131,7 +163,8 @@ class Main : Node2D() {
 	 */
 	@RegisterFunction
 	fun hideMobileControls() {
-		applyMobileOpacity(0.0)
+		leftBtnControl?.visible = false
+		rightBtnControl?.visible = false
 	}
 
 	/**
@@ -208,8 +241,100 @@ class Main : Node2D() {
 		restartPending = true
 	}
 
+	@RegisterFunction
+	fun onWindowSizeChanged() {
+
+		background = getNodeOrNull("TextureRect".asNodePath()) as? TextureRect
+
+		getTree()?.root?.sizeChanged?.connect(this, Main::onWindowSizeChanged)
+
+		background?.let { bg ->
+			val texture = bg.texture
+			val windowSize = getViewport()?.getVisibleRect()?.size ?: Vector2(1920, 1080)
+
+			texture?.let { tex ->
+				val texSize = tex.getSize()
+
+				val scaleX = windowSize.x / texSize.x
+				val scaleY = windowSize.y / texSize.y
+
+				val finalScale = if (scaleX > scaleY) scaleX else scaleY
+
+				bg.setScale(Vector2(finalScale, finalScale))
+				bg.setPivotOffset(texSize / 2.0)
+				bg.setPosition(windowSize / 2.0 - (texSize * finalScale / 2.0))
+			}
+		}
+	}
+
 	private fun restartGamePlayLifeCycle() {
 		basket?.resetBasket()
 		startGameplayLifeCycle()
+	}
+
+	// ================= PLATFORM DETECTION =================
+
+	private fun detectOsEnv(): String {
+		val osName = OS.getName()
+		return osName.lowercase()
+	}
+
+	private fun printOsEnvName() {
+		GD.print("Main: OS name: ${detectOsEnv()}")
+	}
+
+	private fun envIsMobile(): Boolean {
+		return OS.hasFeature("mobile") ||
+				OS.hasFeature("android") ||
+				OS.hasFeature("ios")
+	}
+
+	private fun envIsDesktop(): Boolean {
+		return OS.hasFeature("pc") ||
+				OS.hasFeature("Windows") ||
+				OS.hasFeature("macOS") ||
+				OS.hasFeature("Linux")
+	}
+
+	private fun detectMobilesEnv() {
+		if (envIsMobile())
+			showMobileControls()
+		else
+			hideMobileControls()
+	}
+
+	private fun detectDesktopEnv() {
+		if (envIsDesktop()) {
+			if (detectOsEnv() == "linux") {
+				val distro = getLinuxDistro()
+				GD.print("Os : $distro")
+			}
+		}
+	}
+
+	// Cache the distro result to avoid file reading on every call
+	private var linuxDistroCache: String? = null
+
+	fun getLinuxDistro(): String {
+		linuxDistroCache?.let { return it }
+
+		val osRelease = File("/etc/os-release")
+		if (osRelease.exists()) {
+			try {
+				val lines = osRelease.readLines()
+				val idLine = lines.find { it.startsWith("ID=") }
+				val distroName = idLine
+					?.substringAfter("=")
+					?.removeSurrounding("\"")
+					?: "Unknown Linux"
+
+				val result = "Linux ($distroName)"
+				linuxDistroCache = result
+				return result
+			} catch (e: Exception) {
+				return "Linux (Unknown/Error)"
+			}
+		}
+		return "Unknown Linux"
 	}
 }

@@ -1,14 +1,13 @@
 // THIS FILE IS GENERATED! DO NOT EDIT OR DELETE IT. EDIT OR DELETE THE ASSOCIATED SOURCE CODE FILE INSTEAD
 // Note: You can however freely move this file inside your godot project if you want. Keep in mind however, that if you rename the originating source code file, this file will be deleted and regenerated as a new file instead of being updated! Other modifications to the source file however, will result in this file being updated.
 
-registeredName = Basket
-fqName = godot.game.Basket
-relativeSourcePath = src/main/kotlin/godot/game/Basket.kt
-baseType = Area2D
+registeredName = DesktopDisplayManager
+fqName = godot.game.desktop.DesktopDisplayManager
+relativeSourcePath = src/main/kotlin/godot/game/desktop/DesktopDisplayManager.kt
+baseType = Control
 supertypes = [
-    godot.api.Area2D,
-	godot.api.CollisionObject2D,
-	godot.api.Node2D,
+    godot.api.Control,
+	godot.game.DisplayManager,
 	godot.api.CanvasItem,
 	godot.api.Node,
 	godot.api.Object,
@@ -18,26 +17,12 @@ supertypes = [
 	kotlin.Any
 ]
 signals = [
-    apple_collected
+    
 ]
 properties = [
-    base_speed,
-	lean_amount,
-	lean_speed,
-	squash_amount,
-	squash_duration,
-	stretch_amount,
-	stretch_duration,
-	settle_duration
+    
 ]
 functions = [
     _ready,
-	_process,
-	adjust_to_screen,
-	on_body_entered,
-	on_mobile_left_down,
-	on_mobile_left_up,
-	on_mobile_right_down,
-	on_mobile_right_up,
-	reset_basket
+	_input
 ]

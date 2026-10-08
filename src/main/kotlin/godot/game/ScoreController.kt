@@ -3,7 +3,6 @@ package godot.game
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.api.Node
-import jdk.internal.org.jline.utils.Colors.s
 
 
 @RegisterClass

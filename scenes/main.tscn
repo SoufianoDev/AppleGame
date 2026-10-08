@@ -6,16 +6,25 @@
 [ext_resource type="PackedScene" uid="uid://bvhc6ubnudous" path="res://scenes/left_btn_control.tscn" id="4_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://bukoqa86veuyg" path="res://scenes/right_btn_control.tscn" id="5_tefeu"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_1bvp3")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 1920.0
-offset_bottom = 1080.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_0xm2m")
 
 [node name="Basket" parent="." instance=ExtResource("2_h2yge")]
-position = Vector2(968, 917)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -46,13 +55,19 @@ text = "Time : 60"
 [node name="MobileControls" type="CanvasLayer" parent="."]
 
 [node name="LeftBtnControl" parent="MobileControls" instance=ExtResource("4_tbgi4")]
-offset_left = 63.0
-offset_top = 767.0
-offset_right = 303.0
-offset_bottom = 1007.0
+visible = false
+layout_mode = 3
+anchors_preset = 2
+offset_left = 109.0
+offset_top = -273.0
+offset_right = 349.0
+offset_bottom = -33.0
 
 [node name="RightBtnControl" parent="MobileControls" instance=ExtResource("5_tefeu")]
-offset_left = 1627.0
-offset_top = 770.0
-offset_right = 1867.0
-offset_bottom = 1010.0
+visible = false
+layout_mode = 3
+anchors_preset = 3
+offset_left = -369.0
+offset_top = -261.0
+offset_right = -129.0
+offset_bottom = -21.0
